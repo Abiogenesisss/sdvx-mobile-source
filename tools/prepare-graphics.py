@@ -240,7 +240,6 @@ def audio(data, common, override, ffmpeg, work):
         ("bgm_ver7_05_result", common, "result/bgm.wav"),
         ("bgm_ver7_06_totalresult", override, "entry_flow/total.wav"),
     ])
-    copy(work / "bgm_ver7/bgm_ver7_02_modeselect.wav", override, "entry_flow/mode.wav")
     for bank, groups in {
         "01_short": [("matching_ok", common, "flow"), ("achievement", override, "menu/audio")],
         "02_in": [("entry", override, "entry_original/audio"), ("difficulty", override, "selection_ui/audio"),
@@ -260,6 +259,7 @@ def audio(data, common, override, ffmpeg, work):
         (f"se_06_rank00{index}_{source}", override, f"result_original/audio/se_06_rank00{index}_{target}.wav")
         for index, (source, target) in enumerate((("s", "s"), ("aaa+", "aaa_plus"), ("aaa", "aaa")), 1)
     ])
+    copy(work / "se_ver7_01_short/se_01_short001_modeselect.wav", override, "entry_flow/mode.wav")
     copy(work / "se_ver7_08_big/se_08_big01_main_ready.wav", override, "stage_ready/ready.wav")
     copy(work / "se_ver7_08_big/se_08_big04_endscene.wav", override, "entry_flow/ending.wav")
     copy(work / "se_ver7_04_cursor/se_04_cursor001_modeselect.wav", common, "crew/cursor.wav")
