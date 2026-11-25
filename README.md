@@ -1,32 +1,29 @@
-# SDVX ∇ MOBILE
+<h1 align="center">SDVX ∇ MOBILE</h1>
 
-一个非官方的 Android 竖屏实验项目，复现 SOUND VOLTEX 第七代 NABLA 的界面、演出和部分打歌流程。这个仓库供研究和继续开发，目前的版本还不适合用来正常打歌。
+<p align="center">《SOUND VOLTEX》第七代 NABLA 的非官方 Android 竖屏复现项目</p>
 
-## 当前能用到什么程度
+<p align="center">
+  <img alt="Android 8.0 及以上，64 位 ARM" src="https://img.shields.io/badge/Android-8.0%2B_%C2%B7_arm64-2E765C?style=flat&amp;logo=android&amp;logoColor=white&amp;labelColor=303944">
+  <img alt="OpenGL ES 3.2" src="https://img.shields.io/badge/OpenGL_ES-3.2-456787?style=flat&amp;labelColor=303944">
+  <a href="LICENSE"><img alt="MIT 许可证" src="https://img.shields.io/badge/License-MIT-655B86?style=flat&amp;labelColor=303944"></a>
+</p>
 
-| 项目 | 当前状态 |
+<p align="center">
+  <a href="docs/BUILD.md">Windows 构建指南</a> ·
+  <a href="docs/INCREMENTAL.md">曲目与角色增量包安装说明</a>
+</p>
+
+## 项目现状
+
+当前版本已复现部分街机界面与演出，支持领航员切换、选曲、打歌和本地成绩结算。APK 在 Windows 上使用自备的 HDD 数据构建，已验证的 HDD 版本为 `2026101300`。
+
+| 功能 | 当前状态 |
 | --- | --- |
-| 菜单与演出 | 可以浏览部分街机界面、切换领航员、选曲，进入打歌与本地结算。这是目前比较适合体验的部分。 |
-| 触屏游玩 | 菜单支持触控。进入打歌后，触屏操作仍有很多问题。 |
-| 激光判定 | 判定仍有明显问题，不能据此评估手感或成绩。 |
-| Type-C 手台 | 当前输入方案仍需改进，延迟很大，打歌基本不可玩。目前实际用途是控制界面。 |
-| 段位考核 | **考核流程未实现。** 工程中有段位资源处理和界面代码，不能完成一场段位考核。 |
-| 刷卡与联机 | **真实刷卡流程和联机游玩均未接入。** 本地档案、PIN 和匹配画面只用于本地流程。 |
-
-## 在自己的电脑上构建
-
-准备好 Windows Android 工具链和厂商 SDK 后，把自己有权使用的 HDD 路径交给构建入口即可。曲目按本地实际可用数量导出；目录支持纯净版和带第三方包装的布局。涉及固定地址的 DLL 提取目前支持已核对的 `2026101300` 模块。
-
-```powershell
-& .\tools\Build-FromHDD.ps1 -Hdd 'E:\KFC\contents'
-```
-
-只想带截图中的前三首，可在命令末尾加 `-SongIds 1,2,3`。APK 只内置所选曲目的原目录和原封面。其他已登记曲目可以在手机上增量添加：把 HDD 的曲目文件夹原样复制到 `Android/media/local.sdvx.nativeport/resources/music/`，完全退出并重开应用。如果 Android 弹出目录授权，请选中上一级 `resources` 并确认。曲库按实际存在的文件夹和难度显示。
-
-打歌背景从原始 IFS 按需读 AFP、几何和纹理。APK 保留归档文件，另外携带小型索引和场景清单。
-
-[Windows 构建指南与给本地 AI 的操作说明](docs/BUILD.md)列出了环境安装、可选服务数据、产物路径和局部重跑方法。源码仓库中的图片限于维护者批准的两层启动图标和两张触屏按键图，其余素材和 APK 在用户本地生成。上述图片不在本仓库对自有代码的 MIT 授权范围内。
+| 触屏与激光判定 | 菜单支持触控。打歌时触屏操作仍不稳定，激光判定存在偏差。 |
+| Type-C 手台 | 可控制菜单，打歌时输入延迟较高，难以正常游玩。 |
+| 段位考核 | 考核流程尚未实现。 |
+| 刷卡与联机 | 实体刷卡和联机游玩尚未接入。 |
 
 ## 许可
 
-本项目由贡献者自行编写、且有权授权的代码和文档采用 [MIT 许可证](LICENSE)。游戏名称、商标、原盘素材、音乐、谱面、角色、提取的数据及第三方 SDK 的权利归各自权利人。第三方依赖的获取与许可见[构建指南](docs/BUILD.md#第三方依赖)。本项目与游戏权利人无隶属关系。
+项目自有代码和文档采用 [MIT 许可证](LICENSE)。游戏素材、商标及第三方 SDK 的权利归各自权利人所有。仓库附带的启动图标和触屏按键图不在 MIT 授权范围内。

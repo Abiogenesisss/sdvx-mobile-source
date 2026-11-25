@@ -17,13 +17,10 @@ $ffmpeg = & $python -c 'from imageio_ffmpeg import get_ffmpeg_exe; print(get_ffm
 & $ffmpeg -version
 ```
 
-## 资源路径验收
+## 排查缺失文件
 
-使用同一个 Python，根据待检查的产物选择一个入口。
+需要定位漏打的文件时，可以把本次构建的两个资源目录与 APK 直接按相对路径比较。缺失项会写入 `local-inputs/asset-paths-missing.txt`。
 
 ```powershell
-& $python .\tools\check-asset-paths.py --merged 'D:\path\to\nabla-assets'
-& $python .\tools\check-asset-paths.py --apk 'D:\path\to\app.apk'
+& $python .\tools\check-asset-paths.py --reference .\development\android-native\assets-reference --override .\development\android-native\src\main\assets --apk 'D:\path\to\app.apk'
 ```
-
-[仓库基准](asset-path-baseline.md)只记录路径按组计数与摘要。曲目差异仅供参考。如果有对应的参照资源根和覆盖资源根，可按基准页的说明执行允许额外路径的子集检查。路径验收无需安装 APK。

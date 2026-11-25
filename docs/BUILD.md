@@ -53,11 +53,11 @@ sdkmanager.bat --sdk_root="$env:ANDROID_HOME" --licenses
 | `-ServiceData 'E:\…\nbl.ts'` | 可选。本地第三方服务提供的初学者文件夹和段位课程表。懒人目录下的 `asphyxia/plugins/sdvx@asphyxia/data/nbl.ts` 会被自动识别。纯净版缺少该文件时，初学者分组没有服务标记、课程列表为空，其他流程继续。无需运行第三方启动器或服务。 |
 | `-Offline` | 让 Gradle 使用已经取得的插件缓存。首次安装 Python 包、获取原生依赖仍需网络。 |
 
-APK 输出在 `development/android-native/build/outputs/apk/debug/sdvx-android-native-debug.apk`，为本机 Android 调试密钥签名的手机包。外置全曲包和额外角色包是独立交付项，不属于这个 APK。
+APK 输出在 `development/android-native/build/outputs/apk/debug/sdvx-android-native-debug.apk`，为本机 Android 调试密钥签名的手机包。制作与该 APK 配套的外置歌曲包和角色包，见[增量包格式、制作与手机安装](INCREMENTAL.md)。
 
 ### 版本与曲库差异
 
-相同目录结构可以在不同 HDD 上识别。当前 DLL 提取配置对应 `2026101300` 基线，使用模块指纹确认固定地址的角色、贴纸、判定和舞台登记。文件夹名或第三方包装标签不能替代这一检查。若模块不匹配，程序会输出实际 SHA-256，并在使用偏移前停止。新增 DLL 配置时需验证对应地址。
+原盘按目录结构识别。角色、贴纸、判定和舞台登记目前按 `2026101300` 的 DLL 布局提取。其他版本若提示登记表无法读取，需为对应模块适配偏移。
 
 **曲目文件夹、文件名及内容保持 HDD 原样。** 例如选中 ID 1 后，APK 的 assets 下有：
 
@@ -95,20 +95,12 @@ $sdk = Join-Path $env:SDVX_TOOLCHAIN 'native-deps/CubismSdkForNative-5-r.5'
 
 `--steps` 支持 `songs`、`player` 和 `graphics`。背景转换需要 `songs` 步骤生成的 `local-inputs/stage-registration.json`。Gradle 合并 `development/android-native/assets-reference` 和 `development/android-native/src/main/assets`，同路径以后一层为准。
 
-封包前会检查必要的运行时目录、生成的 C++ include、实际内置歌曲的封面、VOX 和音频。比较其他版本时不使用历史曲目数作门槛。可选的[资源路径对照](asset-path-baseline.md)检查文件名集合，不能代替画面、音频或设备端体验验证。
+封包前会检查必要的运行时目录、生成的 C++ include，以及所选曲目实际需要的封面、VOX 和音频。
 
 ## 3. 给本地 AI 的交接文本
 
-> 当前工程是 SDVX ∇ MOBILE。我的 HDD 在［本地路径］。请先按 docs/BUILD.md 配置 Windows 工具链和已获许可的 SDK，然后用 Build-FromHDD.ps1 生成 arm64 手机 APK。使用本地命令读取 HDD，不上传原盘、日志中的私有数据、生成资源或 APK。只为所选歌曲打包原目录和封面；其他已登记曲目从手机本地 music/ 增量读取。遇到不支持的 DLL 时，报告模块指纹和受影响的登记表，不套用其他版本偏移。
+> 当前工程是 SDVX ∇ MOBILE。我的 HDD 在［本地路径］。请先按 docs/BUILD.md 配置 Windows 工具链和已获许可的 SDK，然后用 Build-FromHDD.ps1 生成 arm64 手机 APK。使用本地命令读取 HDD，不上传原盘、日志中的私有数据、生成资源或 APK。只为所选歌曲打包原目录和封面；其他已登记曲目从手机本地 music/ 增量读取。遇到不支持的 DLL 时，报告读不出的登记表和具体错误，不套用其他版本偏移。
 
 ## 4. 提交范围
 
-Git 提交源码、构建脚本、文档，以及维护者明确批准的四张图片：两层 Android 启动图标和手机版触屏 BT/FX 各一张。原盘、曲目、角色、其余游戏媒体、SDK、签名密钥和 APK 保留在本机。提交前用 `git diff --cached --name-only` 审阅实际文件。
-
-## 本地验证记录（2026-11-25）
-
-在独立源码工作区以本地 HDD 为素材输入，从空的应用素材输出开始完成转换、arm64 编译、组包、对齐和调试签名。验证复用了已安装的 Android SDK、JDK 和部分构建依赖，未使用旧 APK 或旧导出素材作为打包输入。维护者批准的启动图标与触屏按钮直接随仓库提供。
-
-本次默认选择实际得到 54 个原始歌曲目录、206 个内置难度，目录内有 528 张原始 PNG。切换仅内置 ID 1 或仅内置 ID 2 的导出时，已核对目录和抽查的 VOX、S3V、封面字节。9 份原始 VOX 的事件、节拍和控制数据与原转换器一致。背景采用 103 个原始 IFS；通过桌面端相同 C++/SDL 入口对照了五张纹理，以及 AFP、BSI、GE2D 条目的字节。最终手机包 2,662,243,887 字节。没有进行真机安装或 GPU/帧时对照。
-
-2026-11-25 在 Android 16（API 36、x86_64、GLES 3.1）模拟器上实测：外置添加原盘的 `0007_good_high_school_baker` 后，识别曲数由 54 变为 55。对 `resources` 的只读授权在冷启动后保留，选曲与难度确认页均能显示原封面。NOVICE 谱面、原曲音频和背景 0 已在打歌画面实际播放。用同一模拟器对照的 5 张背景纹理，其 IFS 和旧 PNG 解码像素逐字节相同。
+Git 提交源码、构建脚本、文档，以及维护者明确批准的四张图片：两层 Android 启动图标和手机版触屏 BT/FX 各一张。原盘、曲目、角色、其余游戏媒体、SDK、签名密钥和 APK 保留在本机。本机验证记录、截图和日志放在 `evidence/`。提交前用 `git diff --cached --name-only` 审阅实际文件。
