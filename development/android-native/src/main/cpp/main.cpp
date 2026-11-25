@@ -108,34 +108,6 @@ const std::string& externalRoot() {
     return root;
 }
 
-SDL_IOStream* openAsset(std::string_view path, bool externalOnly) {
-    if (!validAssetPath(path)) return nullptr;
-    if (!externalOnly)
-        if (auto* io = SDL_IOFromFile(std::string(path).c_str(), "rb")) return io;
-    if (!path.starts_with("music/") && !path.starts_with("crew/")) return nullptr;
-    const auto& root = externalRoot();
-    if (root.empty()) return nullptr;
-    const auto file = root + "/" + std::string(path);
-    // Android 16 checks the media database even for images inside our own
-    // Android/media directory. Register extracted images before their first
-    // open so .nomedia classification is ready without a failed read/retry.
-    if (android_get_device_api_level() >= 36 &&
-        (path.ends_with(".png") || path.ends_with(".webp") ||
-         path.ends_with(".jpg") || path.ends_with(".jpeg"))) {
-        auto* env = static_cast<JNIEnv*>(SDL_GetAndroidJNIEnv());
-        env->PushLocalFrame(3);
-        auto activity = static_cast<jobject>(SDL_GetAndroidActivity());
-        auto method = env->GetMethodID(env->GetObjectClass(activity), "prepareExternalImage", "(Ljava/lang/String;)Z");
-        const bool ready = env->CallBooleanMethod(activity, method, env->NewStringUTF(file.c_str()));
-        env->PopLocalFrame(nullptr);
-        if (!ready) {
-            SDL_SetError("Could not register external image: %s", file.c_str());
-            return nullptr;
-        }
-    }
-    return SDL_IOFromFile(file.c_str(), "rb");
-}
-
 std::string readFile(SDL_IOStream* io) {
     if (!io) return {};
     size_t size = 0;
@@ -158,6 +130,31 @@ bool assetExists(std::string_view path, bool externalOnly) {
     static AssetDirectory directory(externalRoot());
     return directory.contains(path);
 }
+
+std::string readResource(std::string_view path, bool externalOnly) {
+    if (!validAssetPath(path)) return {};
+    const std::string relative(path);
+    if (!externalOnly) {
+        if (auto* io = SDL_IOFromFile(relative.c_str(), "rb")) return readFile(io);
+    }
+    if ((!path.starts_with("music/") && !path.starts_with("crew/")) || externalRoot().empty()) return {};
+    const auto file = externalRoot() + "/" + relative;
+    if (auto* io = SDL_IOFromFile(file.c_str(), "rb")) return readFile(io);
+    if (android_get_device_api_level() < 36 || !assetExists(path, true)) return {};
+
+    auto* env = static_cast<JNIEnv*>(SDL_GetAndroidJNIEnv());
+    env->PushLocalFrame(4);
+    auto activity = static_cast<jobject>(SDL_GetAndroidActivity());
+    auto method = env->GetMethodID(env->GetObjectClass(activity), "readExternalResource", "(Ljava/lang/String;)[B");
+    auto bytes = static_cast<jbyteArray>(env->CallObjectMethod(activity, method, env->NewStringUTF(relative.c_str())));
+    std::string data;
+    if (bytes) {
+        data.resize(env->GetArrayLength(bytes));
+        env->GetByteArrayRegion(bytes, 0, data.size(), reinterpret_cast<jbyte*>(data.data()));
+    }
+    env->PopLocalFrame(nullptr);
+    return data;
+}
 }
 
 std::unordered_set<std::string> externalMusicFolders() {
@@ -174,10 +171,10 @@ std::unordered_set<std::string> externalMusicFolders() {
 
 std::string readAsset(std::string_view path) {
     if (const auto* entry = stageArchiveEntry(path); entry && !entry->width) return readStageRange(*entry);
-    return readFile(openAsset(path, false));
+    return readResource(path, false);
 }
 bool hasAsset(std::string_view path) { return stageArchiveEntry(path) || assetExists(path, false); }
-std::string readExternalAsset(std::string_view path) { return readFile(openAsset(path, true)); }
+std::string readExternalAsset(std::string_view path) { return readResource(path, true); }
 bool hasExternalAsset(std::string_view path) { return assetExists(path, true); }
 
 std::string readSave(std::string_view name) { return readFile(SDL_IOFromFile(savePath(name).c_str(), "rb")); }

@@ -1,30 +1,35 @@
 package local.sdvx.nativeport
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.graphics.Rect
 import android.hardware.input.InputManager
-import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.DocumentsContract
 import android.util.Base64
+import android.util.Log
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.WindowInsets
+import android.widget.Toast
 import org.libsdl.app.SDLActivity
 import org.libsdl.app.SDLSurface
+import java.io.File
+import java.io.IOException
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.text.Normalizer
 import java.util.Locale
 import java.time.LocalDate
-import java.util.concurrent.CountDownLatch
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
@@ -41,22 +46,69 @@ class SdvxActivity : SDLActivity(), InputManager.InputDeviceListener {
     private var previousX = 0f
     private var previousY = 0f
     private var rotaryBaseline = false
-    private val preparedResourceImages = HashSet<String>()
+    @Volatile private var grantedResourceTree: Uri? = null
+    private val resourceDocumentId get() = "primary:Android/media/$packageName/resources"
+    private val resourceTreeUri get() = DocumentsContract.buildTreeDocumentUri(
+        EXTERNAL_STORAGE_DOCUMENTS, resourceDocumentId
+    )
+    private var checkedResourceTree = false
 
-    @Synchronized
-    fun prepareExternalImage(path: String): Boolean {
-        if (path in preparedResourceImages) return true
-        // Native asset reads run off the Android UI thread. Wait for the scan
-        // callback so the first fopen sees the .nomedia/ownership entry too.
-        val complete = CountDownLatch(1)
-        var ready = false
-        MediaScannerConnection.scanFile(applicationContext, arrayOf(path), null) { _, uri ->
-            ready = uri != null
-            complete.countDown()
+    @Suppress("DEPRECATION") // SDLActivity uses Activity result callbacks.
+    private fun checkResourceTree() {
+        if (Build.VERSION.SDK_INT < 36 || checkedResourceTree) return
+        checkedResourceTree = true
+        val expected = resourceTreeUri
+        if (contentResolver.persistedUriPermissions.any { it.isReadPermission && it.uri == expected }) {
+            grantedResourceTree = expected
+            return
         }
-        complete.await()
-        if (ready) preparedResourceImages.add(path)
-        return ready
+        val root = externalMediaDirs.firstOrNull()?.resolve("resources") ?: return
+        if (listOf("music", "crew").none { name ->
+                root.resolve(name).listFiles()?.any(File::isDirectory) == true
+            }) return
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+                DocumentsContract.buildDocumentUri(EXTERNAL_STORAGE_DOCUMENTS, resourceDocumentId))
+        }
+        startActivityForResult(intent, RESOURCE_TREE_REQUEST)
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != RESOURCE_TREE_REQUEST || resultCode != RESULT_OK) return
+        val tree = data?.data ?: return
+        if (tree != resourceTreeUri || data.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION == 0) {
+            Toast.makeText(this, "Select the game's resources folder and allow read access.", Toast.LENGTH_LONG).show()
+            return
+        }
+        try {
+            contentResolver.takePersistableUriPermission(tree, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            grantedResourceTree = tree
+        } catch (error: SecurityException) {
+            Log.w("SDVX", "Could not retain read access to the resources folder", error)
+        }
+    }
+
+    fun readExternalResource(path: String): ByteArray? {
+        val tree = grantedResourceTree ?: return null
+        val uri = DocumentsContract.buildDocumentUriUsingTree(tree, "$resourceDocumentId/$path")
+        return try {
+            contentResolver.openInputStream(uri)?.use { it.readBytes() }
+        } catch (error: IOException) {
+            null
+        } catch (error: SecurityException) {
+            null
+        } catch (error: IllegalArgumentException) {
+            // The documents provider can report a removed file as an invalid child.
+            null
+        }
+    }
+
+    companion object {
+        private const val EXTERNAL_STORAGE_DOCUMENTS = "com.android.externalstorage.documents"
+        private const val RESOURCE_TREE_REQUEST = 3101
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,6 +231,7 @@ class SdvxActivity : SDLActivity(), InputManager.InputDeviceListener {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         rotaryBaseline = false
         super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && !mBrokenLibraries) checkResourceTree()
     }
 
     fun keyboardHeight(): Int = keyboardPixels

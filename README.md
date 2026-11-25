@@ -21,7 +21,7 @@
 & .\tools\Build-FromHDD.ps1 -Hdd 'E:\KFC\contents'
 ```
 
-只想带截图中的前三首，可在命令末尾加 `-SongIds 1,2,3`。APK 只内置所选曲目的原目录和原封面。其他已登记曲目可以在手机上增量添加：把 HDD 的曲目文件夹原样复制到 `Android/media/local.sdvx.nativeport/resources/music/`，完全退出并重开应用。曲库按实际存在的文件夹和难度显示。
+只想带截图中的前三首，可在命令末尾加 `-SongIds 1,2,3`。APK 只内置所选曲目的原目录和原封面。其他已登记曲目可以在手机上增量添加：把 HDD 的曲目文件夹原样复制到 `Android/media/local.sdvx.nativeport/resources/music/`，完全退出并重开应用。如果 Android 弹出目录授权，请选中上一级 `resources` 并确认。曲库按实际存在的文件夹和难度显示。
 
 打歌背景从原始 IFS 按需读 AFP、几何和纹理。APK 保留归档文件，另外携带小型索引和场景清单。
 
