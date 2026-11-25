@@ -22,6 +22,8 @@ def write_index(output, apk, category, names):
         path = output / name
         item = {"file": name, "bytes": path.stat().st_size}
         with ZipFile(path) as archive:
+            if ".nomedia" not in archive.namelist() or archive.getinfo(".nomedia").file_size != 0:
+                raise ValueError(f"{name} needs an empty .nomedia file at the ZIP root")
             if category == "music":
                 folders = {key.split("/", 2)[1] for key in archive.namelist() if key.startswith("music/")}
                 item["song_ids"] = sorted(int(folder.partition("_")[0]) for folder in folders)

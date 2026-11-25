@@ -5,6 +5,7 @@ import json
 from pathlib import Path, PurePosixPath
 import shutil
 import sys
+from tempfile import TemporaryDirectory
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
 
@@ -87,6 +88,7 @@ def build_crew(destination, external, builtin, reference=None):
     partial = output.with_suffix(".zip.partial")
     try:
         with ZipFile(partial, "w") as archive:
+            archive.writestr(".nomedia", b"", ZIP_STORED)
             for key, value in replacements.items():
                 archive.writestr(key, encoded(value), ZIP_DEFLATED, 3)
             for key in sorted(files):
@@ -109,6 +111,21 @@ def build_crew(destination, external, builtin, reference=None):
         partial.unlink(missing_ok=True)
     print(f"{name}: {len(rows)} crew styles, {count:,} entries, {output.stat().st_size / 2**30:.2f} GiB", flush=True)
     return name, count
+
+
+def reuse_crew_archive(path):
+    with ZipFile(path) as archive:
+        if ".nomedia" in archive.namelist():
+            return len(archive.filelist)
+    # Earlier crew ZIPs omitted the marker. Preserve the existing compressed entries.
+    with TemporaryDirectory(prefix=".crew-", dir=path.parent) as scratch:
+        partial = Path(scratch) / path.name
+        shutil.copyfile(path, partial)
+        with ZipFile(partial, "a") as archive:
+            archive.writestr(".nomedia", b"", ZIP_STORED)
+            count = len(archive.filelist)
+        partial.replace(path)
+    return count
 
 
 def build_songs(output, directories, unpacked):
@@ -243,8 +260,7 @@ def main():
     crew_output = output / "SDVX-extra-crew.zip"
     if crew_output.is_file():
         crew_name = crew_output.name
-        with ZipFile(crew_output) as archive:
-            crew_count = len(archive.infolist())
+        crew_count = reuse_crew_archive(crew_output)
     elif all((root / file).is_file() for root in (external, builtin)
              for file in ("crew/catalog.json", "crew/voice/index.json")):
         crew_name, crew_count = build_crew(output, external, builtin, reference)
