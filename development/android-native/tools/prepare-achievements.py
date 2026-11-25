@@ -5,7 +5,6 @@ the records with RIP-relative stores; reading the next record would shift IDs
 and rewards by one. Source addresses remain in the exported audit metadata.
 """
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import re
@@ -74,7 +73,7 @@ def main():
             metric=metric, goal=goal, parameter=parameter, source_address=hex(0x180000000+rva)))
     assert len(rows) == len({row['id'] for row in rows}) and len(rows) > 1400
     result = dict(source='2026101300/LAZY_KFC/contents/modules/soundvoltex.dll',
-                  sha256=hashlib.sha256(data).hexdigest(), categories=categories, items=rows, excluded=excluded)
+                  categories=categories, items=rows, excluded=excluded)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print(f'Exported {len(rows)} original achievement records; inactive category-zero IDs: {excluded}')

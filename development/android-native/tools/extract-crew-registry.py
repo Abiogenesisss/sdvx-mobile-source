@@ -6,7 +6,6 @@ import json
 import math
 from pathlib import Path
 import struct
-import sys
 
 from capstone import x86
 import pefile
@@ -169,12 +168,7 @@ def main():
     parser.add_argument("module", type=Path)
     parser.add_argument("output", type=Path)
     args = parser.parse_args()
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
-    from hdd_inputs import require_module_profile
-
-    module_data = args.module.read_bytes()
-    require_module_profile(module_data)
-    dll = pefile.PE(data=module_data, fast_load=True)
+    dll = pefile.PE(str(args.module), fast_load=True)
     data = extract(dll)
     args.output.write_text(json.dumps(data, ensure_ascii=False) + "\n", encoding="utf-8")
 

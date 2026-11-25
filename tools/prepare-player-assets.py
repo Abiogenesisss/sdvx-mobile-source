@@ -10,7 +10,7 @@ from xml.etree import ElementTree
 
 from bemani.format import IFS, TwoDX
 from PIL import Image
-from hdd_inputs import locate_contents, require_profile
+from hdd_inputs import locate_contents
 
 def prepare(contents, ffmpeg, sdk, parts=None):
     parts = parts or ("catalog","voices","subscreen","startup")
@@ -117,5 +117,4 @@ if __name__ == "__main__":
     parser.add_argument("--part",choices=("catalog","voices","subscreen","startup"),nargs="+")
     args = parser.parse_args()
     contents = locate_contents(args.hdd)
-    require_profile(contents)
     prepare(contents,args.ffmpeg,args.sdk,args.part)

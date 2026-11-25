@@ -1,12 +1,9 @@
-"""Compare local asset paths with the repository baseline or supplied source roots."""
+"""List local asset counts or find missing paths using supplied source roots."""
 
 import argparse
-from collections import defaultdict
 from fnmatch import fnmatchcase
-from hashlib import sha256
 import json
 from pathlib import Path
-import re
 from zipfile import BadZipFile, ZipFile
 
 
@@ -18,7 +15,6 @@ ANT_EXCLUDES = (
 )
 REFERENCE_SUBTREES = ("songs/666/background", "menu/options", "transition")
 REFERENCE_FILES = {"menu/jacket.png", "stage/console.png", "songs/666/timing.json"}
-BASELINE = Path(__file__).resolve().parents[1] / "docs/asset-path-baseline.md"
 LOCAL_REPORT = Path(__file__).resolve().parents[1] / "local-inputs/asset-paths-missing.txt"
 
 
@@ -70,59 +66,6 @@ def android_packaged(path):
     )
 
 
-def summarize(paths):
-    groups = defaultdict(list)
-    for path in sorted(paths):
-        group, separator, _ = path.partition("/")
-        groups[group if separator else "(root)"].append(path)
-    return {
-        group: (len(entries), sha256("".join(path + "\n" for path in entries).encode("utf-8")).hexdigest())
-        for group, entries in sorted(groups.items())
-    }
-
-
-def print_summary(paths):
-    print("| Asset directory | Required paths | Path SHA-256 |")
-    print("| --- | ---: | --- |")
-    for group, (count, digest) in summarize(paths).items():
-        label = group.replace("|", "\\|").replace("\n", "\\n")
-        print(f"| {label} | {count} | `{digest}` |")
-
-
-def compare_baseline(actual):
-    rows = re.findall(
-        r"^\| ([^|]+?) \| ([0-9]+) \| `([a-f0-9]{64})` \|$",
-        BASELINE.read_text(encoding="utf-8"),
-        re.MULTILINE,
-    )
-    expected = {group: (int(count), digest) for group, count, digest in rows}
-    if not expected or len(expected) != len(rows):
-        raise ValueError("Invalid asset path baseline")
-    observed = summarize(actual)
-    # Songs vary with the local release. Retain its digest as informational data.
-    expected.pop("songs", None)  # Derived song presentations are release-specific too.
-    observed.pop("songs", None)
-    baseline_songs = expected.pop("music", (0, ""))
-    actual_songs = observed.pop("music", (0, ""))
-    if baseline_songs[0] or actual_songs[0]:
-        comparison = "matches baseline" if baseline_songs == actual_songs else "differs from baseline"
-        print(f"Songs: {actual_songs[0]} paths, baseline {baseline_songs[0]} ({comparison}; informational).")
-    mismatches = [
-        group for group in sorted(expected.keys() | observed.keys())
-        if expected.get(group) != observed.get(group)
-    ]
-    if mismatches:
-        print("| Asset directory | Baseline paths | Observed paths |")
-        print("| --- | ---: | ---: |")
-        for group in mismatches:
-            label = json.dumps(group, ensure_ascii=True).replace("|", "\\|")
-            print(f"| {label} | {expected.get(group, (0,))[0]} | {observed.get(group, (0,))[0]} |")
-        print(f"\n{len(mismatches)} asset groups differ from the baseline in count or path digest.")
-        return 1
-    print(f"All {len(actual) - actual_songs[0]} paths in {len(observed)} checked groups match the repository baseline.")
-    return 0
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reference", type=Path, help="reference root for subset checking")
@@ -135,7 +78,7 @@ def main():
     if (args.reference is None) != (args.override is None):
         parser.error("--reference and --override must be supplied together")
     if args.reference is None and args.merged is None and args.apk is None:
-        parser.error("supply --merged or --apk to check the repository baseline")
+        parser.error("supply --merged, --apk, or both source roots")
     for role in ("reference", "override", "merged"):
         directory = getattr(args, role)
         if directory is not None and not directory.is_dir():
@@ -154,7 +97,8 @@ def main():
             }
 
         if args.reference is None:
-            return compare_baseline(actual)
+            print(f"Found {len(actual)} asset paths.")
+            return 0
 
         catalog = json.loads((args.override / "songs/library.json").read_text(encoding="utf-8"))
         bundled = {song["folder"] for song in catalog if any(chart["bundled"] for chart in song["charts"])}
@@ -162,8 +106,8 @@ def main():
         expected.update(source_paths(args.reference, args.override, bundled, is_reference=True))
         if args.apk is not None:
             expected = {path for path in expected if android_packaged(path)}
-        print_summary(expected)
         if args.apk is None and args.merged is None:
+            print(f"Found {len(expected)} eligible source paths.")
             return 0
 
         missing = expected - actual

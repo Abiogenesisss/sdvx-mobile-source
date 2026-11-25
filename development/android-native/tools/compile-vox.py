@@ -1,7 +1,6 @@
 """Compile a SOUND VOLTEX VOX chart and verified judgment tables for Android."""
 import argparse
 from bisect import bisect_right
-from hashlib import sha256
 import json
 from math import lcm
 from pathlib import Path
@@ -119,7 +118,7 @@ def compile_chart(raw, judgment, metadata):
     end_tick = clock.tick(end_position)
     meter = clock.meters[0]
     return {
-        **metadata, "source_sha256": sha256(raw).hexdigest(),
+        **metadata,
         "ticks_per_quarter": clock.ticks_per_quarter, "bpm": clock.tempos[0]["bpm"],
         "meter": [meter["numerator"], meter["denominator"]],
         "tempo_map": clock.tempos, "meter_map": clock.meters,

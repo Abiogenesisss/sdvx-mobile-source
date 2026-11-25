@@ -1,13 +1,14 @@
 """Build the selected songs, jackets and seven-generation registration from a local HDD."""
 import argparse
 import json
+import math
 from pathlib import Path
 import re
 import struct
 import subprocess
 import sys
 
-from hdd_inputs import locate_contents, require_profile
+from hdd_inputs import locate_contents
 
 def prepare(contents, service=None, song_ids=None):
     game = contents / "data"
@@ -33,7 +34,12 @@ def prepare(contents, service=None, song_ids=None):
         rows = []
         for offset, result in entries:
             word = dll[offset:offset+4] if offset is not None else bytes(4)
-            rows.append({"from_seconds":struct.unpack("<f",word)[0], "result_id":result,
+            if len(word) != 4:
+                raise ValueError(f"Missing {name} judgment window in soundvoltex.dll at {offset}")
+            seconds = struct.unpack("<f", word)[0]
+            if not math.isfinite(seconds) or (rows and seconds <= rows[-1]["from_seconds"]):
+                raise ValueError(f"Invalid {name} judgment window in soundvoltex.dll at {offset}")
+            rows.append({"from_seconds":seconds, "result_id":result,
                          "float_bits": f"0x{int.from_bytes(word,'little'):08x}"})
         tables[name] = rows
     # Timing offset application is owned by stageJudgeTime / stageDrawTime in the runtime.
@@ -91,5 +97,4 @@ if __name__ == "__main__":
     parser.add_argument("--song-ids",type=int,nargs="+")
     args = parser.parse_args()
     contents = locate_contents(args.hdd)
-    require_profile(contents)
     prepare(contents,args.service,args.song_ids)

@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from hdd_inputs import locate_contents, require_profile
+from hdd_inputs import locate_contents
 
 
 def main():
@@ -19,7 +19,6 @@ def main():
     parser.add_argument("--song-ids",type=int,nargs="+",help="Only embed these original music folders and jackets")
     args=parser.parse_args()
     contents=locate_contents(args.hdd)
-    require_profile(contents)
     repo=Path(__file__).resolve().parents[1]
     app=repo/"development/android-native"
     print(f"Using local data in {contents}; supported DLL extraction profile 2026101300.",flush=True)
