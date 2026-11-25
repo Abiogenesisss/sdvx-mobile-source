@@ -1,0 +1,60 @@
+body, .input-view, .target-group, .target-list, #sort-options { pointer-events:none; }
+.input-view { display:none; position:absolute; width:100%; height:100%; z-index:0; }
+.input-view.shown { display:block; }
+.target, .target-list, .target-group { position:absolute; }
+.target-group { display:none; width:100%; height:100%; }
+.target, .target-list-item { pointer-events:auto; }
+.target-list-item { width:100%; }
+#search-hit-list { left:879px; top:216px; width:1000px; height:787.5px; }
+#search-hit-list .target { left:0; width:100%; height:157.5px; }
+.target[data-action="option-choice"] { z-index:2; }
+.target[data-action="submonitor-back"],
+.target[data-action="play-tab"],
+.target[data-action="settings-tab"] { z-index:3; }
+#crew .filter .target { z-index:4; }
+#crew .filter .target[data-action="filter-background"] { z-index:3; }
+#entry.entry-pin .entry-pin,
+#entry.entry-terms .entry-terms,
+#entry.entry-registration .entry-registration,
+#entry.entry-name .entry-name,
+#entry.entry-continue .entry-continue,
+#generator.generator-main .generator-main,
+#generator.generator-count .generator-count,
+#generator.generator-volume .generator-volume,
+#generator.generator-confirm .generator-confirm,
+#credit.payment-menu .payment-menu,
+#credit.payment-receipt .payment-receipt,
+#songs.premium-end .premium-end,
+#result.result-character .result-character,
+#result.result-celebrating .result-celebrating,
+#summary.summary-main .summary-main,
+#summary.summary-bonus .summary-bonus,
+#summary.summary-title .summary-title,
+.input-view.achievements .achievements,
+#crew.crew-home .crew-home,
+#crew.crew-models .crew-models,
+#crew.crew-save .crew-save,
+#crew.crew-styles-1 .crew-styles-1,
+#crew.crew-styles-2 .crew-styles-2,
+#crew.crew-styles-3 .crew-styles-3,
+#crew.crew-styles-4 .crew-styles-4,
+#crew.crew-styles-5 .crew-styles-5,
+#crew.crew-styles-6 .crew-styles-6,
+#crew.crew-cards .crew-cards,
+#crew.crew-board .crew-board,
+#crew.crew-board-style .crew-board-style,
+#crew.crew-board-base .crew-board-base,
+#crew.crew-stickers .crew-stickers,
+#crew.filter .filter,
+#settings.settings-home .settings-home,
+#settings.settings-search .settings-search,
+#settings.search-has-query .search-has-query,
+#settings.settings-options .settings-options,
+#settings.controller .controller,
+#settings.general .general,
+#settings.premium-options .premium-options,
+#settings.score-options .score-options,
+#settings.option-popup .option-popup { display:block; }
+.target.option-hidden { display:none; }
+
+#sort-options .sort-row { pointer-events:auto; }

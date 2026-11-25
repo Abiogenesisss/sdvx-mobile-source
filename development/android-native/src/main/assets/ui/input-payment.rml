@@ -1,0 +1,28 @@
+<template name="input-payment">
+    <head></head>
+    <body>
+        <div id="mode" class="input-view">
+            <div class="target" data-action="mode-step" data-value="-2" style="left:567px; top:695px; width:513px; height:140px;"></div>
+            <div class="target" data-action="mode-step" data-value="-1" style="left:488px; top:835px; width:592px; height:140px;"></div>
+            <div class="target" data-action="mode-step" data-value="1" style="left:488px; top:1240px; width:592px; height:140px;"></div>
+            <div class="target" data-action="mode-step" data-value="2" style="left:567px; top:1380px; width:513px; height:140px;"></div>
+            <div class="target" data-action="confirm" data-value="0" style="left:130px; top:992px; width:820px; height:243px;"></div>
+        </div>
+        <div id="credit" class="input-view">
+            <div class="target-group payment-receipt">
+                <div class="target" data-action="confirm" data-value="0" style="left:0px; top:560px; width:1080px; height:800px;"></div>
+                <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1792px; width:315px; height:128px;"></div>
+            </div>
+            <div class="target-group payment-menu">
+                <div class="target" data-action="credit" data-value="0" style="left:800px; top:1800px; width:280px; height:120px;"></div>
+                <div id="payment-hit-list" class="target-list payment-list">
+                    <div class="target-list-item payment-row" data-action="payment-choice" data-value="0"></div>
+                    <div class="target-list-item payment-row" data-action="payment-choice" data-value="1"></div>
+                    <div class="target-list-item payment-row" data-action="payment-choice" data-value="2"></div>
+                    <div class="target-list-item payment-row" data-action="payment-choice" data-value="3"></div>
+                    <div class="target-list-item payment-row" data-action="payment-choice" data-value="4"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</template>

@@ -1,0 +1,290 @@
+<template name="input-room">
+    <head></head>
+    <body>
+        <div id="room" class="input-view">
+            <div class="target round" data-action="room-tile" data-value="0" style="left:37.2px; top:1147.2px; width:297.6px; height:297.6px;"></div>
+            <div class="target round" data-action="room-tile" data-value="1" style="left:392.2px; top:1049.2px; width:297.6px; height:297.6px;"></div>
+            <div class="target round" data-action="room-tile" data-value="2" style="left:747.2px; top:1147.2px; width:297.6px; height:297.6px;"></div>
+            <div class="target" data-action="room-subscreen" data-value="0" style="left:0px; top:1785px; width:1080px; height:115px;"></div>
+        </div>
+        <div id="generator" class="input-view">
+            <div class="target-group generator-main">
+                <div class="target" data-action="confirm" data-value="0" style="left:350px; top:500px; width:380px; height:540px;"></div>
+                <div class="target" data-action="back" data-value="0" style="left:550px; top:1785px; width:530px; height:135px;"></div>
+            </div>
+            <div class="target-group generator-count">
+                <div class="target" data-action="generator-step" data-value="-1" style="left:350px; top:830px; width:190px; height:53px;"></div>
+                <div class="target" data-action="generator-step" data-value="1" style="left:540px; top:830px; width:190px; height:53px;"></div>
+            </div>
+            <div class="target-group generator-volume">
+                <div class="target" data-action="valkyrie-step" data-value="-1" style="left:234px; top:650px; width:131px; height:150px;"></div>
+                <div class="target" data-action="valkyrie-step" data-value="1" style="left:712px; top:650px; width:131px; height:150px;"></div>
+            </div>
+            <div class="target-group generator-confirm">
+                <div class="target" data-action="generator-choice" data-value="0" style="left:231px; top:955px; width:309px; height:137px;"></div>
+                <div class="target" data-action="generator-choice" data-value="1" style="left:540px; top:955px; width:309px; height:137px;"></div>
+            </div>
+        </div>
+        <div id="crew" class="input-view">
+            <div class="target" data-action="submonitor-back" data-value="0" style="left:10px; top:7px; width:106px; height:106px;"></div>
+            <div class="target" data-action="room-tab" data-value="0" style="left:131.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="room-tab" data-value="1" style="left:385.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="room-tab" data-value="2" style="left:639.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="room-tab" data-value="3" style="left:893.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="room-tab" data-value="4" style="left:1147.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target-group achievements">
+                <div class="target" data-action="claim-all" data-value="0" style="left:349px; top:290px; width:200px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="0" style="left:0px; top:379px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="0" style="left:1628px; top:356px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="1" style="left:0px; top:459px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="1" style="left:1628px; top:436px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="2" style="left:0px; top:539px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="2" style="left:1628px; top:516px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="3" style="left:0px; top:619px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="3" style="left:1628px; top:596px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="4" style="left:0px; top:699px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="4" style="left:1628px; top:676px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="5" style="left:0px; top:779px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="5" style="left:1628px; top:756px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="6" style="left:0px; top:859px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="6" style="left:1628px; top:836px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="7" style="left:0px; top:939px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="7" style="left:1628px; top:916px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="8" style="left:0px; top:1019px; width:530px; height:10px;"></div>
+                <div class="target" data-action="achievement-item" data-value="8" style="left:1628px; top:996px; width:180px; height:25px;"></div>
+            </div>
+            <div class="target-group crew-home">
+                <div class="target" data-action="room-tab" data-value="1" style="left:675px; top:230px; width:570px; height:200px;"></div>
+                <div class="target" data-action="room-tab" data-value="2" style="left:675px; top:430px; width:570px; height:200px;"></div>
+                <div class="target" data-action="room-tab" data-value="3" style="left:675px; top:630px; width:570px; height:180px;"></div>
+                <div class="target" data-action="crew-start" data-value="0" style="left:0px; top:890px; width:1920px; height:124px;"></div>
+            </div>
+            <div class="target-group crew-save">
+                <div class="target" data-action="crew-cancel" data-value="0" style="left:526px; top:903px; width:260px; height:90px;"></div>
+                <div class="target" data-action="confirm" data-value="0" style="left:786px; top:903px; width:270px; height:90px;"></div>
+            </div>
+            <div class="target-group crew-models">
+                <div class="target" data-action="crew-family" data-value="0" style="left:1124px; top:376px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="1" style="left:1264px; top:376px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="2" style="left:1404px; top:376px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="3" style="left:1544px; top:376px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="4" style="left:1684px; top:376px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="5" style="left:1124px; top:516px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="6" style="left:1264px; top:516px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="7" style="left:1404px; top:516px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="8" style="left:1544px; top:516px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="9" style="left:1684px; top:516px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="10" style="left:1124px; top:656px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="11" style="left:1264px; top:656px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="12" style="left:1404px; top:656px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="13" style="left:1544px; top:656px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="14" style="left:1684px; top:656px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="15" style="left:1124px; top:796px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="16" style="left:1264px; top:796px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="17" style="left:1404px; top:796px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="18" style="left:1544px; top:796px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="19" style="left:1684px; top:796px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="20" style="left:1124px; top:936px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="21" style="left:1264px; top:936px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="22" style="left:1404px; top:936px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="23" style="left:1544px; top:936px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-family" data-value="24" style="left:1684px; top:936px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-1">
+                <div class="target" data-action="crew-style" data-value="0" style="left:508px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-2">
+                <div class="target" data-action="crew-style" data-value="0" style="left:438px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="1" style="left:578px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-3">
+                <div class="target" data-action="crew-style" data-value="0" style="left:368px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="1" style="left:508px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="2" style="left:648px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-4">
+                <div class="target" data-action="crew-style" data-value="0" style="left:298px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="1" style="left:438px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="2" style="left:578px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="3" style="left:718px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-5">
+                <div class="target" data-action="crew-style" data-value="0" style="left:228px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="1" style="left:368px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="2" style="left:508px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="3" style="left:648px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="4" style="left:788px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-styles-6">
+                <div class="target" data-action="crew-style" data-value="0" style="left:158px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="1" style="left:298px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="2" style="left:438px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="3" style="left:578px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="4" style="left:718px; top:744px; width:126px; height:126px;"></div>
+                <div class="target" data-action="crew-style" data-value="5" style="left:858px; top:744px; width:126px; height:126px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="0" style="left:1121px; top:284px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="0" style="left:1112px; top:276px; width:144px; height:175px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="1" style="left:1265px; top:284px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="1" style="left:1256px; top:276px; width:144px; height:175px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="2" style="left:1409px; top:284px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="2" style="left:1400px; top:276px; width:144px; height:175px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="3" style="left:1553px; top:284px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="3" style="left:1544px; top:276px; width:144px; height:175px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="4" style="left:1697px; top:284px; width:132px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="4" style="left:1688px; top:276px; width:144px; height:175px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="5" style="left:1121px; top:466px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="5" style="left:1112px; top:451px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="6" style="left:1265px; top:466px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="6" style="left:1256px; top:451px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="7" style="left:1409px; top:466px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="7" style="left:1400px; top:451px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="8" style="left:1553px; top:466px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="8" style="left:1544px; top:451px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="9" style="left:1697px; top:466px; width:132px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="9" style="left:1688px; top:451px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="10" style="left:1121px; top:648px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="10" style="left:1112px; top:633px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="11" style="left:1265px; top:648px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="11" style="left:1256px; top:633px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="12" style="left:1409px; top:648px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="12" style="left:1400px; top:633px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="13" style="left:1553px; top:648px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="13" style="left:1544px; top:633px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="14" style="left:1697px; top:648px; width:132px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="14" style="left:1688px; top:633px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="15" style="left:1121px; top:830px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="15" style="left:1112px; top:815px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="16" style="left:1265px; top:830px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="16" style="left:1256px; top:815px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="17" style="left:1409px; top:830px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="17" style="left:1400px; top:815px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="18" style="left:1553px; top:830px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="18" style="left:1544px; top:815px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-item" data-value="19" style="left:1697px; top:830px; width:132px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-item" data-value="19" style="left:1688px; top:815px; width:144px; height:182px;"></div>
+            </div>
+            <div class="target-group crew-cards">
+                <div class="target" data-action="card-random" data-value="0" style="left:1510px; top:180px; width:180px; height:50px;"></div>
+                <div class="target" data-action="card-favorites" data-value="0" style="left:1690px; top:180px; width:230px; height:50px;"></div>
+                <div class="target" data-action="card-filter" data-value="0" style="left:1100px; top:180px; width:220px; height:66px;"></div>
+            </div>
+            <div class="target-group crew-board">
+                <div class="target" data-action="decoration-tab" data-value="0" style="left:953px; top:134px; width:270px; height:50px;"></div>
+                <div class="target" data-action="decoration-tab" data-value="1" style="left:1223px; top:134px; width:270px; height:50px;"></div>
+                <div class="target" data-action="decoration-tab" data-value="2" style="left:1493px; top:134px; width:270px; height:50px;"></div>
+            </div>
+            <div class="target-group crew-board-style">
+                <div class="target" data-action="board-style" data-value="0" style="left:1105px; top:284px; width:335px; height:728px;"></div>
+                <div class="target" data-action="board-style" data-value="1" style="left:1440px; top:284px; width:480px; height:728px;"></div>
+            </div>
+            <div class="target-group crew-board-base">
+                <div class="target" data-action="board-base" data-value="0" style="left:1105px; top:284px; width:815px; height:280px;"></div>
+                <div class="target" data-action="board-base" data-value="1" style="left:1105px; top:564px; width:815px; height:280px;"></div>
+                <div class="target" data-action="board-base" data-value="2" style="left:1105px; top:844px; width:815px; height:168px;"></div>
+            </div>
+            <div class="target-group crew-stickers">
+                <div class="target" data-action="sticker-remove" data-value="0" style="left:751px; top:730px; width:270px; height:90px;"></div>
+            </div>
+            <div class="target-group filter">
+                <div class="target" data-action="filter-background" data-value="0" style="left:0px; top:0px; width:1920px; height:1080px;"></div>
+                <div class="target" data-action="submonitor-back" data-value="0" style="left:10px; top:7px; width:106px; height:106px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="0" style="left:1135.55px; top:371.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="1" style="left:1365.55px; top:371.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="2" style="left:1595.55px; top:371.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="3" style="left:1135.55px; top:408.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="4" style="left:1365.55px; top:408.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="5" style="left:1135.55px; top:488.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="6" style="left:1365.55px; top:488.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="7" style="left:1595.55px; top:488.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="8" style="left:1135.55px; top:525.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="9" style="left:1365.55px; top:525.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="10" style="left:1595.55px; top:525.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-toggle" data-value="11" style="left:1135.55px; top:562.2px; width:210px; height:30px;"></div>
+                <div class="target" data-action="filter-all" data-value="0" style="left:1458px; top:303px; width:172px; height:37px;"></div>
+                <div class="target" data-action="filter-confirm" data-value="0" style="left:1458px; top:609px; width:172px; height:36px;"></div>
+                <div class="target" data-action="filter-all" data-value="1" style="left:1630px; top:303px; width:173px; height:37px;"></div>
+                <div class="target" data-action="filter-confirm" data-value="1" style="left:1630px; top:609px; width:173px; height:36px;"></div>
+            </div>
+        </div>
+    </body>
+</template>

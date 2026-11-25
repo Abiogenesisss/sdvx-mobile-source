@@ -1,0 +1,165 @@
+<template name="cabinet-selection">
+    <head></head>
+    <body>
+        <div id="course-set" class="field"></div>
+        <div id="matching-bpm" class="field"></div>
+        <div id="matching-speed" class="field"></div>
+        <div id="matching-credit" class="field"></div>
+        <div id="course-labels">
+            <div class="row">
+                <div class="field course-title"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+            </div>
+            <div class="row">
+                <div class="field course-title"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+            </div>
+            <div class="row">
+                <div class="field course-title"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+            </div>
+            <div class="row">
+                <div class="field course-title"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+            </div>
+            <div class="row">
+                <div class="field course-title"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+                <div class="field course-song"></div>
+            </div>
+        </div>
+        <div id="sort-options" class="sort-options">
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+            <div class="sort-row">
+                <div class="field sort-label"></div>
+                <img class="field original-text sort-highlight" src="../selection_ui/lamp_panel_sort.png" />
+            </div>
+        </div>
+        <div id="songs-title" class="field original-text" data-baseline="25"></div>
+        <div id="songs-artist" class="field original-text" data-baseline="22"></div>
+        <div id="songs-bpm" class="field original-text bpm" data-baseline="22"></div>
+        <div id="songs-charter" class="field original-text" data-baseline="17"></div>
+        <div id="songs-illustrator" class="field original-text" data-baseline="17"></div>
+        <div id="songs-parent-folder" class="field original-text" data-baseline="23"></div>
+        <div id="songs-child-folder" class="field original-text" data-baseline="23"></div>
+        <div id="songs-sort" class="field original-text" data-baseline="22"></div>
+        <div id="songs-packets" class="field original-text" data-baseline="20"></div>
+        <div id="songs-blocks" class="field original-text" data-baseline="20"></div>
+        <div id="confirm-title" class="field original-text" data-baseline="25"></div>
+        <div id="confirm-artist" class="field original-text" data-baseline="23"></div>
+        <div id="wheel-labels" class="row">
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+            <div class="row">
+                <div class="field original-text song-row-title" data-baseline="23"></div>
+                <div class="field original-text folder-row-title" data-baseline="27"></div>
+                <div class="field original-text folder-row-count" data-baseline="24"></div>
+            </div>
+        </div>
+        <div id="song-scroll-rail" class="field original-text">
+            <div class="field original-text scroll-track" data-image="selection_ui/bar2.png"></div>
+            <div id="song-scroll-lamp" class="field original-text" data-image="selection_ui/bar_lamp2.png"></div>
+        </div>
+        <div id="song-scroll-caption" class="field original-text">
+            <div class="field original-text scroll-caption-bg" data-image="selection_ui/scroll_label_bg.png"></div>
+            <div class="field original-text scroll-caption-text" data-baseline="14" data-outline="1"
+                 data-outline-color="0.4 0.4 0.4 0.7"></div>
+        </div>
+        <div id="songs-blaster-slot" class="field original-text"></div>
+    </body>
+</template>

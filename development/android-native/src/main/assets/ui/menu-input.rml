@@ -1,0 +1,20 @@
+<rml>
+    <head>
+        <link type="text/rcss" href="cabinet.rcss" />
+        <link type="text/rcss" href="menu-input.rcss" />
+        <link type="text/template" href="input-entry.rml" />
+        <link type="text/template" href="input-room.rml" />
+        <link type="text/template" href="input-payment.rml" />
+        <link type="text/template" href="input-selection.rml" />
+        <link type="text/template" href="input-result.rml" />
+        <link type="text/template" href="input-settings.rml" />
+    </head>
+    <body>
+        <template src="input-entry" />
+        <template src="input-room" />
+        <template src="input-payment" />
+        <template src="input-selection" />
+        <template src="input-result" />
+        <template src="input-settings" />
+    </body>
+</rml>

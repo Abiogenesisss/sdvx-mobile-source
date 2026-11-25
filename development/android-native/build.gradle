@@ -1,0 +1,81 @@
+import groovy.json.JsonSlurper
+
+plugins {
+    id 'com.android.application' version '8.13.2'
+    id 'org.jetbrains.kotlin.android' version '2.2.21'
+}
+
+def deps = providers.gradleProperty('sdvxDeps').get().replace('\\', '/')
+def sdl = "$deps/SDL-release-3.4.18"
+def abis = providers.gradleProperty('sdvxAbis').get().split(',')
+def emulatorGles31 = providers.gradleProperty('sdvxEmulatorGles31').get()
+
+android {
+    namespace 'local.sdvx.nativeport'
+    compileSdk 36
+    buildToolsVersion '36.0.0'
+    ndkVersion '28.2.13676358'
+
+    defaultConfig {
+        applicationId 'local.sdvx.nativeport'
+        minSdk 26
+        targetSdk 36
+        versionCode 23
+        versionName '1.1.1'
+        manifestPlaceholders = [glesVersion: emulatorGles31 == 'ON' ? '0x00030001' : '0x00030002']
+        ndk { abiFilters.addAll(abis.toList()) }
+        externalNativeBuild {
+            cmake {
+                arguments "-DSDVX_DEPS=$deps", "-DSDVX_EMULATOR_GLES31=$emulatorGles31", '-DANDROID_STL=c++_shared'
+                targets 'main', 'SDL3-shared'
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path 'src/main/cpp/CMakeLists.txt'
+            version '3.22.1'
+        }
+    }
+    sourceSets.main.java.srcDir "$sdl/android-project/app/src/main/java"
+    sourceSets.main.assets.setSrcDirs([layout.buildDirectory.dir('nabla-assets')])
+    androidResources { noCompress += ['wav', 'flac', 's3v', 'webp'] }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+kotlin { jvmToolchain(17) }
+
+def songCatalog = file('assets-native/songs/library.json')
+def stageAssets = tasks.register('stageNablaAssets', Sync) {
+    def songJackets = new JsonSlurper().parse(songCatalog, 'UTF-8').collectMany { song ->
+        song.charts.collect { chart -> "songs/${song.folder}/${chart.jacket}".toString() }
+    }.toSet()
+    inputs.file(songCatalog)
+    outputs.upToDateWhen { false }
+    into layout.buildDirectory.dir('nabla-assets')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude '**/*.log', 'songs/catalog-audit.json', 'songs/**/*.flac', 'crew/kureha/*.webp',
+            'subscreen/avatars/**'
+    eachFile { entry ->
+        if (entry.path ==~ /songs\/[^\/]+\/jacket-\d+\.png/ && !songJackets.contains(entry.path)) {
+            entry.exclude()
+        }
+        if (entry.path ==~ /songs\/[^\/]+\/(music|preview)\.wav/ &&
+                file('assets-native/' + entry.path.replaceFirst(/\.wav$/, '.s3v')).isFile()) {
+            entry.exclude()
+        }
+    }
+    from('assets-native')
+    from('assets-reference') {
+        exclude 'songs/666/background/**'
+        // The current screens use settings, shutter_nabla and result_original.
+        exclude 'menu/options/**', 'menu/jacket.png', 'transition/**', 'stage/console.png', 'songs/666/timing.json'
+        exclude { entry ->
+            entry.path.startsWith('result/') && !(entry.name in ['bg_grid_result.png', 'bgm.wav'])
+        }
+    }
+}
+tasks.named('preBuild') { dependsOn stageAssets }

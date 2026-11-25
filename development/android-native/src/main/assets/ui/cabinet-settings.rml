@@ -1,0 +1,127 @@
+<template name="cabinet-settings">
+    <head></head>
+    <body>
+        <div id="search-title" class="field"></div>
+        <div id="search-artist" class="field"></div>
+        <div id="search-charter" class="field"></div>
+        <div id="search-illustrator" class="field"></div>
+        <div id="search-rows">
+            <div class="row">
+                <div class="field search-row-title"></div>
+                <div class="field search-row-artist"></div>
+            </div>
+            <div class="row">
+                <div class="field search-row-title"></div>
+                <div class="field search-row-artist"></div>
+            </div>
+            <div class="row">
+                <div class="field search-row-title"></div>
+                <div class="field search-row-artist"></div>
+            </div>
+            <div class="row">
+                <div class="field search-row-title"></div>
+                <div class="field search-row-artist"></div>
+            </div>
+            <div class="row">
+                <div class="field search-row-title"></div>
+                <div class="field search-row-artist"></div>
+            </div>
+        </div>
+        <div id="search-bar" class="row">
+        <div id="search-query" class="field"></div>
+        <div id="search-count" class="field"></div>
+        </div>
+        <div id="settings-volume" class="field original-text" data-baseline="44"></div>
+        <div id="controller-caption" class="field original-text" data-baseline="23"></div>
+        <div id="controller-assignments" class="field original-text" data-baseline="32"></div>
+        <div id="controller-type" class="field original-text" data-baseline="22"></div>
+        <div id="binding-bg-0" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-0" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-0" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-0" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-0" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-1" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-1" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-1" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-1" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-1" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-2" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-2" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-2" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-2" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-2" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-3" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-3" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-3" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-3" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-3" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-4" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-4" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-4" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-4" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-4" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-5" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-5" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-5" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-5" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-5" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-6" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-6" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-6" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-6" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-6" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-7" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-7" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-7" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-7" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-7" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-8" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-8" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-8" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-8" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-8" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-9" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-9" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-9" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-9" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-9" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-bg-10" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-10" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-10" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-10" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-10" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-dial-10" class="field original-text meter" data-background="true"></div>
+        <div id="binding-bg-11" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-11" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-11" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-11" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-11" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="binding-dial-11" class="field original-text meter" data-background="true"></div>
+        <div id="binding-bg-12" class="field original-text" data-background="true"></div>
+        <img id="binding-focus-12" class="field original-text" src="../settings/focus.png" />
+        <div id="binding-label-12" class="field original-text" data-baseline="28"></div>
+        <div id="binding-value-12" class="field original-text" data-baseline="26"></div>
+        <div id="binding-prompt-12" class="field original-text binding-prompt" data-baseline="26"></div>
+        <div id="settings-nemsys-bg" class="field original-text" data-background="true"></div>
+        <div id="settings-nemsys-focus" class="field original-text highlight" data-background="true"></div>
+        <img id="settings-nemsys-preview" class="field original-text" />
+        <div id="settings-nemsys-title" class="field original-text" data-baseline="22" data-unlimited="true"></div>
+        <div id="settings-nemsys-number" class="field original-text" data-baseline="22" data-unlimited="true"></div>
+        <div id="settings-nemsys-left" class="field original-text" data-baseline="28" data-unlimited="true"></div>
+        <div id="settings-nemsys-right" class="field original-text" data-baseline="28" data-unlimited="true"></div>
+        <img id="gauge-track-0" class="field original-text" src="../settings/option_gauge.png" />
+        <img id="gauge-thumb-0" class="field original-text" src="../settings/option_gauge_bar.png" />
+        <img id="gauge-focus-0" class="field original-text" src="../settings/focus.png" />
+        <div id="gauge-value-0" class="field original-text" data-baseline="54"></div>
+        <div id="gauge-fine-0" class="field original-text" data-baseline="43"></div>
+        <img id="gauge-track-1" class="field original-text" src="../settings/option_gauge.png" />
+        <img id="gauge-thumb-1" class="field original-text" src="../settings/option_gauge_bar.png" />
+        <img id="gauge-focus-1" class="field original-text" src="../settings/focus.png" />
+        <div id="gauge-value-1" class="field original-text" data-baseline="54"></div>
+        <div id="gauge-fine-1" class="field original-text" data-baseline="43"></div>
+        <img id="gauge-track-2" class="field original-text" src="../settings/option_gauge.png" />
+        <img id="gauge-thumb-2" class="field original-text" src="../settings/option_gauge_bar.png" />
+        <img id="gauge-focus-2" class="field original-text" src="../settings/focus.png" />
+        <div id="gauge-value-2" class="field original-text" data-baseline="54"></div>
+    </body>
+</template>

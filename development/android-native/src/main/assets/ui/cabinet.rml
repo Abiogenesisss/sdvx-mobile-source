@@ -1,0 +1,21 @@
+<rml>
+    <head>
+        <link type="text/rcss" href="cabinet.rcss" />
+        <link type="text/template" href="cabinet-common.rml" />
+        <link type="text/template" href="cabinet-room.rml" />
+        <link type="text/template" href="cabinet-entry.rml" />
+        <link type="text/template" href="cabinet-result.rml" />
+        <link type="text/template" href="cabinet-selection.rml" />
+        <link type="text/template" href="cabinet-settings.rml" />
+        <link type="text/template" href="cabinet-payment.rml" />
+    </head>
+    <body>
+        <template src="cabinet-common" />
+        <template src="cabinet-room" />
+        <template src="cabinet-entry" />
+        <template src="cabinet-result" />
+        <template src="cabinet-selection" />
+        <template src="cabinet-settings" />
+        <template src="cabinet-payment" />
+    </body>
+</rml>

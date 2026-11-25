@@ -1,0 +1,75 @@
+<template name="cabinet-payment">
+    <head></head>
+    <body>
+        <div id="payment-labels" class="payment-list">
+            <div class="payment-row">
+                <div class="payment-description field"></div>
+                <div class="payment-amount field"></div>
+                <div class="payment-amount-disabled field"></div>
+                <div class="payment-plate field original-text" data-image=""></div>
+                <div class="payment-title field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-one field original-text" data-image="menu/art/6_pay_text_08a.png"></div>
+                <div class="payment-detail payment-detail-two field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-three field original-text" data-image=""></div>
+                <div class="payment-unit field original-text" data-image=""></div>
+                <div class="payment-premium-one field original-text" data-baseline="18"></div>
+                <div class="payment-premium-two field original-text" data-baseline="18"></div>
+                <div class="payment-focus field original-text" data-image="menu/art/6_pay_fuda_cursor1.png"></div>
+            </div>
+            <div class="payment-row">
+                <div class="payment-description field"></div>
+                <div class="payment-amount field"></div>
+                <div class="payment-amount-disabled field"></div>
+                <div class="payment-plate field original-text" data-image=""></div>
+                <div class="payment-title field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-one field original-text" data-image="menu/art/6_pay_text_08a.png"></div>
+                <div class="payment-detail payment-detail-two field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-three field original-text" data-image=""></div>
+                <div class="payment-unit field original-text" data-image=""></div>
+                <div class="payment-premium-one field original-text" data-baseline="18"></div>
+                <div class="payment-premium-two field original-text" data-baseline="18"></div>
+                <div class="payment-focus field original-text" data-image="menu/art/6_pay_fuda_cursor1.png"></div>
+            </div>
+            <div class="payment-row">
+                <div class="payment-description field"></div>
+                <div class="payment-amount field"></div>
+                <div class="payment-amount-disabled field"></div>
+                <div class="payment-plate field original-text" data-image=""></div>
+                <div class="payment-title field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-one field original-text" data-image="menu/art/6_pay_text_08a.png"></div>
+                <div class="payment-detail payment-detail-two field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-three field original-text" data-image=""></div>
+                <div class="payment-unit field original-text" data-image=""></div>
+                <div class="payment-premium-one field original-text" data-baseline="18"></div>
+                <div class="payment-premium-two field original-text" data-baseline="18"></div>
+                <div class="payment-focus field original-text" data-image="menu/art/6_pay_fuda_cursor1.png"></div>
+            </div>
+            <div class="payment-row">
+                <div class="payment-description field"></div>
+                <div class="payment-amount field"></div>
+                <div class="payment-amount-disabled field"></div>
+                <div class="payment-plate field original-text" data-image=""></div>
+                <div class="payment-title field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-one field original-text" data-image="menu/art/6_pay_text_08a.png"></div>
+                <div class="payment-detail payment-detail-two field original-text" data-image=""></div>
+                <div class="payment-detail payment-detail-three field original-text" data-image=""></div>
+                <div class="payment-unit field original-text" data-image=""></div>
+                <div class="payment-premium-one field original-text" data-baseline="18"></div>
+                <div class="payment-premium-two field original-text" data-baseline="18"></div>
+                <div class="payment-focus field original-text" data-image="menu/art/6_pay_fuda_cursor1.png"></div>
+            </div>
+            <div class="payment-row">
+                <div class="payment-plate field original-text" data-image="menu/art/6_pay_fuda_modoru.png"></div>
+                <div class="payment-back field original-text" data-image="menu/art/6_pay_text_07.png"></div>
+                <div class="payment-focus field original-text" data-image="menu/art/6_pay_fuda_cursor1.png"></div>
+            </div>
+        </div>
+        <div id="receipt-title" class="field original-text receipt-text" data-baseline="22"></div>
+        <div id="receipt-label-0" class="field original-text receipt-text" data-baseline="22"></div>
+        <div id="receipt-value-0" class="field original-text receipt-amount" data-baseline="48" data-scale-x="1.4"></div>
+        <div id="receipt-unit-0" class="field original-text receipt-amount" data-baseline="28"></div>
+        <div id="receipt-label-1" class="field original-text receipt-text" data-baseline="22"></div>
+        <div id="receipt-value-1" class="field original-text receipt-amount" data-baseline="48" data-scale-x="1.4"></div>
+        <div id="receipt-unit-1" class="field original-text receipt-amount" data-baseline="28"></div>
+    </body>
+</template>

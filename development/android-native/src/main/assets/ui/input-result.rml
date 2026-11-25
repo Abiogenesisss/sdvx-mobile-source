@@ -1,0 +1,30 @@
+<template name="input-result">
+    <head></head>
+    <body>
+        <div id="result" class="input-view">
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1620px; width:1080px; height:300px;"></div>
+            <div class="target-group result-character">
+                <div class="target" data-action="character" data-value="0" style="left:245px; top:1785px; width:365px; height:135px;"></div>
+            </div>
+            <div class="target-group result-celebrating">
+                <div class="target" data-action="confirm" data-value="0" style="left:0px; top:0px; width:1080px; height:1920px;"></div>
+            </div>
+        </div>
+        <div id="summary" class="input-view">
+            <div class="target-group summary-main">
+                <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1620px; width:1080px; height:300px;"></div>
+            </div>
+            <div class="target-group summary-bonus">
+                <div class="target" data-action="confirm" data-value="0" style="left:180px; top:810px; width:720px; height:300px;"></div>
+            </div>
+            <div class="target-group summary-title">
+                <div class="target" data-action="summary-title" data-value="0" style="left:231px; top:1027px; width:309px; height:68px;"></div>
+                <div class="target" data-action="summary-title" data-value="1" style="left:540px; top:1027px; width:309px; height:68px;"></div>
+            </div>
+        </div>
+        <div id="exit" class="input-view">
+            <div class="target" data-action="exit-choice" data-value="0" style="left:231.0px; top:955px; width:309.0px; height:137px;"></div>
+            <div class="target" data-action="exit-choice" data-value="1" style="left:540.0px; top:955px; width:309.0px; height:137px;"></div>
+        </div>
+    </body>
+</template>

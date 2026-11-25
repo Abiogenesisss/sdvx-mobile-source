@@ -1,0 +1,111 @@
+<template name="cabinet-result">
+    <head></head>
+    <body>
+        <div id="exit-question" class="field"></div>
+        <div id="summary-rows">
+            <div class="row">
+                <div class="field summary-title"></div>
+                <div class="field summary-title-auto"></div>
+                <div class="field summary-auto"></div>
+                <div class="field original-text summary-difficulty-panel" data-image=""></div>
+                <div class="field original-text summary-difficulty-digits"></div>
+                <div class="field original-text summary-grade" data-image=""></div>
+                <div class="field original-text summary-lamp" data-image=""></div>
+            </div>
+            <div class="row">
+                <div class="field summary-title"></div>
+                <div class="field summary-title-auto"></div>
+                <div class="field summary-auto"></div>
+                <div class="field original-text summary-difficulty-panel" data-image=""></div>
+                <div class="field original-text summary-difficulty-digits"></div>
+                <div class="field original-text summary-grade" data-image=""></div>
+                <div class="field original-text summary-lamp" data-image=""></div>
+            </div>
+            <div class="row">
+                <div class="field summary-title"></div>
+                <div class="field summary-title-auto"></div>
+                <div class="field summary-auto"></div>
+                <div class="field original-text summary-difficulty-panel" data-image=""></div>
+                <div class="field original-text summary-difficulty-digits"></div>
+                <div class="field original-text summary-grade" data-image=""></div>
+                <div class="field original-text summary-lamp" data-image=""></div>
+            </div>
+            <div class="row">
+                <div class="field summary-title"></div>
+                <div class="field summary-title-auto"></div>
+                <div class="field summary-auto"></div>
+                <div class="field original-text summary-difficulty-panel" data-image=""></div>
+                <div class="field original-text summary-difficulty-digits"></div>
+                <div class="field original-text summary-grade" data-image=""></div>
+                <div class="field original-text summary-lamp" data-image=""></div>
+            </div>
+            <div class="row">
+                <div class="field summary-title"></div>
+                <div class="field summary-title-auto"></div>
+                <div class="field summary-auto"></div>
+                <div class="field original-text summary-difficulty-panel" data-image=""></div>
+                <div class="field original-text summary-difficulty-digits"></div>
+                <div class="field original-text summary-grade" data-image=""></div>
+                <div class="field original-text summary-lamp" data-image=""></div>
+            </div>
+        </div>
+        <div id="result-title" class="field original-text" data-baseline="23"></div>
+        <div id="result-artist" class="field original-text" data-baseline="22"></div>
+        <div id="result-gauge" class="field original-text" data-baseline="17"></div>
+        <div id="result-auto" class="field original-text" data-baseline="23"></div>
+        <div id="result-retries" class="field original-text" data-baseline="19"></div>
+        <div id="result-balance" class="field original-text" data-baseline="18"></div>
+        <div id="skill-question" class="field original-text" data-baseline="22"></div>
+        <div id="result-grid" class="field original-text" data-image="result/bg_grid_result.png"></div>
+        <div id="result-record-flag" class="field original-text" data-image="result_original/icon_best.png"></div>
+        <div id="result-record-banner" class="field original-text" data-image="result_details/text_update_rival.png"></div>
+        <div id="result-record-name" class="field original-text" data-baseline="20"></div>
+        <div id="result-record-score" class="field original-text" data-baseline="20"></div>
+        <div id="result-premium-panel" class="field original-text" data-image="result_details/pt_box.png"></div>
+        <div id="result-challenge" class="field original-text" data-image=""></div>
+        <div id="result-difficulty-panel" class="field original-text" data-image=""></div>
+        <div id="result-difficulty" class="field original-text" data-baseline="24.24"></div>
+        <div id="result-timing-0" class="field original-text" data-image="result_original/bar_white.png" data-color="1 0.29 0.25 1"></div>
+        <div id="result-timing-1" class="field original-text" data-image="result_original/bar_white.png" data-color="1 0.29 0.25 1"></div>
+        <div id="result-timing-2" class="field original-text" data-image="result_original/bar_yellow.png"></div>
+        <div id="result-timing-3" class="field original-text" data-image="result_original/bar_white.png" data-color="0 0.9 1 1"></div>
+        <div id="result-timing-4" class="field original-text" data-image="result_original/bar_white.png" data-color="0 0.9 1 1"></div>
+        <div id="result-bonus-rows">
+            <div class="result-bonus-row">
+                <div class="field original-text result-bonus-name" data-baseline="16"></div>
+                <div class="field original-text result-bonus-value" data-baseline="19"></div>
+            </div>
+            <div class="result-bonus-row">
+                <div class="field original-text result-bonus-name" data-baseline="16"></div>
+                <div class="field original-text result-bonus-value" data-baseline="19"></div>
+            </div>
+            <div class="result-bonus-row">
+                <div class="field original-text result-bonus-name" data-baseline="16"></div>
+                <div class="field original-text result-bonus-value" data-baseline="19"></div>
+            </div>
+        </div>
+        <div id="result-force-total" class="field original-text" data-baseline="36"></div>
+        <div id="result-force-delta" class="field original-text" data-baseline="14.4" data-unlimited="true"></div>
+        <div id="summary-pass-badge" class="field original-text" data-image="entry_checkin/blpass_on_3f716f9d06.png"></div>
+        <div id="summary-pass-expiry" class="field original-text" data-baseline="12.6"></div>
+        <div id="skill-panel-before" class="field original-text" data-image=""></div>
+        <div id="skill-name-before" class="field original-text" data-baseline="40"></div>
+        <div id="skill-panel-after" class="field original-text" data-image=""></div>
+        <div id="skill-name-after" class="field original-text" data-baseline="40"></div>
+        <div id="result-blaster-slot" class="field original-text"></div>
+        <div id="result-background" class="field original-text" data-image="menu/art/bg_iseki.png"></div>
+        <div id="result-profile-slot" class="field original-text"></div>
+        <div id="summary-profile-slot" class="field original-text"></div>
+        <div id="result-profile" class="field original-text">
+            <div class="field original-text profile-stickers"></div>
+            <div class="field original-text profile-card"></div>
+            <div class="field original-text profile-greeting" data-baseline="19">よろしくお願いします</div>
+            <div class="field original-text profile-name" data-baseline="30"></div>
+            <div class="field original-text profile-skill-name" data-baseline="15.0588235"></div>
+            <div class="field original-text profile-force"></div>
+            <div class="field original-text profile-force-icon" data-image=""></div>
+            <div class="field original-text profile-force-stars"></div>
+            <div class="field original-text profile-force-value" data-baseline="20"></div>
+        </div>
+    </body>
+</template>

@@ -1,0 +1,129 @@
+<template name="input-settings">
+    <head></head>
+    <body>
+        <div id="settings" class="input-view">
+            <div class="target" data-action="submonitor-back" data-value="0" style="left:10px; top:7px; width:106px; height:106px;"></div>
+            <div class="target" data-action="play-tab" data-value="0" style="left:131.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="play-tab" data-value="1" style="left:385.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="play-tab" data-value="2" style="left:639.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target" data-action="play-tab" data-value="3" style="left:893.0px; top:23px; width:254.0px; height:90px;"></div>
+            <div class="target-group achievements">
+                <div class="target" data-action="claim-all" data-value="0" style="left:349px; top:290px; width:200px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="0" style="left:0px; top:379px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="0" style="left:1628px; top:356px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="1" style="left:0px; top:459px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="1" style="left:1628px; top:436px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="2" style="left:0px; top:539px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="2" style="left:1628px; top:516px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="3" style="left:0px; top:619px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="3" style="left:1628px; top:596px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="4" style="left:0px; top:699px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="4" style="left:1628px; top:676px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="5" style="left:0px; top:779px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="5" style="left:1628px; top:756px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="6" style="left:0px; top:859px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="6" style="left:1628px; top:836px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="7" style="left:0px; top:939px; width:530px; height:80px;"></div>
+                <div class="target" data-action="achievement-item" data-value="7" style="left:1628px; top:916px; width:180px; height:80px;"></div>
+                <div class="target" data-action="achievement-category" data-value="8" style="left:0px; top:1019px; width:530px; height:10px;"></div>
+                <div class="target" data-action="achievement-item" data-value="8" style="left:1628px; top:996px; width:180px; height:25px;"></div>
+            </div>
+            <div class="target-group settings-home">
+                <div class="target round" data-action="play-home" data-value="1" style="left:402.5px; top:290px; width:500px; height:500px;"></div>
+                <div class="target round" data-action="play-home" data-value="2" style="left:1017.5px; top:290px; width:500px; height:500px;"></div>
+            </div>
+            <div class="target-group settings-search">
+                <div class="target" data-action="search-edit" data-value="0" style="left:808px; top:138px; width:304px; height:54px;"></div>
+                <div id="search-hit-list" class="target-list">
+                    <div class="target" data-action="search-item" data-value="0" style="top:0px;"></div>
+                    <div class="target" data-action="search-item" data-value="1" style="top:157.5px;"></div>
+                    <div class="target" data-action="search-item" data-value="2" style="top:315px;"></div>
+                    <div class="target" data-action="search-item" data-value="3" style="top:472.5px;"></div>
+                    <div class="target" data-action="search-item" data-value="4" style="top:630px;"></div>
+                </div>
+            </div>
+            <div class="target-group search-has-query">
+                <div class="target" data-action="search-edit" data-value="0" id="search-edit-target" style="left:481px; top:1008px; width:1037px; height:72px;"></div>
+                <div class="target" data-action="search-toggle" data-value="0" id="search-toggle-target" style="left:1554px; top:985px; width:100px; height:82px;"></div>
+            </div>
+            <div class="target-group settings-options">
+                <div class="target" data-action="settings-tab" data-value="0" id="settings-general-tab" style="left:608px; top:138px; width:304px; height:54px;"></div>
+                <div class="target" data-action="settings-tab" data-value="1" id="settings-controller-tab" style="left:1008px; top:138px; width:304px; height:54px;"></div>
+            </div>
+            <div class="target-group controller">
+                <div class="target" data-action="binding" data-value="0" style="left:280px; top:310px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="1" style="left:280px; top:410px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="2" style="left:280px; top:510px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="3" style="left:280px; top:610px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="4" style="left:280px; top:710px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="5" style="left:280px; top:810px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="6" style="left:280px; top:910px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="7" style="left:1050px; top:310px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="8" style="left:1050px; top:410px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="9" style="left:1050px; top:510px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="10" style="left:1050px; top:610px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="11" style="left:1050px; top:710px; width:590px; height:82px;"></div>
+                <div class="target" data-action="binding" data-value="12" style="left:1050px; top:910px; width:590px; height:82px;"></div>
+            </div>
+            <div class="target-group general">
+                <div class="target" data-action="back" data-value="0" style="left:1601px; top:949px; width:168px; height:46px;"></div>
+                <div class="target" data-action="lane-preview" data-value="0" style="left:1312px; top:949px; width:230px; height:46px;"></div>
+                <div class="target" data-action="ars" data-value="0" style="left:666px; top:413px; width:198px; height:48px;"></div>
+                <div class="target" data-action="nemsys" data-value="-1" style="left:858px; top:949px; width:62px; height:92px;"></div>
+                <div class="target" data-action="nemsys" data-value="0" style="left:920px; top:949px; width:288px; height:92px;"></div>
+                <div class="target" data-action="nemsys" data-value="1" style="left:1208px; top:949px; width:62px; height:92px;"></div>
+                <div class="target" data-action="volume" data-value="-1" style="left:160px; top:833px; width:119px; height:148px;"></div>
+                <div class="target" data-action="volume" data-value="1" style="left:279px; top:833px; width:119px; height:148px;"></div>
+                <div class="target" data-action="option" data-value="0" style="left:181px; top:320px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="1" style="left:667px; top:320px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="2" style="left:909px; top:320px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="3" style="left:181px; top:466px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="4" style="left:424px; top:466px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="5" style="left:667px; top:466px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="6" style="left:904px; top:466px; width:96px; height:48px;"></div>
+                <div class="target" data-action="option" data-value="7" style="left:1014px; top:466px; width:96px; height:48px;"></div>
+            </div>
+            <div class="target-group score-options">
+                <div class="target" data-action="option" data-value="8" style="left:181px; top:613px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="9" style="left:181px; top:758px; width:196px; height:46px;"></div>
+            </div>
+            <div class="target-group general">
+                <div class="target" data-action="option" data-value="10" style="left:424px; top:320px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="11" style="left:424px; top:613px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="12" style="left:667px; top:613px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="13" style="left:909px; top:613px; width:196px; height:46px;"></div>
+            </div>
+            <div class="target-group premium-options">
+                <div class="target" data-action="option" data-value="14" style="left:424px; top:905px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="15" style="left:424px; top:758px; width:196px; height:46px;"></div>
+            </div>
+            <div class="target-group general">
+                <div class="target" data-action="option" data-value="16" style="left:667px; top:758px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="17" style="left:909px; top:758px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option" data-value="18" style="left:667px; top:905px; width:196px; height:46px;"></div>
+                <div class="target" data-action="gauge" data-value="0" style="left:1175px; top:279px; width:150px; height:544px;"></div>
+                <div class="target" data-action="precision" data-value="0" style="left:1175px; top:872px; width:150px; height:46px;"></div>
+                <div class="target" data-action="gauge-step" data-value="1" style="left:1332px; top:831px; width:40px; height:64px;"></div>
+                <div class="target" data-action="gauge-step" data-value="-1" style="left:1332px; top:895px; width:40px; height:54px;"></div>
+                <div class="target" data-action="gauge" data-value="1" style="left:1393px; top:279px; width:150px; height:544px;"></div>
+                <div class="target" data-action="precision" data-value="1" style="left:1393px; top:872px; width:150px; height:46px;"></div>
+                <div class="target" data-action="gauge-step" data-value="2" style="left:1550px; top:831px; width:40px; height:64px;"></div>
+                <div class="target" data-action="gauge-step" data-value="-2" style="left:1550px; top:895px; width:40px; height:54px;"></div>
+                <div class="target" data-action="gauge" data-value="2" style="left:1611px; top:279px; width:150px; height:544px;"></div>
+                <div class="target" data-action="gauge-step" data-value="3" style="left:1768px; top:831px; width:40px; height:64px;"></div>
+                <div class="target" data-action="gauge-step" data-value="-3" style="left:1768px; top:895px; width:40px; height:54px;"></div>
+            </div>
+            <div class="target-group option-popup">
+                <div class="target" data-action="option-dismiss" data-value="0" style="left:0px; top:113px; width:1920px; height:967px; z-index:1;"></div>
+                <div class="target" data-action="option-choice" data-value="0" id="option-choice-0" style="left:0px; top:0px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option-choice" data-value="1" id="option-choice-1" style="left:0px; top:0px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option-choice" data-value="2" id="option-choice-2" style="left:0px; top:0px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option-choice" data-value="3" id="option-choice-3" style="left:0px; top:0px; width:196px; height:46px;"></div>
+                <div class="target" data-action="option-choice" data-value="4" id="option-choice-4" style="left:0px; top:0px; width:196px; height:46px;"></div>
+            </div>
+        </div>
+        <div id="lane" class="input-view">
+            <div class="target" data-action="close-preview" data-value="0" style="left:288px; top:487px; width:504px; height:52px;"></div>
+        </div>
+    </body>
+</template>

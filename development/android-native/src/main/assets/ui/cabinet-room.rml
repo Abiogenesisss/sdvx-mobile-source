@@ -1,0 +1,163 @@
+<template name="cabinet-room">
+    <head></head>
+    <body>
+        <div id="achievement-heading" class="field"></div>
+        <div id="achievement-message" class="field"></div>
+        <div id="generator-heading" class="field"></div>
+        <div id="generator-price" class="field"></div>
+        <div id="generator-owned" class="field"></div>
+        <div id="generator-packets" class="field original-text" data-baseline="24"></div>
+        <div id="valkyrie-heading" class="field"></div>
+        <div id="generator-question" class="field"></div>
+        <div id="generator-credit" class="field"></div>
+        <div id="room-credit" class="field"></div>
+        <div id="crew-name" class="field"></div>
+        <div id="achievement-name" class="field"></div>
+        <div id="achievement-progress" class="field"></div>
+        <div id="card-random" class="field"></div>
+        <div id="card-favorites" class="field"></div>
+        <div id="card-name" class="field"></div>
+        <div id="card-illustrator" class="field"></div>
+        <div id="sticker-name" class="field"></div>
+        <div id="achievement-categories">
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+            <div class="row">
+                <div class="field category-name"></div>
+                <div class="field category-progress"></div>
+            </div>
+        </div>
+        <div id="achievement-rows">
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+            <div class="row">
+                <div class="field achievement-text"></div>
+                <div class="field achievement-number"></div>
+            </div>
+        </div>
+        <div id="card-messages">
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+            <div class="row">
+                <div class="field card-message"></div>
+            </div>
+        </div>
+        <div id="card-filter-labels">
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+            <div class="row">
+                <div class="field card-filter-label"></div>
+            </div>
+        </div>
+    </body>
+</template>

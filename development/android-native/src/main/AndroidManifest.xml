@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:glEsVersion="${glesVersion}" android:required="true" />
+    <application android:label="SDVX ∇" android:icon="@mipmap/ic_launcher" android:allowBackup="false" android:appCategory="game"
+        android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
+        <activity android:name=".SdvxActivity" android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboard|keyboardHidden|navigation|uiMode"
+            android:screenOrientation="portrait" android:windowSoftInputMode="adjustNothing" android:enableOnBackInvokedCallback="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

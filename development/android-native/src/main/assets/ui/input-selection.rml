@@ -1,0 +1,66 @@
+<template name="input-selection">
+    <head></head>
+    <body>
+        <div id="skill" class="input-view">
+            <div class="target" data-action="skill-step" data-value="-1" style="left:0px; top:326px; width:1080px; height:449px;"></div>
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:775px; width:1080px; height:370px;"></div>
+            <div class="target" data-action="skill-step" data-value="1" style="left:0px; top:1145px; width:1080px; height:452px;"></div>
+            <div class="target" data-action="skill-category" data-value="-1" style="left:120.0px; top:195px; width:420.0px; height:70px;"></div>
+            <div class="target" data-action="skill-category" data-value="1" style="left:540.0px; top:195px; width:420.0px; height:70px;"></div>
+        </div>
+        <div id="songs" class="input-view">
+            <div class="target" data-action="songs-jacket" data-value="0" style="left:95px; top:243px; width:350px; height:350px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="0" style="left:44px; top:1035px; width:113px; height:150px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="1" style="left:157.0px; top:1035px; width:113.0px; height:150px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="2" style="left:270.0px; top:1035px; width:113.0px; height:150px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="3" style="left:383.0px; top:1035px; width:113.0px; height:150px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="4" style="left:496px; top:1035px; width:25px; height:150px;"></div>
+            <div class="target" data-action="song-wheel" data-value="-5" style="left:522px; top:170px; width:558px; height:7px;"></div>
+            <div class="target" data-action="song-wheel" data-value="-4" style="left:522px; top:177px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="-3" style="left:522px; top:351px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="-2" style="left:522px; top:525px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="-1" style="left:522px; top:699px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="0" style="left:522px; top:873px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="1" style="left:522px; top:1047px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="2" style="left:522px; top:1221px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="3" style="left:522px; top:1395px; width:558px; height:174px;"></div>
+            <div class="target" data-action="song-wheel" data-value="4" style="left:522px; top:1569px; width:558px; height:171px;"></div>
+            <div class="target" data-action="songs-folder" data-value="0" style="left:0px; top:95px; width:405px; height:112px;"></div>
+            <div class="target" data-action="songs-sort" data-value="0" style="left:733px; top:95px; width:347px; height:112px;"></div>
+            <div class="target-group premium-end">
+                <div class="target" data-action="songs-end" data-value="0" style="left:0px; top:1627px; width:502px; height:108px;"></div>
+            </div>
+            <div class="target" data-action="settings" data-value="0" style="left:760px; top:1790px; width:320px; height:130px;"></div>
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1800px; width:250px; height:120px;"></div>
+        </div>
+        <div id="sort" class="input-view">
+            <div class="target" data-action="sort-close" data-value="0" style="left:0px; top:0px; width:620px; height:1920px;"></div>
+            <div class="target" data-action="sort-close" data-value="0" style="left:620px; top:1220px; width:460px; height:700px;"></div>
+            <div id="sort-options" class="sort-options">
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="0"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="1"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="2"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="3"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="4"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="5"></div>
+                <div class="target-list-item sort-row" data-action="sort-item" data-value="6"></div>
+            </div>
+        </div>
+        <div id="difficulty" class="input-view">
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1140px; width:1080px; height:120px;"></div>
+            <div class="target" data-action="back" data-value="0" style="left:0px; top:1330px; width:1080px; height:110px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="0" style="left:460px; top:870px; width:135px; height:180px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="1" style="left:595px; top:870px; width:125px; height:180px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="2" style="left:720px; top:870px; width:125px; height:180px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="3" style="left:845px; top:870px; width:125px; height:180px;"></div>
+            <div class="target" data-action="songs-difficulty" data-value="4" style="left:970px; top:870px; width:110px; height:180px;"></div>
+        </div>
+        <div id="matching" class="input-view">
+            <div class="target" data-action="character" data-value="0" style="left:540px; top:1760px; width:540px; height:160px;"></div>
+            <div class="target" data-action="settings" data-value="0" style="left:790px; top:1775px; width:290px; height:145px;"></div>
+            <div class="target" data-action="matching-speed" data-value="1" style="left:0px; top:1585px; width:415px; height:93px;"></div>
+            <div class="target" data-action="matching-speed" data-value="-1" style="left:0px; top:1678px; width:415px; height:122px;"></div>
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1280px; width:1080px; height:85px;"></div>
+        </div>
+    </body>
+</template>

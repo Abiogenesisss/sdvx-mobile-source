@@ -1,0 +1,22 @@
+<template name="cabinet-entry">
+    <head></head>
+    <body>
+        <div id="title-credit" class="field"></div>
+        <div id="caution-paseli" class="field"></div>
+        <div id="caution-credit" class="field"></div>
+        <div id="saved" class="field"></div>
+        <div id="transfer-code" class="field"></div>
+        <div id="entry-code" class="field"></div>
+        <div id="profile-code" class="field"></div>
+        <div id="pin-code" class="field"></div>
+        <div id="pin-credit" class="field"></div>
+        <div id="pin-paseli" class="field"></div>
+        <div id="entry-confirmation" class="field original-text" data-baseline="22"></div>
+        <div id="entry-notice-1" class="field original-text" data-baseline="26"></div>
+        <div id="entry-notice-2" class="field original-text" data-baseline="22"></div>
+        <div id="entry-notice-3" class="field original-text" data-baseline="22"></div>
+        <div id="entry-notice-4" class="field original-text" data-baseline="22"></div>
+        <div id="entry-notice-5" class="field original-text" data-baseline="22"></div>
+        <div id="entry-notice-6" class="field original-text" data-baseline="22"></div>
+    </body>
+</template>

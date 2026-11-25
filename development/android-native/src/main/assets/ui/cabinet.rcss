@@ -1,0 +1,368 @@
+#notice { left:240px; top:937px; width:600px; height:46px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#achievement-heading { left:360px; top:480px; width:1200px; height:60px; font-size:36px; color:#fff; text-align:center; font-family:Nabla; }
+#achievement-message { left:360px; top:555px; width:1200px; height:54px; font-size:29px; color:#fff; text-align:center; font-family:Nabla; }
+#title-credit { left:814px; top:1836px; width:229px; height:49px; font-size:26px; color:#e8ffad; text-align:right; font-family:Nabla; }
+#caution-paseli { left:61px; top:1862px; width:220px; height:34px; font-size:20px; color:#deded9; text-align:left; font-family:Nabla; }
+#caution-credit { left:872px; top:1862px; width:171px; height:34px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#saved { left:240px; top:937px; width:600px; height:46px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#transfer-code { left:260px; top:1197px; width:560px; height:38px; font-size:23px; color:#d8c390; text-align:center; font-family:Nabla; }
+#entry-code { left:260px; top:1029px; width:560px; height:38px; font-size:23px; color:#d8c390; text-align:center; font-family:Nabla; }
+#profile-code { left:260px; top:1244px; width:560px; height:38px; font-size:23px; color:#d8c390; text-align:center; font-family:Nabla; }
+#pin-code { left:260px; top:1150px; width:560px; height:38px; font-size:23px; color:#d8c390; text-align:center; font-family:Nabla; }
+#pin-credit { left:872px; top:1862px; width:171px; height:34px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#pin-paseli { left:61px; top:1862px; width:220px; height:34px; font-size:20px; color:#deded9; text-align:left; font-family:Nabla; }
+#exit-question { left:240px; top:861px; width:600px; height:50px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#generator-heading { left:210px; top:1028px; width:660px; height:50px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#generator-price { left:441px; top:848px; width:143px; height:34px; font-size:25px; color:#fff; text-align:right; font-family:Nabla; }
+#generator-owned { left:550px; top:889px; width:79px; height:30px; font-size:19px; color:#fff; text-align:right; font-family:Nabla; }
+#generator-packets { left:867px; top:936px; width:90px; height:38px; font-size:25px; color:#fff; text-align:right; font-family:Nabla; }
+#valkyrie-heading { left:210px; top:1028px; width:660px; height:50px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#generator-question { left:240px; top:861px; width:600px; height:50px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#generator-credit { left:872px; top:1862px; width:171px; height:34px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#footer-credit { left:872px; top:1862px; width:171px; height:34px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#footer-paseli { left:61px; top:1862px; width:220px; height:34px; font-size:20px; color:#deded9; text-align:left; font-family:Nabla; }
+#room-credit { left:872px; top:1862px; width:171px; height:34px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#crew-name { left:311px; top:665px; width:512px; height:40px; font-size:22px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#achievement-name { left:878px; top:161px; width:700px; height:50px; font-size:38px; color:#fff; text-align:center; font-family:Nabla; }
+#achievement-progress { left:1038px; top:227px; width:380px; height:30px; font-size:24px; color:#fff; text-align:center; font-family:Nabla; }
+#card-random { left:1510px; top:188px; width:180px; height:34px; font-size:23px; color:#fff; text-align:center; font-family:Nabla; }
+#card-favorites { left:1724px; top:188px; width:145px; height:34px; font-size:23px; color:#fff; text-align:center; font-family:Nabla; }
+#card-name { left:96px; top:651px; width:940px; height:35px; font-size:24px; color:#fff; text-align:center; font-family:Nabla; }
+#card-illustrator { left:96px; top:695px; width:940px; height:30px; font-size:19px; color:#fff; text-align:center; font-family:Nabla; }
+#sticker-name { left:131px; top:640px; width:870px; height:50px; font-size:24px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#course-set { left:120px; top:195px; width:840px; height:70px; font-size:32px; color:#fff; text-align:center; font-family:Nabla; }
+#matching-bpm { left:244px; top:1683px; width:144px; height:36px; font-size:23px; color:#fff; text-align:center; font-family:NablaDisplay; }
+#matching-speed { left:244px; top:1726px; width:144px; height:38px; font-size:25px; color:#e8ffad; text-align:center; font-family:NablaDisplay; }
+#matching-credit { left:872px; top:1865px; width:170px; height:35px; font-size:20px; color:#deded9; text-align:right; font-family:Nabla; }
+#search-title { left:38px; top:228px; width:800px; height:42px; font-size:30px; color:#fff; text-align:left; font-family:Nabla; }
+#search-artist { left:350px; top:310px; width:475px; height:38px; font-size:25px; color:#fff; text-align:left; font-family:Nabla; }
+#search-charter { left:350px; top:377px; width:475px; height:38px; font-size:25px; color:#fff; text-align:left; font-family:Nabla; }
+#search-illustrator { left:350px; top:442px; width:475px; height:38px; font-size:25px; color:#fff; text-align:left; font-family:Nabla; }
+#achievement-categories { position:absolute; left:0px; top:379px; width:530px; height:650px; overflow:hidden; }
+#achievement-categories .category-name { left:66px; top:25px; width:270px; height:40px; font-size:28px; color:#fff; text-align:left; font-family:Nabla; }
+#achievement-categories .category-progress { left:344px; top:25px; width:80px; height:40px; font-size:28px; color:#fff; text-align:left; font-family:Nabla; }
+#achievement-categories .row:nth-child(1) { left:0px; top:0px; }
+#achievement-categories .row:nth-child(2) { left:0px; top:80px; }
+#achievement-categories .row:nth-child(3) { left:0px; top:160px; }
+#achievement-categories .row:nth-child(4) { left:0px; top:240px; }
+#achievement-categories .row:nth-child(5) { left:0px; top:320px; }
+#achievement-categories .row:nth-child(6) { left:0px; top:400px; }
+#achievement-categories .row:nth-child(7) { left:0px; top:480px; }
+#achievement-categories .row:nth-child(8) { left:0px; top:560px; }
+#achievement-categories .row:nth-child(9) { left:0px; top:640px; }
+#achievement-rows { position:absolute; left:584px; top:346px; width:1306px; height:675px; overflow:hidden; }
+#achievement-rows .achievement-text { left:154px; top:10px; width:700px; height:50px; font-size:26px; color:#fff; text-align:left; font-family:Nabla; }
+#achievement-rows .achievement-number { left:938px; top:10px; width:100px; height:50px; font-size:25px; color:#fff; text-align:center; font-family:Nabla; }
+#achievement-rows .row:nth-child(1) { left:0px; top:0px; }
+#achievement-rows .row:nth-child(2) { left:0px; top:80px; }
+#achievement-rows .row:nth-child(3) { left:0px; top:160px; }
+#achievement-rows .row:nth-child(4) { left:0px; top:240px; }
+#achievement-rows .row:nth-child(5) { left:0px; top:320px; }
+#achievement-rows .row:nth-child(6) { left:0px; top:400px; }
+#achievement-rows .row:nth-child(7) { left:0px; top:480px; }
+#achievement-rows .row:nth-child(8) { left:0px; top:560px; }
+#achievement-rows .row:nth-child(9) { left:0px; top:640px; }
+#card-messages { position:absolute; left:111px; top:753px; }
+#card-messages .card-message { left:0px; top:0px; width:220px; height:50px; font-size:16px; color:#fff; text-align:center; font-family:Nabla; }
+#card-messages .row:nth-child(1) { left:0px; top:0px; }
+#card-messages .row:nth-child(2) { left:230px; top:0px; }
+#card-messages .row:nth-child(3) { left:460px; top:0px; }
+#card-messages .row:nth-child(4) { left:690px; top:0px; }
+#card-messages .row:nth-child(5) { left:0px; top:71px; }
+#card-messages .row:nth-child(6) { left:230px; top:71px; }
+#card-messages .row:nth-child(7) { left:460px; top:71px; }
+#card-messages .row:nth-child(8) { left:690px; top:71px; }
+#card-filter-labels { position:absolute; left:1135.55px; top:371.2px; }
+#card-filter-labels .card-filter-label { left:32px; top:3px; width:178px; height:28px; font-size:21px; color:#fff; text-align:left; font-family:Nabla; }
+#card-filter-labels .row:nth-child(1) { left:0px; top:0px; }
+#card-filter-labels .row:nth-child(2) { left:230px; top:0px; }
+#card-filter-labels .row:nth-child(3) { left:460px; top:0px; }
+#card-filter-labels .row:nth-child(4) { left:0px; top:37px; }
+#card-filter-labels .row:nth-child(5) { left:230px; top:37px; }
+#card-filter-labels .row:nth-child(6) { left:0px; top:117px; }
+#card-filter-labels .row:nth-child(7) { left:230px; top:117px; }
+#card-filter-labels .row:nth-child(8) { left:460px; top:117px; }
+#card-filter-labels .row:nth-child(9) { left:0px; top:154px; }
+#card-filter-labels .row:nth-child(10) { left:230px; top:154px; }
+#card-filter-labels .row:nth-child(11) { left:460px; top:154px; }
+#card-filter-labels .row:nth-child(12) { left:0px; top:191px; }
+#payment-labels .payment-description { left:111px; top:54px; width:474px; height:39px; font-size:22px; color:#fff; text-align:left; font-family:Nabla; }
+#payment-labels .payment-amount { left:537px; top:60px; width:105px; height:55px; font-size:48px; color:#fff; text-align:right; font-family:Nabla; }
+#payment-labels .payment-amount-disabled { left:537px; top:60px; width:105px; height:55px; font-size:48px; color:#b9b9b9; text-align:right; font-family:Nabla; }
+#course-labels { position:absolute; left:0px; top:0px; }
+#course-labels .course-title { left:225px; top:25px; width:500px; height:30px; font-size:22px; color:#fff; text-align:left; font-family:Nabla; }
+#course-labels .course-song { left:382px; top:58px; width:520px; height:27px; font-size:20px; color:#fff; text-align:left; font-family:Nabla; }
+#course-labels .row:nth-child(1) { left:85px; top:326px; }
+#course-labels .row:nth-child(2) { left:85px; top:548px; }
+#course-labels .row:nth-child(3) { left:30px; top:775px; }
+#course-labels .row:nth-child(4) { left:85px; top:1135px; }
+#course-labels .row:nth-child(5) { left:85px; top:1357px; }
+#course-labels .row:nth-child(3) .course-title { left:419px; top:48px; width:580px; }
+#course-labels .row:nth-child(3) .course-song { left:425px; width:580px; }
+#course-labels .course-song:nth-child(2) { top:58px; }
+#course-labels .row:nth-child(3) .course-song:nth-child(2) { top:91px; }
+#course-labels .course-song:nth-child(3) { top:88px; }
+#course-labels .row:nth-child(3) .course-song:nth-child(3) { top:128px; }
+#course-labels .course-song:nth-child(4) { top:118px; }
+#course-labels .row:nth-child(3) .course-song:nth-child(4) { top:165px; }
+#course-labels .course-song:nth-child(5) { top:148px; }
+#course-labels .row:nth-child(3) .course-song:nth-child(5) { top:202px; }
+#sort-options { position:absolute; left:718px; top:744px; }
+#sort-options .sort-label { left:7px; top:8px; width:316px; height:30px; font-size:22px; color:#fff; text-align:center; font-family:Nabla; }
+#summary-rows { position:absolute; left:101px; top:784px; }
+#summary-rows .summary-title { left:0px; top:52px; width:610px; height:34px; font-size:26px; color:#fff; text-align:left; font-family:Nabla; }
+#summary-rows .summary-title-auto { left:0px; top:52px; width:503px; height:34px; font-size:26px; color:#fff; text-align:left; font-family:Nabla; }
+#summary-rows .summary-auto { left:514px; top:52px; width:127px; height:34px; font-size:21px; color:#fff; text-align:right; font-family:Nabla; }
+#summary-rows .row:nth-child(1) { left:0px; top:0px; }
+#summary-rows .row:nth-child(2) { left:0px; top:172px; }
+#summary-rows .row:nth-child(3) { left:0px; top:344px; }
+#summary-rows .row:nth-child(4) { left:0px; top:516px; }
+#summary-rows .row:nth-child(5) { left:0px; top:688px; }
+#search-rows { position:absolute; left:879px; top:216px; width:1000px; height:787.5px; overflow:hidden; }
+#search-rows .search-row-title { left:170px; top:32px; width:480px; height:40px; font-size:28px; color:#fff; text-align:left; font-family:Nabla; }
+#search-rows .search-row-artist { left:170px; top:82px; width:480px; height:34px; font-size:23px; color:#fff; text-align:left; font-family:Nabla; }
+#search-rows .row:nth-child(1) { left:0px; top:0.0px; }
+#search-rows .row:nth-child(2) { left:0px; top:158px; }
+#search-rows .row:nth-child(3) { left:0px; top:315.0px; }
+#search-rows .row:nth-child(4) { left:0px; top:472px; }
+#search-rows .row:nth-child(5) { left:0px; top:630.0px; }
+#search-query { left:580px; top:12px; width:760px; height:48px; font-size:32px; color:#fff; text-align:left; font-family:Nabla; }
+#search-count { left:1350px; top:12px; width:150px; height:48px; font-size:32px; color:#fff; text-align:right; font-family:Nabla; }
+#search-bar { top:1008px; }
+#songs-title { left:174px; top:915px; width:350px; height:39px; font-size:25px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#songs-artist { left:174px; top:954px; width:350px; height:36px; font-size:22px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#songs-bpm { left:13.0px; top:951px; width:98px; height:36px; font-size:22px; color:#57e3ed; text-align:center; font-family:NablaDisplay; }
+#songs-charter { left:326px; top:992px; width:205px; height:31px; font-size:17px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#songs-illustrator { left:326px; top:1016px; width:205px; height:31px; font-size:17px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#songs-parent-folder { left:37.0px; top:112px; width:250px; height:37px; font-size:23px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#songs-child-folder { left:71.0px; top:148px; width:250px; height:37px; font-size:23px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#songs-sort { left:820.0px; top:113px; width:220px; height:36px; font-size:22px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#songs-packets { left:75px; top:1749px; width:110px; height:34px; font-size:20px; color:#fff; text-align:right; font-family:NablaDisplay; }
+#songs-blocks { left:280px; top:1749px; width:110px; height:34px; font-size:20px; color:#fff; text-align:right; font-family:NablaDisplay; }
+#confirm-title { left:120.0px; top:668px; width:840px; height:39px; font-size:25px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#confirm-artist { left:120.0px; top:721px; width:840px; height:37px; font-size:23px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#result-title { left:344px; top:913px; width:450px; height:37px; font-size:23px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#result-artist { left:400px; top:952px; width:394px; height:36px; font-size:22px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#result-gauge { left:944px; top:1103px; width:45px; height:31px; font-size:17px; color:#fff; text-align:right; font-family:NablaDisplay; }
+#sort-options .sort-label { z-index: 1; }
+#sort-options .sort-highlight { left:0; top:0; width:330px; height:44px; }
+#sort-options { width:362px; }
+#sort-options .sort-row { display:block; position:relative; width:100%; height:57px; }
+body { margin:0; width:100%; height:100%; overflow:hidden; font-family:Nabla; color:#fff; }
+.field { display:none; position:absolute; overflow:hidden; white-space:nowrap; pointer-events:none; }
+.field.shown { display:block; }
+.row { position:absolute; }
+.field.original-text { display:block; visibility:hidden; }
+#card-messages .card-message { white-space:pre; }
+#subscreen-back-panel { left:10px; top:7px; width:106px; height:106px; }
+#entry-confirmation { left:0px; top:945px; width:1080px; height:36px; font-size:22px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-1 { left:0px; top:858px; width:1080px; height:40px; font-size:26px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-2 { left:0px; top:913px; width:1080px; height:36px; font-size:22px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-3 { left:0px; top:945px; width:1080px; height:36px; font-size:22px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-4 { left:0px; top:977px; width:1080px; height:36px; font-size:22px; color:#e88041; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-5 { left:0px; top:1009px; width:1080px; height:36px; font-size:22px; color:#e88041; text-align:center; font-family:NablaMaruW4; }
+#entry-notice-6 { left:0px; top:1053px; width:1080px; height:36px; font-size:22px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#result-auto { left:651px; top:981px; width:100px; height:37px; font-size:23px; color:#fff; text-align:right; font-family:NablaDisplay; }
+#result-retries { left:176.15px; top:753px; width:56px; height:33px; font-size:19px; color:#fff; text-align:center; font-family:NablaDisplay; }
+#result-balance { left:788px; top:1683px; width:96px; height:32px; font-size:18px; color:#fff; text-align:right; font-family:NablaMaruW4; }
+#skill-question { left:240px; top:832px; width:600px; height:36px; font-size:22px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#settings-volume { left:226px; top:888px; width:105px; height:58px; font-size:44px; color:#fff; text-align:center; font-family:NablaDisplay; }
+#controller-caption { left:1030px; top:151px; width:260px; height:37px; font-size:23px; color:#fff; text-align:center; font-family:NablaMaruW4; }
+#controller-assignments { left:280px; top:245px; width:590px; height:46px; font-size:32px; color:#fff; text-align:left; font-family:NablaMaruW4; }
+#subscreen-back-icon { left:10px; top:3px; width:106px; height:76px; font-size:62px; color:#fff; text-align:center; font-family:Nabla; }
+#subscreen-back-label { left:10px; top:74px; width:106px; height:38px; font-size:24px; color:#fff; text-align:center; font-family:Nabla; }
+#controller-type { left:1390px; top:255px; width:250px; height:34px; font-size:22px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-bg-0 { left:280px; top:310px; width:590px; height:82px; }
+#binding-focus-0 { left:280px; top:310px; width:590px; height:82px; }
+#binding-label-0 { left:304px; top:333px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-0 { left:496px; top:335px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-0 { left:496px; top:335px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-1 { left:280px; top:410px; width:590px; height:82px; }
+#binding-focus-1 { left:280px; top:410px; width:590px; height:82px; }
+#binding-label-1 { left:304px; top:433px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-1 { left:496px; top:435px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-1 { left:496px; top:435px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-2 { left:280px; top:510px; width:590px; height:82px; }
+#binding-focus-2 { left:280px; top:510px; width:590px; height:82px; }
+#binding-label-2 { left:304px; top:533px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-2 { left:496px; top:535px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-2 { left:496px; top:535px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-3 { left:280px; top:610px; width:590px; height:82px; }
+#binding-focus-3 { left:280px; top:610px; width:590px; height:82px; }
+#binding-label-3 { left:304px; top:633px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-3 { left:496px; top:635px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-3 { left:496px; top:635px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-4 { left:280px; top:710px; width:590px; height:82px; }
+#binding-focus-4 { left:280px; top:710px; width:590px; height:82px; }
+#binding-label-4 { left:304px; top:733px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-4 { left:496px; top:735px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-4 { left:496px; top:735px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-5 { left:280px; top:810px; width:590px; height:82px; }
+#binding-focus-5 { left:280px; top:810px; width:590px; height:82px; }
+#binding-label-5 { left:304px; top:833px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-5 { left:496px; top:835px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-5 { left:496px; top:835px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-6 { left:280px; top:910px; width:590px; height:82px; }
+#binding-focus-6 { left:280px; top:910px; width:590px; height:82px; }
+#binding-label-6 { left:304px; top:933px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-6 { left:496px; top:935px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-6 { left:496px; top:935px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-7 { left:1050px; top:310px; width:590px; height:82px; }
+#binding-focus-7 { left:1050px; top:310px; width:590px; height:82px; }
+#binding-label-7 { left:1074px; top:333px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-7 { left:1266px; top:335px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-7 { left:1266px; top:335px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-8 { left:1050px; top:410px; width:590px; height:82px; }
+#binding-focus-8 { left:1050px; top:410px; width:590px; height:82px; }
+#binding-label-8 { left:1074px; top:433px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-8 { left:1266px; top:435px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-8 { left:1266px; top:435px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-9 { left:1050px; top:510px; width:590px; height:82px; }
+#binding-focus-9 { left:1050px; top:510px; width:590px; height:82px; }
+#binding-label-9 { left:1074px; top:533px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-9 { left:1266px; top:535px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-9 { left:1266px; top:535px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-bg-10 { left:1050px; top:610px; width:590px; height:82px; }
+#binding-focus-10 { left:1050px; top:610px; width:590px; height:82px; }
+#binding-label-10 { left:1074px; top:633px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-10 { left:1266px; top:635px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-10 { left:1266px; top:635px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-dial-10 { left:1345px; top:681px; width:0px; height:4px; }
+#binding-bg-11 { left:1050px; top:710px; width:590px; height:82px; }
+#binding-focus-11 { left:1050px; top:710px; width:590px; height:82px; }
+#binding-label-11 { left:1074px; top:733px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-11 { left:1266px; top:735px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-11 { left:1266px; top:735px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#binding-dial-11 { left:1345px; top:781px; width:0px; height:4px; }
+#binding-bg-12 { left:1050px; top:910px; width:590px; height:82px; }
+#binding-focus-12 { left:1050px; top:910px; width:590px; height:82px; }
+#binding-label-12 { left:1074px; top:933px; width:265px; height:40px; font-size:28px; text-align:left; font-family:NablaMaruW4; color:#fff; }
+#binding-value-12 { left:1266px; top:935px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#fff; }
+#binding-prompt-12 { left:1266px; top:935px; width:350px; height:38px; font-size:26px; text-align:right; font-family:NablaMaruW4; color:#b0e34d; }
+#wheel-labels { top:-171px; }
+#wheel-labels .row:nth-child(1) { top:0px; }
+#wheel-labels .row:nth-child(2) { top:174px; }
+#wheel-labels .row:nth-child(3) { top:348px; }
+#wheel-labels .row:nth-child(4) { top:522px; }
+#wheel-labels .row:nth-child(5) { top:696px; }
+#wheel-labels .row:nth-child(6) { top:870px; }
+#wheel-labels .row:nth-child(7) { top:1044px; }
+#wheel-labels .row:nth-child(8) { top:1218px; }
+#wheel-labels .row:nth-child(9) { top:1392px; }
+#wheel-labels .row:nth-child(10) { top:1566px; }
+#wheel-labels .row:nth-child(11) { top:1740px; }
+#wheel-labels .row:nth-child(12) { top:1914px; }
+#wheel-labels .row:nth-child(13) { top:2088px; }
+.song-row-title { left:612px; top:136px; width:448px; height:35px; font-size:23px; text-align:left; font-family:NablaMaruW4; }
+.folder-row-title { left:570px; top:57px; width:480px; height:39px; font-size:27px; text-align:left; font-family:NablaMaruW4; }
+.folder-row-count { left:922px; top:106px; width:92px; height:36px; font-size:24px; text-align:center; font-family:NablaDisplay; }
+#receipt-title { left:0px; top:877px; width:1080px; height:34px; font-size:22px; color:#e0e0e0; text-align:center; font-family:NablaMaruW4; }
+#receipt-label-0 { left:380px; top:965px; width:180px; height:34px; font-size:22px; color:#e0e0e0; text-align:left; font-family:NablaMaruW4; }
+#receipt-value-0 { left:475px; top:939px; width:225px; height:60px; font-size:48px; color:#00cf21; text-align:right; font-family:NablaMaruW4Fixed; }
+#receipt-unit-0 { left:713px; top:959px; width:100px; height:40px; font-size:28px; color:#00cf21; text-align:left; font-family:NablaMaruW4; }
+#receipt-label-1 { left:380px; top:1022px; width:180px; height:34px; font-size:22px; color:#e0e0e0; text-align:left; font-family:NablaMaruW4; }
+#receipt-value-1 { left:475px; top:996px; width:225px; height:60px; font-size:48px; color:#00cf21; text-align:right; font-family:NablaMaruW4Fixed; }
+#receipt-unit-1 { left:713px; top:1016px; width:100px; height:40px; font-size:28px; color:#00cf21; text-align:left; font-family:NablaMaruW4; }
+#settings-nemsys-bg { left:858px; top:949px; width:412px; height:92px; }
+#settings-nemsys-focus { left:858px; top:949px; width:412px; height:2px; }
+#settings-nemsys-preview { left:1046px; top:954px; width:156px; height:82px; }
+#settings-nemsys-title { left:888px; top:960px; width:180px; height:34px; font-size:22px; text-align:center; font-family:NablaDisplay; }
+#settings-nemsys-number { left:888px; top:989px; width:180px; height:34px; font-size:22px; text-align:center; font-family:NablaDisplay; }
+#settings-nemsys-left { left:858px; top:977px; width:62px; height:40px; font-size:28px; text-align:center; font-family:Nabla; }
+#settings-nemsys-right { left:1208px; top:977px; width:62px; height:40px; font-size:28px; text-align:center; font-family:Nabla; }
+#gauge-track-0 { left:1175px; top:257px; width:150px; height:588px; }
+#gauge-thumb-0 { left:1197px; top:808px; width:104px; height:30px; }
+#gauge-focus-0 { left:1175px; top:872px; width:150px; height:46px; }
+#gauge-value-0 { left:1175px; top:858px; width:150px; height:66px; font-size:54px; text-align:center; font-family:NablaDisplay; }
+#gauge-fine-0 { left:1175px; top:869px; width:150px; height:55px; font-size:43px; text-align:center; font-family:NablaDisplay; }
+#gauge-track-1 { left:1393px; top:257px; width:150px; height:588px; }
+#gauge-thumb-1 { left:1415px; top:808px; width:104px; height:30px; }
+#gauge-focus-1 { left:1393px; top:872px; width:150px; height:46px; }
+#gauge-value-1 { left:1393px; top:858px; width:150px; height:66px; font-size:54px; text-align:center; font-family:NablaDisplay; }
+#gauge-fine-1 { left:1393px; top:869px; width:150px; height:55px; font-size:43px; text-align:center; font-family:NablaDisplay; }
+#gauge-track-2 { left:1611px; top:257px; width:150px; height:588px; }
+#gauge-thumb-2 { left:1633px; top:808px; width:104px; height:30px; }
+#gauge-focus-2 { left:1611px; top:872px; width:150px; height:46px; }
+#gauge-value-2 { left:1611px; top:858px; width:150px; height:66px; font-size:54px; text-align:center; font-family:NablaDisplay; }
+
+/* The payment art and the touch list use the same row geometry. */
+.payment-list { position:absolute; left:149px; top:683px; width:782px; }
+.payment-row { display:block; position:relative; width:100%; height:123px; }
+.payment-plate { left:0; top:0; width:782px; height:122px; }
+.payment-title { left:113px; top:15px; width:642px; height:42px; }
+.payment-detail-one { left:111px; top:87px; width:115px; height:19px; }
+.payment-detail-two { left:232px; top:87px; width:112px; height:19px; }
+.payment-detail-three { left:351px; top:87px; width:131px; height:19px; }
+.payment-unit { left:644px; top:75px; width:121px; height:32px; }
+.payment-back { left:65px; top:44px; width:652px; height:34px; }
+.payment-premium-one, .payment-premium-two { left:113px; width:530px; height:28px; font-size:18px; font-family:NablaMaruW4; }
+.payment-premium-one { top:58px; }
+.payment-premium-two { top:81px; }
+.payment-focus { left:-83px; top:-31px; width:948px; height:186px; }
+
+#song-scroll-rail { left:1056px; top:450px; width:20px; height:1096px; overflow:hidden; }
+.scroll-track { left:0; top:0; width:100%; height:100%; }
+#song-scroll-lamp { left:0; top:-4px; width:100%; height:60px; }
+#song-scroll-caption { right:30px; top:450px; width:374px; height:18px; overflow:visible; }
+.scroll-caption-bg { left:0; top:0; width:100%; height:100%; }
+.scroll-caption-text { right:2px; top:0; width:370px; height:18px; font-size:16px; font-family:NablaMaruW4; text-align:right; }
+
+#result-grid { left:0px; top:976px; width:1080px; height:944px; }
+#result-record-flag { left:318px; top:983px; width:468px; height:22px; }
+#result-record-banner { left:0px; top:0px; width:532px; height:28px; }
+#result-record-name { left:15px; top:1px; width:150px; height:34px; font-size:20px; font-family:NablaMaruW4; text-align:center; }
+#result-record-score { left:232px; top:1px; width:146px; height:34px; font-size:20px; font-family:NablaDisplay; text-align:center; }
+#result-premium-panel { left:40.15px; top:729px; width:200px; height:94px; }
+#result-challenge { left:174.15px; top:730px; width:60px; height:22px; }
+#result-difficulty-panel { left:11px; top:814px; width:202px; height:52px; }
+#result-difficulty { left:92.81px; top:824.1px; width:96.96px; height:38.24px; font-size:24.24px; font-family:NablaDisplay; text-align:center; }
+#result-timing-0 { left:785.24px; top:1167.75px; width:194.11px; height:16px; }
+#result-timing-1 { left:785.24px; top:1197.06px; width:194.11px; height:16px; }
+#result-timing-2 { left:785.24px; top:1226.37px; width:194.11px; height:16px; }
+#result-timing-3 { left:785.24px; top:1255.68px; width:194.11px; height:16px; }
+#result-timing-4 { left:785.24px; top:1284.99px; width:194.11px; height:16px; }
+#result-force-total { left:746px; top:621px; width:225px; height:50px; font-size:36px; font-family:NablaDigital; text-align:center; }
+#result-force-delta { left:132.15px; top:1617.8px; width:150px; height:28.4px; font-size:14.4px; font-family:NablaDigital; text-align:center; }
+#summary-pass-badge { left:115.2px; top:179.6px; width:237.6px; height:54px; }
+#summary-pass-expiry { left:130.5px; top:212.9px; width:163.8px; height:26.6px; font-size:12.6px; font-family:NablaMaruW4; text-align:left; }
+#skill-panel-before { left:180px; top:863px; width:300px; height:170px; }
+#skill-name-before { left:199px; top:920.8px; width:300px; height:54px; font-size:40px; font-family:NablaMaruW4; text-align:center; }
+#skill-panel-after { left:600px; top:863px; width:300px; height:170px; }
+#skill-name-after { left:619px; top:920.8px; width:300px; height:54px; font-size:40px; font-family:NablaMaruW4; text-align:center; }
+
+#songs-blaster-slot { left:17px; top:1549px; width:340px; height:80px; }
+#result-blaster-slot { left:26.5px; top:1293px; width:255px; height:60px; }
+#blaster-gauge { left:0; top:0; width:340px; height:80px; }
+.blaster-fill { left:15px; top:32px; width:300px; height:17px; }
+.blaster-fill-shape { left:-15px; top:-32px; }
+.blaster-gloss { left:4px; top:2px; width:300px; height:4px; }
+.blaster-song-icon { left:179px; top:33px; width:138px; height:14px; }
+.blaster-result-icon { left:186.8px; top:34.6px; width:122.4px; height:10.8px; }
+.blaster-caption, .blaster-caption-shadow { left:22px; top:28px; width:70px; height:24px; font-size:19px; font-family:NablaDisplay; }
+.blaster-caption-shadow { left:23px; top:29px; color:#000; }
+.blaster-effect { left:9px; top:22px; width:322px; height:36px; }
+
+#result-background { left:0; top:0; width:1080px; height:1920px; }
+.summary-difficulty-panel { left:-16px; top:93px; width:200px; height:50px; }
+.summary-difficulty-digits { left:72px; top:103px; width:88px; height:30px; }
+.summary-grade { left:662.5px; top:26.5px; width:135px; height:135px; }
+.summary-lamp { left:769.5px; top:26.5px; width:135px; height:135px; }
+
+#result-profile-slot { left:42px; top:1355px; width:864px; height:324px; }
+#summary-profile-slot { left:132px; top:234px; width:816px; height:306px; }
+#result-profile { left:0; top:0; width:960px; height:360px; }
+.profile-stickers { left:330px; top:30px; }
+.profile-card { left:30px; top:30px; width:300px; height:300px; }
+.profile-greeting { left:40px; top:30px; width:280px; height:22px; font-size:19px; font-family:NablaMaruW4; }
+.profile-name { left:53px; top:53px; width:254px; height:38px; font-size:30px; font-family:NablaDisplay; text-align:center; }
+.profile-skill-name { left:81.3133333px; top:104.76px; width:226px; height:26px;
+    font-size:15.0588235px; font-family:NablaMaruW4; text-align:center; }
+.profile-force { left:32px; top:236px; width:166px; height:70px; }
+.profile-force-icon { left:34.98px; top:238.57px; width:62.04px; height:52.64px; }
+.profile-force-stars { left:35px; top:287.5px; width:62px; height:18.8px; }
+.profile-force-value { left:101px; top:274px; width:94px; height:28px; font-size:20px; font-family:NablaDisplay; text-align:center; }
+
+#result-bonus-rows { position:absolute; left:93px; top:1719px; width:400px; }
+.result-bonus-row { display:block; position:relative; height:30px; }
+.result-bonus-name { left:5px; top:6px; width:280px; height:30px; font-size:16px; font-family:NablaMaruW4; }
+.result-bonus-value { left:304px; top:3px; width:81px; height:33px; font-size:19px; font-family:NablaDisplay; text-align:right; }

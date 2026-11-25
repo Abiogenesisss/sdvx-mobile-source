@@ -1,0 +1,48 @@
+<template name="input-entry">
+    <head></head>
+    <body>
+        <div id="title" class="input-view">
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1400px; width:1080px; height:520px;"></div>
+            <div class="target" data-action="credit" data-value="0" style="left:865px; top:1800px; width:215px; height:120px;"></div>
+        </div>
+        <div id="entry" class="input-view">
+            <div class="target-group entry-continue">
+                <div class="target" data-action="entry-confirm" data-value="0" style="left:0px; top:650px; width:1080px; height:850px;"></div>
+            </div>
+            <div class="target-group entry-pin">
+                <div class="target" data-action="pin-key" data-value="0" style="left:255.0px; top:743px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="1" style="left:327.6666666666667px; top:743px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="2" style="left:400.33333333333337px; top:743px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="3" style="left:255.0px; top:809px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="4" style="left:327.6666666666667px; top:809px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="5" style="left:400.33333333333337px; top:809px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="6" style="left:255.0px; top:875px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="7" style="left:327.6666666666667px; top:875px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="8" style="left:400.33333333333337px; top:875px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="9" style="left:255.0px; top:941px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="10" style="left:327.6666666666667px; top:941px; width:72.66666666666667px; height:66px;"></div>
+                <div class="target" data-action="pin-key" data-value="11" style="left:400.33333333333337px; top:941px; width:72.66666666666667px; height:66px;"></div>
+            </div>
+            <div class="target-group entry-registration">
+                <div class="target" data-action="entry-choice" data-value="0" style="left:125px; top:810px; width:830px; height:194px;"></div>
+                <div class="target" data-action="entry-choice" data-value="1" style="left:125px; top:1004px; width:830px; height:201px;"></div>
+            </div>
+            <div class="target-group entry-terms">
+                <div class="target" data-action="entry-choice" data-value="0" style="left:220px; top:1260px; width:320px; height:100px;"></div>
+                <div class="target" data-action="entry-choice" data-value="1" style="left:540px; top:1260px; width:320px; height:100px;"></div>
+            </div>
+            <div class="target-group entry-name">
+                <div class="target" data-action="entry-name-step" data-value="-1" style="left:70px; top:790px; width:360px; height:165px;"></div>
+                <div class="target" data-action="entry-confirm" data-value="0" style="left:430px; top:790px; width:220px; height:165px;"></div>
+                <div class="target" data-action="entry-name-step" data-value="1" style="left:650px; top:790px; width:360px; height:165px;"></div>
+                <div class="target" data-action="entry-name-erase" data-value="0" style="left:0px; top:1030px; width:1080px; height:105px;"></div>
+            </div>
+        </div>
+        <div id="caution" class="input-view">
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1180px; width:1080px; height:740px;"></div>
+        </div>
+        <div id="game-end" class="input-view">
+            <div class="target" data-action="confirm" data-value="0" style="left:0px; top:1600px; width:1080px; height:320px;"></div>
+        </div>
+    </body>
+</template>
