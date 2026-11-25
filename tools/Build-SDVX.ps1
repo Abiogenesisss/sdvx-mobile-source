@@ -33,7 +33,7 @@ foreach ($package in $packages) {
 }
 
 # Keep each ABI's generated build files in its own directory.
-$stagingName = if ($EmulatorOnly) { 'nabla-native-build' } else { 'nabla-device-build' }
+$stagingName = if ($EmulatorOnly) { 'source-emulator-build' } else { 'source-device-build' }
 $staging = Join-Path $env:SDVX_TOOLCHAIN $stagingName
 New-Item -ItemType Directory -Force -Path $staging | Out-Null
 $staging = (Resolve-Path -LiteralPath $staging).ProviderPath

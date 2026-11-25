@@ -1,5 +1,6 @@
 #include "app.h"
 #include "afp.h"
+#include "stage_archive.h"
 
 #include <SDL3/SDL.h>
 #include <GLES3/gl32.h>
@@ -111,12 +112,21 @@ void clipPolygon(std::vector<Vertex>& result, std::vector<Vertex>& scratch,
 struct Pixels {
     int w = 0, h = 0;
     std::unique_ptr<uint8_t, void (*)(void*)> rgba{nullptr, stbi_image_free};
+    std::vector<uint8_t> archivePixels;
+    uint8_t* data() { return archivePixels.empty() ? rgba.get() : archivePixels.data(); }
+    const uint8_t* data() const { return archivePixels.empty() ? rgba.get() : archivePixels.data(); }
 };
 
 Pixels decodeImage(std::string_view path) {
+    Pixels image;
+    if (const auto* entry = stageArchiveEntry(path); entry && entry->width) {
+        image.w = entry->width;
+        image.h = entry->height;
+        image.archivePixels = readStagePixels(*entry);
+        return image;
+    }
     auto data = readAsset(path);
     if (data.empty()) return {};
-    Pixels image;
     const auto* bytes = reinterpret_cast<const uint8_t*>(data.data());
     if (path.ends_with(".webp")) {
         image.rgba = {WebPDecodeRGBA(bytes, data.size(), &image.w, &image.h), WebPFree};
@@ -371,8 +381,8 @@ class UiRenderer : public RenderInterface_GL3 {
 public:
     Rml::TextureHandle LoadTexture(Rml::Vector2i& dimensions, const Rml::String& source) override {
         auto image = decodeImage(source);
-        if (!image.rgba) return {};
-        const Rml::Span pixels{image.rgba.get(), size_t(image.w) * image.h * 4};
+        if (!image.data()) return {};
+        const Rml::Span pixels{image.data(), size_t(image.w) * image.h * 4};
         for (size_t i = 0; i < pixels.size(); i += 4) {
             for (int c = 0; c < 3; ++c) pixels[i + c] = (pixels[i + c] * pixels[i + 3] + 127) / 255;
         }
@@ -776,8 +786,8 @@ struct Render::Impl {
 
     Texture& upload(std::string_view path, const Pixels& image) {
         auto& texture = textures.try_emplace(std::string(path)).first->second;
-        if (image.rgba) {
-            texture = {makeTexture(image.w, image.h, image.rgba.get()), image.w, image.h, frame};
+        if (image.data()) {
+            texture = {makeTexture(image.w, image.h, image.data()), image.w, image.h, frame};
             textureBytes += size_t(image.w) * image.h * 4;
             nextTextureTrim = frame;
         }

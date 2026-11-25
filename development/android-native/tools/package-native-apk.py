@@ -28,7 +28,7 @@ if not project_dex or not external_dex or libraries != {
 } or not (assets / "crew/grace/model/grace_ver7.moc3").is_file():
     raise RuntimeError("Required current native build outputs are missing")
 
-stored = {".wav", ".flac", ".s3v", ".webp", ".png", ".jpg", ".jpeg", ".ogg", ".mp3", ".dat", ".zip"}
+stored = {".ifs", ".wav", ".flac", ".s3v", ".webp", ".png", ".jpg", ".jpeg", ".ogg", ".mp3", ".dat", ".zip"}
 args.output.parent.mkdir(parents=True, exist_ok=True)
 # APK tools read unsigned 32-bit ZIP offsets. Python switches to ZIP64 at 2 GiB,
 # even though classic ZIP offsets can go up to the reserved 0xFFFFFFFF marker.

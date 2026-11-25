@@ -119,7 +119,7 @@ void spliceChart(Json& chart, const ChartSource& source, int from, int until, in
 
 void prepareAutomationParadise(const Selection& selection, Json& chart, std::string& wave,
                                std::vector<int16_t>& dryPcm, uint32_t seed) {
-    const auto config = Json::parse(readAsset(selection.asset("arrangement.json")));
+    const auto config = Json::parse(readAsset(selection.presentation("arrangement.json")));
     const auto ticks = [](double bars) { return int(std::lround(bars * ticksPerBar)); };
     std::vector<Phrase> phrases;
     const auto& rows = config.at("tracks");
@@ -209,7 +209,7 @@ void prepareAutomationParadise(const Selection& selection, Json& chart, std::str
     dryPcm.resize(size_t(frameAt(end)) * 2);
     const int difficulty = selection.label == "NOV" ? 0 : selection.label == "ADV" ? 1 : selection.label == "EXH" ? 2 : 3;
     const auto pathFor = [&selection](const Phrase& phrase) {
-        return selection.asset(std::to_string(phrase.id) + "/" + std::to_string(phrase.wave));
+        return selection.presentation(std::to_string(phrase.id) + "/" + std::to_string(phrase.wave));
     };
     std::string decoded, previousPath;
     std::unordered_map<std::string, ChartSource> charts;

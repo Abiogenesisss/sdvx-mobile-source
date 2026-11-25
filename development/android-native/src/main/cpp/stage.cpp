@@ -1,4 +1,5 @@
 #include "stage.h"
+#include "stage_vox.h"
 #include "stage_automation.h"
 #include "s3v_audio.h"
 #include "stage_scene.h"
@@ -111,7 +112,7 @@ constexpr std::array<std::string_view, 5> chainMilestoneClips{
     "eff_combo_01", "eff_combo_02", "eff_combo_03", "eff_combo_04", "eff_combo_05"
 };
 std::string songFile(const Selection& selection, std::string_view file) {
-    return file.starts_with("songs/") ? std::string(file) : selection.asset(file);
+    return file.starts_with("music/") ? std::string(file) : selection.asset(file);
 }
 
 uint32_t littleEndian(const char* bytes, int count) {
@@ -512,7 +513,9 @@ std::shared_ptr<const Stage::SongData> Stage::prepareSong(const Selection& selec
         return song;
     }
     const auto chart = songFile(selection, selection.chart);
-    song->chart = nlohmann::json::parse(selection.externalChart ? readExternalAsset(chart) : readAsset(chart));
+    static const auto judgment = nlohmann::json::parse(readAsset("songs/judgment.json"));
+    const auto raw = selection.externalChart ? readExternalAsset(chart) : readAsset(chart);
+    song->chart = parseVox(raw, judgment, selection.maxExscore);
     const auto path = selection.asset(selection.music);
     auto bytes = selection.externalMusic ? readExternalAsset(path) : readAsset(path);
     if (path.ends_with(".s3v")) {

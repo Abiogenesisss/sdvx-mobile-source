@@ -13,7 +13,8 @@ from bemani.format.afp.swf import AP2DefineSpriteTag, AP2ImageTag, AP2PlaceObjec
 import bemani.format.afp.geo as geometry
 
 
-def prepare(archive, output, scene, textures=(), extra_afp=None):
+def prepare(archive, output, scene, textures=(), extra_afp=None, publish=None):
+    publish = publish or copy_asset
     afp = import_module("compile-stage-background")
     extra_afp = extra_afp or {}
     archives = (*dict.fromkeys(extra_afp.values()), archive)
@@ -24,6 +25,7 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
     used_textures = set()
     bitmap_fills = set()
     movies = {}
+    shape_sources = {}
     geometry.descramble_text = afp.geometry_name
 
     def timeline_tags(timeline):
@@ -32,8 +34,7 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
             if isinstance(tag, AP2DefineSpriteTag):
                 yield from timeline_tags(tag)
 
-    for directory in ("afp", "afp/bsi", "geo", "tex"):
-        (output / directory).mkdir(parents=True, exist_ok=True)
+    output.mkdir(parents=True, exist_ok=True)
 
     def copy_movie(name, folder):
         if name in movies:
@@ -44,11 +45,12 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
         dependencies = {}
         movies[name] = (movie, definitions, dependencies)
         for directory in ("afp", "afp/bsi"):
-            shutil.copyfile(folder / directory / name, output / directory / name)
+            publish(folder / directory / name, output / directory / name)
         for tag in definitions.values():
             if isinstance(tag, AP2ShapeTag):
                 source = folder / "geo" / tag.reference
-                shutil.copyfile(source, output / "geo" / source.name)
+                shape_sources[source.name] = source
+                publish(source, output / "geo" / source.name)
         for tag_id, reference in movie.imported_tags.items():
             dependency = reference.swf
             # Global ActionScript packages supply methods, with no drawable assets.
@@ -90,7 +92,7 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
             elif isinstance(tag, AP2ImageTag):
                 used_textures.add(tag.reference)
             elif isinstance(tag, AP2ShapeTag):
-                data = bytearray((output / "geo" / tag.reference).read_bytes())
+                data = bytearray(shape_sources[tag.reference].read_bytes())
                 if data[:4] == b"GE2D" and struct.unpack_from(">I", data, 16)[0] == 0x24:
                     struct.pack_into(">I", data, 16, 4)
                 shape = Shape(tag.reference, bytes(data))
@@ -107,13 +109,13 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
         if name not in texture_sources:
             raise FileNotFoundError(f"{archive.name} references missing AFP texture {name!r}")
         source = texture_sources[name]
-        shutil.copyfile(source, output / "tex" / source.name)
+        publish(source, output / "tex" / source.name)
     bitmap_regions = {}
-    for directory in sorted({texture_sources[name].parent for name in bitmap_fills}):
+    for directory in sorted({texture_sources[name].parent for name in bitmap_fills}, key=str):
         index = directory / "texturelist.xml"
         if not index.is_file():
             continue
-        for atlas in ElementTree.parse(index).getroot().findall("texture"):
+        for atlas in ElementTree.fromstring(index.read_bytes()).findall("texture"):
             for entry in atlas.findall("image"):
                 name = entry.attrib["name"]
                 if name not in bitmap_fills or texture_sources[name].parent != directory:
@@ -127,6 +129,11 @@ def prepare(archive, output, scene, textures=(), extra_afp=None):
     if bitmap_regions:
         (output / "afp-textures.json").write_text(json.dumps(bitmap_regions, sort_keys=True, separators=(",", ":")), encoding="utf-8")
     (output / "afp-scene.json").write_text(json.dumps(scene, separators=(",", ":")), encoding="utf-8")
+
+
+def copy_asset(source, target):
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, target)
 
 
 def main():

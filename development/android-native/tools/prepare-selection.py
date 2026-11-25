@@ -27,11 +27,11 @@ FLOOR_TITLE_RANGES = (
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('game', type=Path)
-    parser.add_argument('service', type=Path, help='Recording server data/nbl.ts')
+    parser.add_argument('service', type=Path, nargs='?', help='Recording server data/nbl.ts')
     parser.add_argument('output', type=Path)
     args = parser.parse_args()
     beginner = {int(n) for row in re.findall(r"BEGINNER_MUSIC_FOLDER\\t([\d,]+)", args.service.read_text(encoding='utf-8'))
-                for n in row.split(',')}
+                for n in row.split(',')} if args.service else set()
     database = ElementTree.fromstring((args.game/'others/music_db.xml').read_bytes().decode('cp932'))
     rows = {}
     kana = ('あいうえおぁぃぅぇぉ', 'かきくけこがぎぐげご', 'さしすせそざじずぜぞ',

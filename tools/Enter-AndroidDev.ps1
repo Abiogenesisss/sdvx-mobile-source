@@ -1,5 +1,5 @@
 param([string] $Toolchain = $env:SDVX_TOOLCHAIN)
-if (!$Toolchain) { $Toolchain = 'D:/Dev/sdvx-mobile' }
+if (!$Toolchain) { $Toolchain = 'D:/Dev/sdvx-source-tools' }
 
 $SdvxToolchain = (Resolve-Path -LiteralPath $Toolchain -ErrorAction Stop).Path
 $env:SDVX_TOOLCHAIN = $SdvxToolchain

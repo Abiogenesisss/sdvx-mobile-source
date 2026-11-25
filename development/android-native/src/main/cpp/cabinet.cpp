@@ -78,8 +78,8 @@ std::string lower(std::string value) {
 }
 
 std::string keyFor(const Selection& track) {
-    // The original song ID 666 and the bundled song ID 1580 share the resource folder "666".
-    return (track.id == 666 ? "id-666" : track.folder) + "/" + track.chart;
+    // Keep existing local scores when switching the asset layout to original HDD names.
+    return (track.id == 666 ? "id-666" : std::to_string(track.id == 1580 ? 666 : track.id)) + "/" + track.chartKey;
 }
 
 int lampRank(std::string_view outcome) {
@@ -110,6 +110,7 @@ void Cabinet::loadCatalogs() {
     floorContests_ = selectionData.at("floor_contests").get<std::vector<std::string>>();
     const auto details = Json::parse(readAsset("songs/details.json"), nullptr, false);
     versions_.push_back(0);
+    const auto externalFolders = externalMusicFolders();
     for (const auto& entry : catalog) {
         Song song{}; song.version=entry.at("version").get<int>();
         song.searchKey = entry.value("search_key", lower(entry.at("title").get<std::string>() + "\n" + entry.at("artist").get<std::string>()));
@@ -122,19 +123,13 @@ void Cabinet::loadCatalogs() {
         song.kana=meta.at("kana"); song.beginner=meta.at("beginner");
         const auto& rows = entry.at("charts");
         const auto folder = entry.at("folder").get<std::string>();
-        const auto prefix = "songs/" + folder + "/";
-        const auto music = entry.value("music", std::string("music.wav"));
+        const auto prefix = "music/" + folder + "/";
+        const bool externalFolder = externalFolders.contains(folder);
+        if (!externalFolder && !std::ranges::any_of(rows, [](const auto& row) { return row.value("bundled", false); })) continue;
+        const auto shared = entry.at("music").get<std::string>();
+        const auto preview = entry.at("preview").get<std::string>();
         const bool generated = id == AutomationParadise2019;
-        const bool arrangementInstalled = generated && hasAsset(prefix + "arrangement.json");
-        const bool hasBundledChart = !generated &&
-            std::ranges::any_of(rows, [](const auto& row) { return row.value("bundled", true); });
-        const bool bundledMusic = hasBundledChart && hasAsset(prefix + music);
-        const char* preview = hasBundledChart && !hasAsset(prefix + "preview.s3v") ? "preview.wav" : "preview.s3v";
-        std::string externalMusic;
-        if (!generated && !bundledMusic) {
-            if (hasExternalAsset(prefix + "music.s3v")) externalMusic = "music.s3v";
-            else if (music == "music.wav" && hasExternalAsset(prefix + music)) externalMusic = music;
-        }
+        const bool arrangementInstalled = generated && hasAsset("songs/1438/arrangement.json");
         for (const auto& row : rows) {
             Chart chart;
             chart.track = {
@@ -142,23 +137,33 @@ void Cabinet::loadCatalogs() {
                 row.at("name"), row.at("label"), row.at("effect"), row.at("illustrator"),
                 id, row.at("level"), entry.at("bpm_min"), entry.at("bpm_max"), entry.at("background")
             };
-            const auto chartPath = chart.track.asset(chart.track.chart);
-            chart.track.externalChart = !generated && !row.value("bundled", true);
-            const auto trackMusic = row.value("music", music);
-            auto chartMusic = externalMusic;
-            if (!row.contains("music") && chart.track.externalChart && !bundledMusic && chartMusic.empty()) {
-                // Some songs have different arrangements for each difficulty.
-                const auto arrangement = chart.track.chart.substr(0, chart.track.chart.rfind('.')) + ".s3v";
-                if (hasExternalAsset(prefix + arrangement)) chartMusic = arrangement;
+            auto& track = chart.track;
+            track.chartKey = lower(track.difficulty) + ".json";
+            track.maxExscore = row.value("max_exscore", 0);
+            const bool external = !row.value("bundled", false);
+            if (external && !externalFolder) continue;
+            const auto exists = external ? hasExternalAsset : hasAsset;
+            if (!(generated ? arrangementInstalled : exists(track.asset(track.chart)))) continue;
+            track.music = row.value("music", shared);
+            if (!generated && !exists(track.asset(track.music))) {
+                // A raw HDD may have a separate arrangement for one difficulty.
+                auto alternate = track.chart.substr(0, track.chart.rfind('.')) + ".s3v";
+                if (track.music != shared && exists(track.asset(shared))) track.music = shared;
+                else if (exists(track.asset(alternate))) track.music = std::move(alternate);
+                else continue;
             }
-            chart.track.externalMusic = !row.contains("music") && !chartMusic.empty();
-            chart.track.music = chart.track.externalMusic ? chartMusic : trackMusic;
-            chart.track.preview = preview;
-            chart.track.externalPreview = !hasBundledChart;
-            // Unbundled charts must come from the resource directory. An older song shares the bundled folder "666".
-            chart.installed = generated ? arrangementInstalled : chart.track.externalChart
-                ? (bundledMusic || chart.track.externalMusic) && hasExternalAsset(chartPath)
-                : (row.contains("music") ? hasAsset(prefix + trackMusic) : bundledMusic) && hasAsset(chartPath);
+            // External imports may contain just the normal-size jacket, or the shared slot-1 image.
+            const auto paddedId = folder.substr(0, folder.find('_'));
+            const auto cover = "jk_" + paddedId + "_";
+            const auto slot = std::to_string(row.at("slot").get<int>());
+            const std::array jackets{track.jacket,cover+slot+".png",cover+"1_b.png",cover+"1.png",
+                                     cover+slot+"_s.png",cover+"1_s.png"};
+            const auto found = std::ranges::find_if(jackets, [&](const auto& file) { return exists(prefix+file); });
+            if (found == jackets.end()) continue;
+            track.jacket = *found;
+            track.externalChart = track.externalMusic = track.externalPreview = external;
+            track.preview = exists(prefix + preview) ? preview : "";
+            chart.installed = true;
             chart.recordKey = keyFor(chart.track);
             if (details.is_object()) {
                 const auto item = details.find(std::to_string(id));
@@ -192,14 +197,17 @@ void Cabinet::loadCatalogs() {
             for (int s=0;s<int(songs_.size());++s) if (songs_[s].charts.front().track.id==id) {
                 for (int c=0;c<int(songs_[s].charts.size());++c) {
                     const auto& chart=songs_[s].charts[c];
-                    if ((type<3 && c==type) || (type==4 && chart.track.label=="MXM") || (type==3 && c==3 && chart.track.label!="MXM")) {
+                    const auto& label = chart.track.label;
+                    if ((type==0 && label=="NOV") || (type==1 && label=="ADV") ||
+                        (type==2 && label=="EXH") || (type==4 && label=="MXM") ||
+                        (type==3 && label!="NOV" && label!="ADV" && label!="EXH" && label!="MXM" && label!="ULT")) {
                         course.tracks.emplace_back(s,c);break;
                     }
                 }
                 break;
             }
         }
-        if (course.tracks.size()!=source.at("tracks").size()) throw std::runtime_error("Course refers to an unknown chart");
+        if (course.tracks.empty() || course.tracks.size()!=source.at("tracks").size()) continue;
         courses_.push_back(std::move(course));
     }
     options_.speed = 7;
@@ -1896,7 +1904,7 @@ void Cabinet::update(double nowMs) {
     audio_.updatePreview();
     if (page_ == Page::Songs && previewAt_ >= 0) {
         const auto& selected = chart();
-        if (selected.installed && selected.track.id != AutomationParadise2019) {
+        if (selected.installed && !selected.track.preview.empty() && selected.track.id != AutomationParadise2019) {
             const auto& track = selected.track;
             const auto path = track.asset(track.preview);
             // Decode during the original selection delay so a compressed preview does not block rendering.
@@ -2113,7 +2121,7 @@ std::span<const Cabinet::PaymentOffer> Cabinet::modePayments(int mode) {
 }
 
 void Cabinet::startSession(const PaymentOffer& offer) {
-    if (!offer.session) {
+    if (!offer.session || (offer.session == StartType::Skill && courses_.empty())) {
         notice("このモードは現在利用できません");
         return;
     }
@@ -2497,7 +2505,7 @@ void Cabinet::closeSongOverlay(bool accept) {
             if (!chart().installed) {
                 notice("楽曲データがインストールされていません"); return;
             }
-            const auto decide=chart().track.asset("decide.wav");
+            const auto decide=chart().track.presentation("decide.wav");
             play(chart().track.id != 666 && hasAsset(decide) ? std::string_view(decide) : Decide);
         }
         songConfirmAccept_=accept;

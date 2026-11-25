@@ -35,3 +35,14 @@
 !/development/android-native/src/main/assets/ui/
 !/development/android-native/src/main/assets/ui/*.rml
 !/development/android-native/src/main/assets/ui/*.rcss
+
+# Two Android launcher layers explicitly included by the maintainer.
+!/development/android-native/src/main/res/drawable-xxxhdpi/
+!/development/android-native/src/main/res/drawable-xxxhdpi/ic_launcher_background.png
+!/development/android-native/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png
+
+# Mobile touch controls approved by the maintainer.
+!/development/android-native/src/main/assets/stage/
+!/development/android-native/src/main/assets/stage/touch/
+!/development/android-native/src/main/assets/stage/touch/note.png
+!/development/android-native/src/main/assets/stage/touch/fx.png

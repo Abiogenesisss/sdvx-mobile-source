@@ -1,6 +1,7 @@
 #include "app.h"
 #include "application_clock.h"
 #include "asset_directory.h"
+#include "stage_archive.h"
 #include "cabinet.h"
 #include "stage.h"
 
@@ -111,7 +112,7 @@ SDL_IOStream* openAsset(std::string_view path, bool externalOnly) {
     if (!validAssetPath(path)) return nullptr;
     if (!externalOnly)
         if (auto* io = SDL_IOFromFile(std::string(path).c_str(), "rb")) return io;
-    if (!path.starts_with("songs/") && !path.starts_with("crew/")) return nullptr;
+    if (!path.starts_with("music/") && !path.starts_with("crew/")) return nullptr;
     const auto& root = externalRoot();
     if (root.empty()) return nullptr;
     const auto file = root + "/" + std::string(path);
@@ -153,14 +154,29 @@ bool assetExists(std::string_view path, bool externalOnly) {
             return true;
         }
     }
-    if (!path.starts_with("songs/") && !path.starts_with("crew/")) return false;
+    if (!path.starts_with("music/") && !path.starts_with("crew/")) return false;
     static AssetDirectory directory(externalRoot());
     return directory.contains(path);
 }
 }
 
-std::string readAsset(std::string_view path) { return readFile(openAsset(path, false)); }
-bool hasAsset(std::string_view path) { return assetExists(path, false); }
+std::unordered_set<std::string> externalMusicFolders() {
+    std::unordered_set<std::string> names;
+    const auto& root = externalRoot();
+    if (root.empty()) return names;
+    std::error_code error;
+    const std::filesystem::directory_iterator end;
+    for (std::filesystem::directory_iterator it(std::filesystem::path(root) / "music", error); it != end; it.increment(error)) {
+        if (it->is_directory(error)) names.insert(it->path().filename().string());
+    }
+    return names;
+}
+
+std::string readAsset(std::string_view path) {
+    if (const auto* entry = stageArchiveEntry(path); entry && !entry->width) return readStageRange(*entry);
+    return readFile(openAsset(path, false));
+}
+bool hasAsset(std::string_view path) { return stageArchiveEntry(path) || assetExists(path, false); }
 std::string readExternalAsset(std::string_view path) { return readFile(openAsset(path, true)); }
 bool hasExternalAsset(std::string_view path) { return assetExists(path, true); }
 

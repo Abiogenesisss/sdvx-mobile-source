@@ -12,6 +12,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -52,6 +53,7 @@ struct ImageBinding {
 using Bindings = std::unordered_map<std::string, ImageBinding>;
 
 std::string readAsset(std::string_view path);
+std::unordered_set<std::string> externalMusicFolders();
 bool hasAsset(std::string_view path);
 std::string readExternalAsset(std::string_view path);
 bool hasExternalAsset(std::string_view path);
@@ -215,7 +217,12 @@ struct Selection {
     std::string music = "music.wav";
     bool externalChart = false, externalMusic = false, externalPreview = false;
     std::string preview = "preview.wav";
-    std::string asset(std::string_view file) const { return "songs/" + folder + "/" + std::string(file); }
+    int maxExscore = 0;
+    std::string chartKey; // Stable difficulty key for scores and authored stage routes.
+    std::string asset(std::string_view file) const { return "music/" + folder + "/" + std::string(file); }
+    std::string presentation(std::string_view file) const {
+        return "songs/" + std::to_string(id == 1580 ? 666 : id) + "/" + std::string(file);
+    }
 };
 
 void drawLevelBadge(Render&, std::string_view difficulty, int tenths, Rect bounds);

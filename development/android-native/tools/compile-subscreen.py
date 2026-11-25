@@ -70,6 +70,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('game', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--stickers', type=Path, default=Path(__file__).with_name('sticker-metadata.json'))
     args = parser.parse_args()
     graphics = args.game / 'graphics'
     afp = import_module('prepare-cabinet-afp')
@@ -98,7 +99,7 @@ def main():
     cards.sort(key=lambda item: (item['sort'], item['id']))
     bases = atlas_images(graphics / 'board_thumbnail01.ifs', args.output / 'bases')
     stickers = atlas_images(graphics / 'sticker_thumbnail01.ifs', args.output / 'stickers')
-    sticker_metadata = json.loads(Path(__file__).with_name('sticker-metadata.json').read_bytes())
+    sticker_metadata = json.loads(args.stickers.read_bytes())
     catalog = {'cards': cards}
     for key, items, folder in [('bases', bases, 'board_base'), ('stickers', stickers, 'board_sticker')]:
         catalog[key] = []

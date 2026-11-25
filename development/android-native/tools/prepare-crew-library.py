@@ -20,10 +20,11 @@ def main():
     parser.add_argument("ffmpeg", type=Path)
     parser.add_argument("output", type=Path, help="Runtime crew directory")
     parser.add_argument("--jobs", type=int, default=8)
+    parser.add_argument("--bundled",action="store_true",help="Only the two bundled voice banks; models are exported by prepare-navigator.py")
     args = parser.parse_args()
     original = args.game_data / "graphics/live2d"
     files = set()
-    for setting in original.rglob("*.model3.json"):
+    for setting in (() if args.bundled else original.rglob("*.model3.json")):
         refs = json.loads(setting.read_text(encoding="utf-8-sig"))["FileReferences"]
         files.add(setting)
         files.update(setting.parent / refs[key] for key in ("Moc", "Physics", "Pose", "DisplayInfo", "UserData")
@@ -54,9 +55,13 @@ def main():
 
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         for bank in sorted((args.game_data / "sound/voice").glob("vo*")):
+            if args.bundled and bank.name not in PIN_VOICE_BANKS and bank.name not in PIN_VOICE_BANKS.values():
+                continue
             voices, pending = {}, []
             for archive in sorted(bank.glob("*.s3p")):
                 for entry, payload in read_bank(archive):
+                    if args.bundled and bank.name in PIN_VOICE_BANKS.values() and entry["name"] not in PIN_VOICE_SLOTS:
+                        continue
                     name = sha256(payload).hexdigest()[:24] + ".flac"
                     voices[entry["name"]] = [name, entry["s3v_gain_db"]]
                     if name not in unique:
@@ -71,6 +76,8 @@ def main():
                 task.result()
             slots[bank.name] = voices
             print(f"{bank.name}: {len(voices)} original slots", flush=True)
+    if args.bundled:
+        slots = {bank: slots[bank] for bank in PIN_VOICE_BANKS}
     (folder / "index.json").write_text(json.dumps(slots, separators=(",", ":")), encoding="utf-8")
     print(f"{sum(map(len, slots.values()))} voice slots, {len(unique)} unique recordings", flush=True)
 

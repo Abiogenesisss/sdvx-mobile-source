@@ -22,10 +22,10 @@ constexpr auto inversionColor = "runtime/stage-inversion-color";
 
 bool hasSongBackground(const Selection& selection) {
     // Song ID 666 uses the same folder name as the authored background for song ID 1580.
-    if ((selection.id == 271 && selection.chart != "exceed.json") ||
-        (selection.id == 636 && selection.chart != "ultimate.json")) return false;
-    return selection.id != 666 && (selection.id != 642 || selection.chart == "exceed.json")
-        && hasAsset(selection.asset("background/afp-scene.json"));
+    if ((selection.id == 271 && selection.chartKey != "exceed.json") ||
+        (selection.id == 636 && selection.chartKey != "ultimate.json")) return false;
+    return selection.id != 666 && (selection.id != 642 || selection.chartKey == "exceed.json")
+        && hasAsset(selection.presentation("background/afp-scene.json"));
 }
 
 const nlohmann::json& backgroundCatalog() {
@@ -45,7 +45,7 @@ const nlohmann::json& originalStageRegistration(const Selection& selection, bool
     if (dedicated) {
         for (const auto& route : table.at("special_routes")) {
             if (route.at("song_id") == selection.id &&
-                route.at("chart") == selection.chart)
+                route.at("chart") == selection.chartKey)
                 return table.at("special").at(std::to_string(route.at("key").get<int>()));
         }
     }
@@ -154,7 +154,7 @@ std::string commonStageBackground(int number) {
 }
 
 std::string stageBackgroundFolder(const Selection& selection) {
-    return hasSongBackground(selection) ? selection.asset("background") : commonStageBackground(selection.background);
+    return hasSongBackground(selection) ? selection.presentation("background") : commonStageBackground(selection.background);
 }
 
 struct StageScene::Source {
@@ -170,7 +170,7 @@ struct StageScene::Source {
 std::shared_ptr<const StageScene::Source> StageScene::load(const Selection& selection) {
     auto source = std::make_shared<Source>();
     source->folder = stageBackgroundFolder(selection);
-    if (source->folder == selection.asset("background"))
+    if (source->folder == selection.presentation("background"))
         source->scene = nlohmann::json::parse(readAsset(source->folder + "/scene.json"));
     source->afp = nlohmann::json::parse(readAsset(source->folder + "/afp-scene.json"));
     for (const auto& entry : source->afp.at("movies")) {
@@ -246,7 +246,7 @@ struct StageScene::Impl {
 
     Impl(Render& graphics, const Selection& selection, const Source& source, bool defer)
         : render(graphics), background(source.folder),
-          specialBackground(background == selection.asset("background")), deferTextures(defer) {
+          specialBackground(background == selection.presentation("background")), deferTextures(defer) {
         const auto addTunnel = [&](const nlohmann::json& entry) {
             if (entry.is_null()) {
                 tunnels.emplace_back();
@@ -330,7 +330,7 @@ struct StageScene::Impl {
                 addTunnel(*entry);
         }
         if (!tunnels.empty()) tunnelClock = std::floor(applicationTime());
-        if (specialBackground && selection.folder == "666")
+        if (specialBackground && selection.id == 1580)
             sceneModels.emplace_back("crew/kureha/model/kureha_9thkac_0101.model3.json",
                                      std::array{540.f, 800.f, .68f, .68f}, deferTextures);
         loadOriginalLayers(selection);

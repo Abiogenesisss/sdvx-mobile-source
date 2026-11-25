@@ -39,7 +39,7 @@ android {
     }
     sourceSets.main.java.srcDir "$sdl/android-project/app/src/main/java"
     sourceSets.main.assets.setSrcDirs([layout.buildDirectory.dir('nabla-assets')])
-    androidResources { noCompress += ['wav', 'flac', 's3v', 'webp'] }
+    androidResources { noCompress += ['ifs', 'wav', 'flac', 's3v', 'webp'] }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -50,9 +50,8 @@ kotlin { jvmToolchain(17) }
 
 def songCatalog = file('assets-native/songs/library.json')
 def stageAssets = tasks.register('stageNablaAssets', Sync) {
-    def songJackets = new JsonSlurper().parse(songCatalog, 'UTF-8').collectMany { song ->
-        song.charts.collect { chart -> "songs/${song.folder}/${chart.jacket}".toString() }
-    }.toSet()
+    def bundledFolders = new JsonSlurper().parse(songCatalog, 'UTF-8')
+            .findAll { song -> song.charts.any { it.bundled } }.collect { it.folder }.toSet()
     inputs.file(songCatalog)
     outputs.upToDateWhen { false }
     into layout.buildDirectory.dir('nabla-assets')
@@ -60,11 +59,7 @@ def stageAssets = tasks.register('stageNablaAssets', Sync) {
     exclude '**/*.log', 'songs/catalog-audit.json', 'songs/**/*.flac', 'crew/kureha/*.webp',
             'subscreen/avatars/**'
     eachFile { entry ->
-        if (entry.path ==~ /songs\/[^\/]+\/jacket-\d+\.png/ && !songJackets.contains(entry.path)) {
-            entry.exclude()
-        }
-        if (entry.path ==~ /songs\/[^\/]+\/(music|preview)\.wav/ &&
-                file('assets-native/' + entry.path.replaceFirst(/\.wav$/, '.s3v')).isFile()) {
+        if (entry.path.startsWith('music/') && !bundledFolders.contains(entry.path.split('/')[1])) {
             entry.exclude()
         }
     }

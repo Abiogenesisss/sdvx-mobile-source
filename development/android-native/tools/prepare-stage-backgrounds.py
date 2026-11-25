@@ -80,34 +80,18 @@ def gauge_labels(swf):
     return {"initial": initial, "normal": normal, "clear": "clear"}
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", type=Path, help="Directory containing extracted game_bg IFS archives")
-    parser.add_argument("output", type=Path)
-    parser.add_argument("--source-extra", type=Path, action="append", default=[], help="Additional extracted IFS directory")
-    parser.add_argument("--game-textures", type=Path, required=True, help="Original graphics/game_tex directory")
-    parser.add_argument("--ids", type=int, nargs="+", choices=BACKGROUNDS, default=list(BACKGROUNDS))
-    parser.add_argument("--registration", type=Path, required=True, help="Full JSON from extract-stage-registration.py")
-    args = parser.parse_args()
-    registrations = json.loads(args.registration.read_text(encoding="utf-8"))["ordinary"]
+def prepare_backgrounds(archive_path, output, game_textures, registration, ids, publish=None):
+    registrations = json.loads(registration.read_text(encoding="utf-8"))["ordinary"]
     tunnels = {}
     for number in TUNNEL_IDS:
         entry = registrations[str(number)]["tunnels"][0]
         tunnels[number] = [entry[key] for key in ("name", "angle", "density", "preset")]
-    args.output.mkdir(parents=True, exist_ok=True)
-    def archive_path(name):
-        for source in (args.source, *args.source_extra):
-            for suffix in (".ifs", "_ifs"):
-                path = source / f"gmbg_{name}{suffix}"
-                if path.is_dir():
-                    return path
-        raise FileNotFoundError(f"Missing extracted game_bg/gmbg_{name}.ifs")
-
+    output.mkdir(parents=True, exist_ok=True)
     shared = archive_path("diver_tex") / "tex"
     palettes = {90: "blue", 91: "blue", 104: "white", 114: "purple"}
     prepare = import_module("prepare-original-afp").prepare
     read_movie = import_module("compile-stage-background").BackgroundSWF
-    for number in args.ids:
+    for number in ids:
         archive = BACKGROUNDS[number][0]
         source = archive_path(archive)
         afp = source / "afp"
@@ -133,17 +117,37 @@ def main():
             scene["movies"].append({"slot": 1, "name": "bg_top", "label": 0})
         if gauge:
             scene["gauge"] = gauge
-        prepare(source, args.output / str(number), scene, texture_dirs)
+        prepare(source, output / str(number), scene, texture_dirs, publish=publish)
     aliases = {str(number): number for number in BACKGROUNDS}
     aliases.update({str(alias): number for number, (_, aliases) in BACKGROUNDS.items() for alias in aliases})
-    textures = args.output / "tunnel"
+    textures = output / "tunnel"
     textures.mkdir(exist_ok=True)
     for family in sorted({row[0] for row in tunnels.values()}):
         for state in ("no", "cl"):
             name = f"tex_{family}_{state}.png"
-            shutil.copyfile(args.game_textures / name, textures / name)
+            shutil.copyfile(game_textures / name, textures / name)
     catalog = {"backgrounds": aliases, "tunnels": tunnels}
-    (args.output / "catalog.json").write_text(json.dumps(catalog, separators=(",", ":")), encoding="utf-8")
+    (output / "catalog.json").write_text(json.dumps(catalog, separators=(",", ":")), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("source", type=Path, help="Directory containing extracted game_bg IFS archives")
+    parser.add_argument("output", type=Path)
+    parser.add_argument("--source-extra", type=Path, action="append", default=[], help="Additional extracted IFS directory")
+    parser.add_argument("--game-textures", type=Path, required=True, help="Original graphics/game_tex directory")
+    parser.add_argument("--ids", type=int, nargs="+", choices=BACKGROUNDS, default=list(BACKGROUNDS))
+    parser.add_argument("--registration", type=Path, required=True, help="Full JSON from extract-stage-registration.py")
+    args = parser.parse_args()
+    def archive_path(name):
+        for source in (args.source, *args.source_extra):
+            for suffix in (".ifs", "_ifs"):
+                path = source / f"gmbg_{name}{suffix}"
+                if path.is_dir():
+                    return path
+        raise FileNotFoundError(f"Missing extracted game_bg/gmbg_{name}.ifs")
+
+    prepare_backgrounds(archive_path, args.output, args.game_textures, args.registration, args.ids)
 
 
 if __name__ == "__main__":

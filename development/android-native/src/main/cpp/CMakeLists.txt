@@ -54,7 +54,7 @@ target_link_libraries(Framework PUBLIC CubismCore GLESv3)
 
 file(GLOB STAGE_FILES CONFIGURE_DEPENDS "stage*.cpp")
 file(GLOB CABINET_FILES CONFIGURE_DEPENDS "cabinet*.cpp")
-add_library(main SHARED main.cpp audio.cpp s3v_audio.cpp render.cpp afp.cpp afp_movie.cpp ${STAGE_FILES} ${CABINET_FILES})
+add_library(main SHARED main.cpp audio.cpp s3v_audio.cpp archive_texture.cpp archive_lz.cpp render.cpp afp.cpp afp_movie.cpp ${STAGE_FILES} ${CABINET_FILES})
 target_compile_features(main PRIVATE cxx_std_20)
 target_compile_options(main PRIVATE -Wall -Wextra -O2)
 target_include_directories(main SYSTEM PRIVATE

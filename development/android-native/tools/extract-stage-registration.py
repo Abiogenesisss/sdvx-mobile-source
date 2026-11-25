@@ -321,9 +321,10 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--compact", type=Path, help="Write the compact bundled registration index")
     parser.add_argument("--runtime-inc", type=Path, help="Write the C++ include for all registered stages")
+    parser.add_argument("--contents", type=Path, help="Local HDD contents directory")
     args = parser.parse_args()
     root = args.root
-    contents = root / "2026101300/LAZY_KFC/contents"
+    contents = args.contents or root / "2026101300/LAZY_KFC/contents"
     dll = pefile.PE(str(contents / "modules/soundvoltex.dll"))
     library = root / "development/android-native/src/main/assets/songs/library.json"
     music_db = ElementTree.fromstring((contents / "data/others/music_db.xml").read_text(encoding="cp932"))

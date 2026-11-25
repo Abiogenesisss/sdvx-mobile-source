@@ -15,16 +15,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("game", type=Path)
     parser.add_argument("assets", type=Path)
+    parser.add_argument("--judgment", type=Path)
     args = parser.parse_args()
-    waves = args.game / "sound/automa/waves"
+    prepare(args.game,args.assets,args.judgment or Path(__file__).resolve().parents[1]/"assets-reference/songs/840/gravity.json")
+
+
+def prepare(game, assets, judgment):
+    waves = game / "sound/automa/waves"
     db = ElementTree.fromstring((waves / "wave_info_2019apr.xml").read_bytes().decode("cp932"))
-    # Reuse the judgment and offset tables used by the other special songs.
-    fixture = json.loads((Path(__file__).resolve().parents[1] / "assets-reference/songs/840/gravity.json")
-                         .read_text(encoding="utf-8"))
+    fixture = json.loads(judgment.read_text(encoding="utf-8"))
     compile_chart = import_module("compile-vox").compile_chart
-    output = args.assets / "songs/1438"
+    output = assets / "songs/1438"
     output.mkdir(parents=True, exist_ok=True)
-    original, = (args.game / "music").glob("1438_*")
+    original, = (game / "music").glob("1438_*")
     shutil.copyfile(original / "jk_1438_1.png", output / "jacket-1.png")
     tracks = []
     for entry in db.findall("mdb/music"):
@@ -36,7 +39,7 @@ def main():
         destination = output / str(song_id)
         destination.mkdir(exist_ok=True)
         if song_id < 99001:
-            original, = (args.game / "music").glob(f"{song_id:04d}_*")
+            original = next((game / "music").glob(f"{song_id:04d}_*"))
             shutil.copyfile(original / f"jk_{song_id:04d}_1.png", destination / "jacket.png")
         for row in db.findall(f"phrases/{name}/phrase"):
             get = row.findtext

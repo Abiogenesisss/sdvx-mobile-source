@@ -1,13 +1,10 @@
-"""Build optional song and crew ZIPs from the original S3V and exported assets."""
+"""Pack local song directories in HDD layout and optionally package exported crew assets."""
 import argparse
 from collections import Counter
-from concurrent.futures import ThreadPoolExecutor
-from importlib import import_module
 import json
 from pathlib import Path, PurePosixPath
+import shutil
 import sys
-from tempfile import TemporaryDirectory
-from xml.etree import ElementTree
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
 
@@ -92,157 +89,101 @@ def build_crew(destination, external, builtin, reference):
     return name, count
 
 
+def build_songs(output, directories, unpacked):
+    if unpacked:
+        (output / ".nomedia").touch()
+        music = output / "music"
+        music.mkdir(exist_ok=True)
+        for directory in directories:
+            shutil.copytree(directory, music / directory.name, dirs_exist_ok=True)
+        print(f"Copied {len(directories):,} song directories to {music}", flush=True)
+        return [], Counter()
+
+    total = Counter()
+    names = []
+    batch_size = 500
+    for start in range(0, len(directories), batch_size):
+        batch = directories[start:start + batch_size]
+        name = f"SDVX-s3v-songs-{start // batch_size + 1:02d}.zip"
+        destination = output / name
+        partial = destination.with_suffix(".zip.partial")
+        print(f"{name}: packing {start+1:,}–{start+len(batch):,}/{len(directories):,}", flush=True)
+        try:
+            with ZipFile(partial, "w") as archive:
+                archive.writestr(".nomedia", b"", ZIP_STORED)
+                for directory in batch:
+                    for file in sorted(directory.rglob("*")):
+                        if file.is_file():
+                            key = PurePosixPath("music", directory.name, *file.relative_to(directory).parts)
+                            add_file(archive, file, key.as_posix())
+                            total[file.suffix] += 1
+                count = len(archive.filelist)
+            partial.replace(destination)
+        finally:
+            partial.unlink(missing_ok=True)
+        names.append(name)
+        print(f"{name}: {count:,} entries, {destination.stat().st_size / 2**30:.2f} GiB", flush=True)
+    return names, total
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("project", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--jobs", type=int, default=12)
-    parser.add_argument("--songs", nargs="+", type=int)
+    parser.add_argument("--hdd", type=Path, help="Local HDD root, contents, or data directory")
+    parser.add_argument("--songs", nargs="+", type=int, help="Export only these song IDs and skip the crew pack")
+    parser.add_argument("--directory", action="store_true", help="Copy songs to an unpacked music directory")
     args = parser.parse_args()
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+    from hdd_inputs import locate_contents
+
+    contents = locate_contents(args.hdd or args.project / "2026101300")
+    music = contents / "data/music"
+    output = args.output.resolve()
+    original_music = music.resolve()
+    if output.is_relative_to(original_music) or (args.directory and (output / "music").resolve() == original_music):
+        parser.error("Choose an output directory outside the original HDD music directory.")
+    requested = set(args.songs or ())
+    found = set()
+    directories = []
+    for directory in sorted(music.iterdir()):
+        prefix, sep, _ = directory.name.partition("_")
+        if not sep or not prefix.isascii() or not prefix.isdecimal() or not directory.is_dir():
+            continue
+        song_id = int(prefix)
+        if requested and song_id not in requested:
+            continue
+        if any(directory.glob("*.vox")):
+            directories.append(directory)
+            found.add(song_id)
+    if missing := requested - found:
+        print(f"Skipped song IDs without a local VOX directory: {sorted(missing)}", flush=True)
+
+    output.mkdir(parents=True, exist_ok=True)
+    names, totals = build_songs(output, directories, args.directory)
+    if args.songs or args.directory:
+        return
+
     runtime = args.project / "development/android-native"
     builtin = runtime / "src/main/assets"
     reference = runtime / "assets-reference"
     external = args.project / "development/download-content"
-    original = args.project / "2026101300/LAZY_KFC/contents/data"
-    sys.path.insert(0, str(runtime / "tools"))
-    compile_chart = import_module("compile-vox").compile_chart
-
-    song_catalog = load(builtin / "songs/library.json")
-    judgment = load(reference / "songs/666/advanced.json")
-    database = ElementTree.fromstring((original / "others/music_db.xml").read_bytes().decode("cp932"))
-    db_songs = {int(node.attrib["id"]): node for node in database}
-    original_dirs = {int(path.name.split("_", 1)[0]): path for path in (original / "music").iterdir() if path.is_dir()}
-    slots = {"NOV": "1", "ADV": "2", "EXH": "3", "MXM": "5"}
-    missing = []
-    plans = []
-    bundled_charts = 0
-    for song in song_catalog:
-        song_id = song["id"]
-        folder = song["folder"]
-        rows = song["charts"]
-        directory = original_dirs[song_id]
-        vox = {path.stem.rsplit("_", 1)[1][0]: path for path in directory.glob("*.vox")}
-        charts = []
-        for row in rows:
-            if row.get("bundled", True):
-                bundled_charts += 1
-                continue
-            slot = "6" if row["label"] == "ULT" and "6" in vox else slots.get(row["label"], "4")
-            if slot not in vox:
-                missing.append((song_id, song["title"], row["label"], "VOX absent from original directory"))
-                continue
-            charts.append((row, slot, vox[slot]))
-        if charts:
-            plans.append((song, directory, charts, any(row.get("bundled", True) for row in rows)))
-
-    if args.songs:
-        plans = [plan for plan in plans if plan[0]["id"] in args.songs]
-        if len(plans) != len(set(args.songs)):
-            raise ValueError("Selected song IDs must all have downloadable audio and charts")
-    args.output.mkdir(parents=True, exist_ok=True)
-    print(f"{len(plans):,} songs, {sum(len(plan[2]) for plan in plans):,} charts to export, "
-          f"{bundled_charts} built-in charts skipped, {len(missing)} unavailable charts", flush=True)
-
-    with TemporaryDirectory(prefix="song-work-", dir=args.output) as temp:
-        work = Path(temp)
-
-        def convert(plan):
-            song, source, charts, shared_builtin = plan
-            song_id = song["id"]
-            folder = song["folder"]
-            target = work / str(song_id)
-            target.mkdir()
-            assets = []
-            for row, slot, vox in charts:
-                name = row["chart"]
-                cached = external / "songs" / folder / name
-                if cached.is_file() and load(cached).get("song_id") == song_id:
-                    assets.append((cached, f"songs/{folder}/{name}", False))
-                    continue
-                difficulty = "infinite" if slot == "4" else row["name"].lower()
-                stats = db_songs[song_id].find(f"difficulty/{difficulty}")
-                metadata = {
-                    "song_id": song_id, "title": song["title"], "artist": song["artist"],
-                    "difficulty": row["name"], "source_vox": vox.name, "level_tenths": row["level"],
-                    "max_exscore": int(stats.findtext("max_exscore")),
-                }
-                chart_path = target / name
-                chart_path.write_bytes(encoded(compile_chart(vox.read_bytes(), judgment, metadata)))
-                assets.append((chart_path, f"songs/{folder}/{name}", True))
-
-            if not shared_builtin:
-                shared = source / f"{source.name}.s3v"
-                if shared.is_file():
-                    assets.append((shared, f"songs/{folder}/music.s3v", False))
-                else:
-                    for row, _, vox in charts:
-                        audio = vox.with_suffix(".s3v")
-                        if not audio.is_file():
-                            raise FileNotFoundError(audio)
-                        name = Path(row["chart"]).stem + ".s3v"
-                        assets.append((audio, f"songs/{folder}/{name}", False))
-
-            preview = source / f"{source.name}_pre.s3v"
-            if preview.is_file() and not shared_builtin:
-                assets.append((preview, f"songs/{folder}/preview.s3v", False))
-            return assets, target
-
-        total = Counter()
-        errors = []
-        archive_names = []
-        batch_size = 500
-        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-            for start in range(0, len(plans), batch_size):
-                batch = plans[start:start + batch_size]
-                name = f"SDVX-s3v-songs-{start // batch_size + 1:02d}.zip"
-                output = args.output / name
-                partial = output.with_suffix(".zip.partial")
-                if output.is_file():
-                    with ZipFile(output) as archive:
-                        for item in archive.infolist():
-                            total[Path(item.filename).suffix] += 1
-                    archive_names.append(name)
-                    continue
-                print(f"{name}: exporting {start+1:,}–{start+len(batch):,}/{len(plans):,}", flush=True)
-                with ZipFile(partial, "w") as archive:
-                    archive.writestr(".nomedia", b"", ZIP_STORED)
-                    jobs = [pool.submit(convert, plan) for plan in batch]
-                    for plan, job in zip(batch, jobs):
-                        try:
-                            assets, target = job.result()
-                        except Exception as error:
-                            errors.append((plan[0]["id"], plan[0]["title"], repr(error)))
-                            print(f"Failed song {plan[0]['id']}: {error}", flush=True)
-                            continue
-                        for path, key, temporary in assets:
-                            add_file(archive, path, key)
-                            total[path.suffix] += 1
-                            if temporary:
-                                path.unlink()
-                        target.rmdir()
-                    count = len(archive.filelist)
-                partial.replace(output)
-                archive_names.append(name)
-                print(f"{name}: {count:,} entries, {output.stat().st_size / 2**30:.2f} GiB", flush=True)
-
-    if args.songs:
-        if errors:
-            sys.exit(1)
-        return
-    crew_name = "SDVX-extra-crew.zip"
-    crew_output = args.output / crew_name
+    crew_name, crew_count = None, 0
+    crew_output = output / "SDVX-extra-crew.zip"
     if crew_output.is_file():
+        crew_name = crew_output.name
         with ZipFile(crew_output) as archive:
             crew_count = len(archive.infolist())
+    elif all((root / file).is_file() for root in (external, builtin)
+             for file in ("crew/catalog.json", "crew/voice/index.json")):
+        crew_name, crew_count = build_crew(output, external, builtin, reference)
     else:
-        crew_name, crew_count = build_crew(args.output, external, builtin, reference)
-    report = {"songs": len(plans) - len(errors), "bundled_charts_skipped": bundled_charts,
-              "missing_vox": missing, "song_errors": errors, "song_file_counts": dict(total),
-              "song_archives": archive_names, "crew_archive": crew_name, "crew_files": crew_count}
-    (args.output / "s3v-report.json").write_bytes(encoded(report))
+        print("Skipped crew ZIP since the local crew inputs are unavailable.", flush=True)
+
+    report = {"songs": len(directories), "song_file_counts": dict(totals), "song_archives": names,
+              "crew_archive": crew_name, "crew_files": crew_count}
+    (output / "s3v-report.json").write_bytes(encoded(report))
     print(json.dumps(report, ensure_ascii=False), flush=True)
-    if errors:
-        sys.exit(1)
 
 
 if __name__ == "__main__":

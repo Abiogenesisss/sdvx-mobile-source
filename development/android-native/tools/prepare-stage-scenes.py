@@ -511,24 +511,30 @@ def main():
                     return path
         raise FileNotFoundError(f"Extracted AFP archive {name} was not found")
 
-    for song in args.songs:
+    prepare_scenes(package, args.shared, args.output, args.songs, args.live2d)
+
+
+def prepare_scenes(package, shared, output, songs, live2d, publish=None):
+    exporter = import_module("prepare-original-afp")
+    publish = publish or exporter.copy_asset
+    for song in songs:
         spec = SCENES[song]
         source = package(spec["archive"])
-        destination = args.output / spec.get("folder", str(song)) / "background"
+        destination = output / spec.get("folder", str(song)) / "background"
         afp = original_playback(spec, source)
-        texture_dirs = (args.shared, *(package(name) / "tex" for name in spec.get("texture_packs", ())))
+        texture_dirs = (shared, *(package(name) / "tex" for name in spec.get("texture_packs", ())))
         extra_afp = {name: package(archive) for name, archive in spec.get("extra_afp", {}).items()}
-        import_module("prepare-original-afp").prepare(source, destination, afp, texture_dirs, extra_afp)
+        exporter.prepare(source, destination, afp, texture_dirs, extra_afp, publish)
         scene = {field: spec[field] for field in ("models", "motions", "tunnels",
                                                  "inversion_layers", "text") if field in spec}
         scene["initial"] = [{key: value for key, value in layer.items() if key in ("bounds", "after_models", "foreground", "priority")}
                             for layer in spec["initial"]]
         if "text" in scene:
             for file in (source / "tex").glob(scene["text"]["prefix"] + "[0-9][0-9].png"):
-                shutil.copyfile(file, destination / file.name)
+                publish(file, destination / file.name)
         for model in scene.get("models", ()):
             folder = Path(model["asset"]).parent
-            shutil.copytree(args.live2d / folder, destination / "models" / folder, dirs_exist_ok=True)
+            shutil.copytree(live2d / folder, destination / "models" / folder, dirs_exist_ok=True)
         (destination / "scene.json").write_text(json.dumps(scene, separators=(",", ":")), encoding="utf-8")
 
 

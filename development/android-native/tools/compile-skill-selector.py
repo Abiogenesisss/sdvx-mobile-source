@@ -9,14 +9,21 @@ import re
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('game', type=Path)
-    parser.add_argument('server_data', type=Path)
+    parser.add_argument('server_data', type=Path, nargs='?')
     parser.add_argument('output', type=Path)
     parser.add_argument('--source', type=Path, help=argparse.SUPPRESS)
+    parser.add_argument('--courses-only', action='store_true')
     args = parser.parse_args()
-    afp = import_module('prepare-cabinet-afp')
-    graphics = args.game / 'graphics/ver07'
-    afp.prepare(graphics, args.output, *afp.SCENES['skill_selector'])
-    afp.SKILL_TOTAL.copy_static(graphics, args.output, 'skill_selector')
+    args.output.mkdir(parents=True,exist_ok=True)
+    if not args.courses_only:
+        afp = import_module('prepare-cabinet-afp')
+        graphics = args.game / 'graphics/ver07'
+        afp.prepare(graphics, args.output, *afp.SCENES['skill_selector'])
+        afp.SKILL_TOTAL.copy_static(graphics, args.output, 'skill_selector')
+    if args.server_data is None:
+        (args.output/'courses.json').write_text('[]',encoding='utf-8')
+        print('No optional service table supplied; no server-defined course sets.')
+        return
     source = args.server_data.read_text(encoding='utf-8').split('export const COURSES7 = ',1)[1].split('export const ',1)[0].strip().rstrip(';')
     source = re.sub(r'//[^\n]*','',source)
     source = re.sub(r'\b(\w+)\s*:',r'"\1":',source)

@@ -4,7 +4,7 @@
 
 ## 1. 配置工具链
 
-使用 PowerShell、Python 3.10 或更新版本、Git for Windows、JDK 17 和 Gradle 8.13。用一个独立的 ASCII 目录作工具链根目录。如果电脑上还有旧开发工程，请给这个克隆使用不同的根目录，因为构建脚本会在里面建立指向当前源码的目录联接。
+使用 PowerShell、CPython 3.13 和 Windows Python 启动器、Git for Windows、JDK 17 和 Gradle 8.13。用一个独立的 ASCII 目录作工具链根目录。如果电脑上还有旧开发工程，请给这个克隆使用不同的根目录，因为构建脚本会在里面建立指向当前源码的目录联接。
 
 ```powershell
 $env:SDVX_TOOLCHAIN = 'D:\Dev\sdvx-source-tools'
@@ -19,7 +19,7 @@ sdkmanager.bat --sdk_root="$env:ANDROID_HOME" 'platform-tools' 'platforms;androi
 sdkmanager.bat --sdk_root="$env:ANDROID_HOME" --licenses
 ```
 
-首次编译音频解码库还要安装 Visual Studio C++ x64/x86 Build Tools 与 Windows SDK。确保 `Get-Command bash.exe` 指向 Git for Windows 的 Bash，`curl.exe`、`tar.exe` 和 `python` 可用。转换音频还需可在 Windows 上运行的 FFmpeg CLI；Android 目标的 FFmpeg 动态库不能用作这个命令行程序。
+首次编译音频解码库还要安装 Visual Studio C++ x64/x86 Build Tools 与 Windows SDK。确保 `Get-Command bash.exe` 指向 Git for Windows 的 Bash，`curl.exe`、`tar.exe` 和 `python` 可用。Windows FFmpeg 命令行程序随下方独立 Python 工具环境安装。构建 Android 音频库的工具链单独配置。
 
 ### 第三方依赖
 
@@ -28,62 +28,85 @@ sdkmanager.bat --sdk_root="$env:ANDROID_HOME" --licenses
 | Live2D Cubism SDK for Native 5-r.5 | 从 [Live2D](https://www.live2d.com/en/sdk/download/native/) 阅读并接受适用条款，在 `$env:SDVX_TOOLCHAIN/native-deps/CubismSdkForNative-5-r.5` 保留完整的 `Core`、`Framework` 和许可文件。另见 [SDK 发布条款](https://www.live2d.com/en/sdk/license/)。 |
 | BASS、BASS_FX for Android | 从 [Un4seen](https://www.un4seen.com/) 按其许可获取 Android 包，分别解压至 `native-deps/bass` 和 `native-deps/bass-fx`。目录内应有 `c/bass.h`、`C/bass_fx.h` 和对应 ABI 的库。 |
 | SDL3、RmlUi、FreeType、stb、libwebp、nlohmann/json、FFmpeg | 构建脚本从上游获取指定版本。具体版本与路径在 [Build-SDVX.ps1](../tools/Build-SDVX.ps1) 和 [Ensure-SdvxAudioCodec.ps1](../tools/Ensure-SdvxAudioCodec.ps1)；首次运行需要联网。 |
-| Python 导出环境 | 建议单独创建虚拟环境。按脚本需要安装 Pillow、numpy、pefile、capstone、[bemaniutils](https://github.com/DragonMinded/bemaniutils)（导入名 `bemani`）及 [ifstools](https://github.com/mon/ifstools) CLI。AFP 导出使用 bemaniutils 的 AFP/IFS 子模块，兼容版本组合尚未在干净机器上锁定。 |
-
-## 2. 接入本地原盘
-
-输入基线为 `2026101300/LAZY_KFC/contents`。多数工具读其 `data` 子目录；登记表还要读 `modules/soundvoltex.dll`，只有 `data` 不够。将自己的版本目录放在仓库根的 `2026101300`，或在该位置建立指向它的目录联接。下面示例的目标目录应直接包含 `LAZY_KFC`。
+| Python 工具环境 | `Install-SourceTools.ps1` 创建独立 venv，安装固定版本的解析模块及提供 Windows FFmpeg CLI 的 `imageio-ffmpeg`，并输出 Python 和 FFmpeg 的路径。首次安装需要联网。 |
 
 ```powershell
-New-Item -ItemType Junction -Path .\2026101300 -Target 'E:\MyData\2026101300'
-$app = 'development/android-native'
-$data = '2026101300/LAZY_KFC/contents/data'
-$assets = "$app/src/main/assets"
-Get-Item "$data/others/music_db.xml", '2026101300/LAZY_KFC/contents/modules/soundvoltex.dll'
+& .\tools\Install-SourceTools.ps1 -Toolchain $env:SDVX_TOOLCHAIN
 ```
 
-原盘只用作本地输入。中间文件可放在已被 Git 忽略的 `local-inputs/`。端上使用的资源分两层：`$app/assets-reference` 存放共用资源，`$assets` 存放补充和覆盖项。相同路径优先取后者。保留仓库中的 `$assets/ui` 界面源码。
+## 2. 从 HDD 直接构建
 
-## 3. 准备构建输入
+从纯净的本地 `contents`、它的 `data` 子目录、或包含它的版本目录开始。识别依据是 `data/others/music_db.xml` 和 `modules/soundvoltex.dll`；根目录可以是 `E:\KFC\contents`，也可以是诸如 `E:\2026101300\LAZY_KFC\contents` 的布局。若一个目录下有多套数据，请直接指定其中一套的 `contents`。原盘作为只读输入使用。
 
-**已有自己合法准备的完整导出时**，按原相对路径放回上述两层目录，并准备本地登记表和启动图标。不要将整份原盘直接复制到 Android 的 assets 目录。只有 HDD 时，下面列出实际转换入口；它们覆盖不同环节，并非完整流水线。
+完成第 1 节的 Android 工具链和厂商 SDK 配置后，从独立的 ASCII 源码路径运行：
 
-| 环节 | 输入、工具与输出 |
+```powershell
+& .\tools\Build-FromHDD.ps1 -Hdd 'E:\KFC\contents' -Toolchain 'D:\Dev\sdvx-source-tools'
+```
+
+首次调用会在缺少 venv 时运行 [Install-SourceTools.ps1](../tools/Install-SourceTools.ps1)，使用该环境中的 Python 和 Windows FFmpeg。正常流程依次生成曲库和编曲、C++ 登记表、模型和语音、角色选择器和副屏、街机界面和舞台资源，再运行 Gradle/CMake、组装、对齐和签名。在 SDK、依赖以及原盘之外，不需要旧工程的素材目录、上一版 APK 或模拟器。
+
+| 参数 | 用途 |
 | --- | --- |
-| 曲谱和曲目目录 | `pack-song-library.py` 读 `data`、本地判定 JSON（含 `judgment` 和 `offsets`）、选定的曲目 ID，生成已内置曲目的目录。`prepare-song-catalog.py` 在该目录上补全曲库，向 `src/main/assets/songs` 写入 `library.json` 等。打包工具另有两个现存输入约定：外置曲包使用 `assets-reference/songs/666/advanced.json` 的判定字段，动态编曲使用 `assets-reference/songs/840/gravity.json`。单独运行曲库索引工具不会生成可玩谱面。 |
-| 舞台 | 有曲库后，按下方命令从本地 DLL 生成 C++ 必需的 `.inc`。转换共用背景时给 `prepare-stage-backgrounds.py` 传入同一次生成的完整 JSON（`--registration`）、已解出的 game_bg 目录和 `--game-textures`。专属背景另用 `prepare-stage-scenes.py`。 |
-| 角色、语音和着色器 | `prepare-navigator.py` 读取本地 Live2D 资源、语音库、Cubism SDK 和 FFmpeg CLI，将领航员资源及 SDK 许可文件写入 `src/main/assets/crew`。`compile-crew-catalog.py` 另需本地角色登记表 `tools/data/crew-catalog-original.json`和已解出的角色图形目录。 |
-| 界面、HUD、打击特效 | `prepare-cabinet-afp.py` 按场景名读取 `data/graphics/ver07`。`compile-hud.py`、`compile-button-hits.py` 等各自产出局部目录。多数脚本提供 `--help`。 |
-| 选曲、段位和贴纸 | `prepare-selection.py` 从本地 DLL 读取比赛名称，同版目录若含 `2026101300/LAZY_KFC/asphyxia/plugins/sdvx@asphyxia/data/nbl.ts`，可直接将其传给选曲和段位转换器，分别读取 `BEGINNER_MUSIC_FOLDER` 和 `COURSES7`，不需要启动服务。生成资源不会实现段位玩法。`compile-subscreen.py` 读取脚本旁本地生成的 `sticker-metadata.json`。 |
-| 启动图标 | Android 资源链接要求 `src/main/res/drawable-xxxhdpi/ic_launcher_background.png` 和 `ic_launcher_foreground.png`。提供有权使用的背景与前景图层。 |
+| `-SongIds 1,2,3` | 只内置这些 ID 对应的原盘目录。省略时采用 [默认内置清单](SONGS.md) 与本机数据的交集。 |
+| `-PrepareOnly` | 只转换并检查本地输入，完成后若要封包，使用同一工具链运行 `& .\tools\Build-SDVX.ps1`。 |
+| `-ServiceData 'E:\…\nbl.ts'` | 可选。本地第三方服务提供的初学者文件夹和段位课程表。懒人目录下的 `asphyxia/plugins/sdvx@asphyxia/data/nbl.ts` 会被自动识别。纯净版缺少该文件时，初学者分组没有服务标记、课程列表为空，其他流程继续。无需运行第三方启动器或服务。 |
+| `-Offline` | 让 Gradle 使用已经取得的插件缓存。首次安装 Python 包、获取原生依赖仍需网络。 |
 
-以下示例共用第 2 节的变量。入场提示文案直接从本地 DLL 提取，打击特效工具只生成一个局部资源组。舞台登记表转换要求 `src/main/assets/songs/library.json` 已准备好。
+APK 输出在 `development/android-native/build/outputs/apk/debug/sdvx-android-native-debug.apk`，为本机 Android 调试密钥签名的手机包。外置全曲包和额外角色包是独立交付项，不属于这个 APK。
 
-```powershell
-python "$app/tools/prepare-entry-notice.py"
-python "$app/tools/compile-button-hits.py" "$data/graphics/ver06/game_effect.ifs" "$assets/button_hit"
-New-Item -ItemType Directory -Force -Path local-inputs | Out-Null
-python "$app/tools/extract-stage-registration.py" --root . --output local-inputs/stage-registration.json --runtime-inc "$app/src/main/cpp/stage_registration_2026101300.inc"
+### 版本与曲库差异
+
+相同目录结构可以在不同 HDD 上识别。当前 DLL 提取配置对应 `2026101300` 基线，使用模块指纹确认固定地址的角色、贴纸、判定和舞台登记。文件夹名或第三方包装标签不能替代这一检查。若模块不匹配，程序会输出实际 SHA-256，并在使用偏移前停止。新增 DLL 配置时需验证对应地址。
+
+**曲目文件夹、文件名及内容保持 HDD 原样。** 例如选中 ID 1 后，APK 的 assets 下有：
+
+```text
+music/0001_albida_muryoku/
+  0001_albida_muryoku.s3v
+  0001_albida_muryoku_pre.s3v
+  0001_albida_muryoku_1n.vox
+  jk_0001_1.png
+  jk_0001_1_b.png
+  …同一原目录的其他文件
 ```
 
-**已知的重建缺口**：完整共用素材的首轮导出、内置曲目的判定输入、角色登记表和贴纸元数据还没有一套仅凭原盘即可复现的流程。例如 `compile-cabinet-ui.py` 的 `case` 参数需要带 `playthrough/scenes/*_ifs/tex`、`original-layout/game_hud_ifs/tex` 和解码 WAV 的中间目录。直接传入 HDD 根目录不能满足这些输入。请记录具体缺项，不要用空 JSON、占位音频或 AI 猜测的数据继续封包。外置曲库和角色 ZIP 是可选的本地产物，不是构建依赖的公共下载项。
+手机版仅为所选内置歌曲复制目录，保留原曲所有规格的封面。其他歌曲只保留用于识别的轻量元数据，不导出整盘封面。运行时在进入打歌时解析原始 VOX，正曲与试听从原名 S3V 读取。仅供手机版使用的索引、判定参数、专属舞台演出及 1438 动态编曲在独立的 `songs/` 中，原曲目录不混入生成 JSON。
 
-本地 Android 工程原先选择的内置曲目以 `ID:输出目录` 记在 [内置曲目构建清单](SONGS.md)。这份清单记录打包选择，用它可以重建目录关系。歌曲 1438 的动态编曲还需单独处理。
+**手机端增量添加。** 把同版 HDD 上的单首或多首目录，连同里面的原始文件，复制到 `Android/media/local.sdvx.nativeport/resources/music/`。例如复制后应为 `resources/music/0002_broken_iroha/0002_broken_iroha_1n.vox`。完全退出并重新打开应用后，选曲器扫描实际目录，只显示本地存在、具备谱面、音轨及封面的难度；图片沿用按需加载。新增已登记歌曲不需要重新安装 APK。跨版首次出现的歌曲需要用包含它的音乐数据库重建索引。动态拼曲 1438 还需要从 HDD 单独的编曲素材库生成演出资源，构建时如需它请将 ID 1438 加入内置选择。
 
-## 4. 检查和构建
+工具不会按历史曲数判断成败。找不到被选的目录、难度或可用输入时，会写入本地 `songs/catalog-audit.json`。如果 APK 没有内置可玩歌曲，请先复制至少一个已登记的完整原曲目录，再首次进入游戏。外置原目录也可用 `development/android-native/tools/pack-download-content.py` 按 ID 输出目录或 ZIP；参见该工具的 `--help`。
+
+**打歌背景直接读取 IFS。** 原盘的 `data/graphics/game_bg/gmbg_0101_bridge.ifs` 在 APK 中保留为 `assets/graphics/game_bg/gmbg_0101_bridge.ifs`。其他用到的归档同样按原名、原字节存储。构建时生成本地 `graphics/stage-ifs.json`，为 AFP、BSI、GE2D 和纹理记录归档及字节范围。手机在现有图片加载队列内按需读取、解压和上传，继续使用 SDL3 和 GLES。AVSLZ、DXT5 和 BGRA 解码随本项目的 C++ 源码编译，手机端无需 Python 或额外第三方运行库。
+
+`stage_bg/0/tex/bg_nor_00.png` 这样的名字只作为虚拟纹理键供 AFP 引用，包里不再包含这份解出的 PNG。独立的场景清单、原盘本来就是 PNG 的隧道贴图和 Live2D 模型/贴图各自保留。菜单界面的既有素材流程不受此项变更影响。
+
+### 排查或恢复中断
+
+总入口调用 [prepare-hdd.py](../tools/prepare-hdd.py)。在同一份数据转换中断后，可以只重跑失败的步骤。换另一套 HDD 时使用新的干净克隆和独立 staging，避免旧资源混入本次结果。
 
 ```powershell
-python .\tools\check-build-inputs.py
+$python = Join-Path $env:SDVX_TOOLCHAIN 'venv/Scripts/python.exe'
+$ffmpeg = & $python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())'
+$sdk = Join-Path $env:SDVX_TOOLCHAIN 'native-deps/CubismSdkForNative-5-r.5'
+& $python .\tools\prepare-hdd.py 'E:\KFC\contents' --sdk $sdk --ffmpeg $ffmpeg --steps graphics
+& $python .\tools\check-build-inputs.py
 ```
 
-检查会列出缺少的关键文件，退出码 0 表示这些入口已就绪。它抽查可玩谱面与核心资源，不能证明每个场景的全部资源已生成。在用户明确需要生成 APK 时，再运行：
+`--steps` 支持 `songs`、`player` 和 `graphics`。背景转换需要 `songs` 步骤生成的 `local-inputs/stage-registration.json`。Gradle 合并 `development/android-native/assets-reference` 和 `development/android-native/src/main/assets`，同路径以后一层为准。
 
-```powershell
-& .\tools\Build-SDVX.ps1
-```
+封包前会检查必要的运行时目录、生成的 C++ include、实际内置歌曲的封面、VOX 和音频。比较其他版本时不使用历史曲目数作门槛。可选的[资源路径对照](asset-path-baseline.md)检查文件名集合，不能代替画面、音频或设备端体验验证。
 
-首次允许 Gradle 获取插件。缓存就绪后可传 `-Offline` 让 Gradle 离线解析。脚本使用本机 Android 调试密钥签名，输出 `development/android-native/build/outputs/apk/debug/sdvx-android-native-debug.apk`。若提示目录联接指向其他工程，换用专属于本克隆的工具链目录。不要递归删除指向源码或素材的联接。
+## 3. 给本地 AI 的交接文本
 
-## 5. 提交代码
+> 当前工程是 SDVX ∇ MOBILE。我的 HDD 在［本地路径］。请先按 docs/BUILD.md 配置 Windows 工具链和已获许可的 SDK，然后用 Build-FromHDD.ps1 生成 arm64 手机 APK。使用本地命令读取 HDD，不上传原盘、日志中的私有数据、生成资源或 APK。只为所选歌曲打包原目录和封面；其他已登记曲目从手机本地 music/ 增量读取。遇到不支持的 DLL 时，报告模块指纹和受影响的登记表，不套用其他版本偏移。
 
-仓库的 `.gitignore` 默认排除文件，只放行源码、构建配置和文档。即使克隆里已有 HDD、SDK、生成的 JSON 或 APK，普通的 `git add` 也不会把这些路径加入索引。新建代码目录时先显式加入规则，提交前用 `git diff --cached --name-only` 审阅实际文件。不要强制加入被忽略的素材，也不要把素材或构建产物上传到 Releases、CI 缓存或工单。
+## 4. 提交范围
+
+Git 提交源码、构建脚本、文档，以及维护者明确批准的四张图片：两层 Android 启动图标和手机版触屏 BT/FX 各一张。原盘、曲目、角色、其余游戏媒体、SDK、签名密钥和 APK 保留在本机。提交前用 `git diff --cached --name-only` 审阅实际文件。
+
+## 本地验证记录（2026-11-25）
+
+在独立源码工作区以本地 HDD 为素材输入，从空的应用素材输出开始完成转换、arm64 编译、组包、对齐和调试签名。验证复用了已安装的 Android SDK、JDK 和部分构建依赖，未使用旧 APK 或旧导出素材作为打包输入。维护者批准的启动图标与触屏按钮直接随仓库提供。
+
+本次默认选择实际得到 54 个原始歌曲目录、206 个内置难度，目录内有 528 张原始 PNG。切换仅内置 ID 1 或仅内置 ID 2 的导出时，已核对目录和抽查的 VOX、S3V、封面字节。9 份原始 VOX 的事件、节拍和控制数据与原转换器一致。背景采用 103 个原始 IFS；通过桌面端相同 C++/SDL 入口对照了五张纹理，以及 AFP、BSI、GE2D 条目的字节。最终手机包 2,662,243,887 字节。没有进行真机安装或 GPU/帧时对照。

@@ -1,9 +1,12 @@
 """Generate the six entry notice lines locally from the 2026101300 module."""
+import argparse
 import json
 from pathlib import Path
 
 app = Path(__file__).resolve().parents[1]
-module = app.parents[1] / '2026101300/LAZY_KFC/contents/modules/soundvoltex.dll'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--contents', type=Path, default=app.parents[1] / '2026101300/LAZY_KFC/contents')
+module = parser.parse_args().contents / 'modules/soundvoltex.dll'
 ranges = ((9451148, 10), (9451170, 36), (9451213, 24),
           (9451254, 42), (9451303, 38), (9451048, 32))
 with module.open('rb') as source:
