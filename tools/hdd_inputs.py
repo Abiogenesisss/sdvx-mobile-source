@@ -16,9 +16,13 @@ def locate_contents(root):
     return found[0]
 
 
-def require_profile(contents):
+def require_module_profile(module_data):
     import hashlib
-    digest = hashlib.sha256((contents / "modules/soundvoltex.dll").read_bytes()).hexdigest()
+    digest = hashlib.sha256(module_data).hexdigest()
     if digest != PROFILE_SHA256:
         raise ValueError(f"Recognized the HDD layout but no DLL extraction profile matches SHA-256 {digest}. "
                          "Use a supported module or implement and validate its offsets first.")
+
+
+def require_profile(contents):
+    require_module_profile((contents / "modules/soundvoltex.dll").read_bytes())

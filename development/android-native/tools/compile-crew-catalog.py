@@ -55,7 +55,13 @@ def export_afp(source, original, target, matching):
     with TemporaryDirectory(prefix="nabla-crew-") as temporary:
         work = Path(temporary)
         archive = work / original.stem
-        raw = IFS(original.read_bytes(), decode_binxml=True, decode_textures=True)
+        data = original.read_bytes()
+        if original.name == "chara_18b_cocona.ifs":
+            # This archive labels its texture index ASCII, but a name and its
+            # corresponding on-disk MD5 key use UTF-8. Correct the index tag.
+            index = bytes.fromhex("a04200ff000005c8010be6af79eb7ab1bb8e402e")
+            data = data.replace(index, bytes.fromhex("a042a05f") + index[4:], 1)
+        raw = IFS(data, decode_binxml=True, decode_textures=True)
         inventory = source.parents[2] / "待复核" / "graphics/chara" / source.name
         for filename in raw.filenames:
             directory = filename.split("\\", 1)[0]
