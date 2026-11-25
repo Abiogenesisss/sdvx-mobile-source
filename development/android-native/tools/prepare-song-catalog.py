@@ -106,6 +106,7 @@ def main():
                 slot,suffix,category = 4,"4i",categories[label]
             vox = f"{folder}_{suffix}.vox"
             track_audio = f"{folder}_{suffix}.s3v"
+            has_track_audio = source is not None and (source/track_audio).is_file()
             base_jacket = f"jk_{song_id:04d}_{slot}"
             available = False
             generated = song_id == 1438
@@ -116,7 +117,7 @@ def main():
                     available = available and (args.output/"1438/arrangement.json").is_file()
                 else:
                     available = available and (source/vox).is_file() and (
-                        (source/shared).is_file() or (source/track_audio).is_file())
+                        has_track_audio or (source/shared).is_file())
                 if available and not generated:
                     try:
                         compile_chart((source/vox).read_bytes(),common_judgment,{})
@@ -128,7 +129,7 @@ def main():
             record = dict(name=category.upper(),label=label,level=level,chart=vox,jacket=base_jacket+"_b.png",
                           slot=slot,max_exscore=int(row.findtext("max_exscore","0")),
                           effect=row.findtext("effected_by",""),illustrator=row.findtext("illustrator",""),bundled=available)
-            if source and not (source/shared).is_file():
+            if has_track_audio:
                 record["music"] = track_audio
             song["charts"].append(record)
             radar[category] = {"radar":{x.tag:int(x.text) for x in row.findall("radar/*") if x.text and x.text.isdecimal()}}

@@ -144,13 +144,12 @@ void Cabinet::loadCatalogs() {
             if (external && !externalFolder) continue;
             const auto exists = external ? hasExternalAsset : hasAsset;
             if (!(generated ? arrangementInstalled : exists(track.asset(track.chart)))) continue;
-            track.music = row.value("music", shared);
-            if (!generated && !exists(track.asset(track.music))) {
-                // A raw HDD may have a separate arrangement for one difficulty.
-                auto alternate = track.chart.substr(0, track.chart.rfind('.')) + ".s3v";
-                if (track.music != shared && exists(track.asset(shared))) track.music = shared;
-                else if (exists(track.asset(alternate))) track.music = std::move(alternate);
-                else continue;
+            track.music = shared;
+            if (!generated) {
+                // Older catalogs may omit the difficulty-specific HDD arrangement.
+                auto arrangement = row.value("music", track.chart.substr(0, track.chart.rfind('.')) + ".s3v");
+                if (exists(track.asset(arrangement))) track.music = std::move(arrangement);
+                else if (row.contains("music") || !exists(track.asset(shared))) continue;
             }
             // External imports may contain just the normal-size jacket, or the shared slot-1 image.
             const auto paddedId = folder.substr(0, folder.find('_'));
