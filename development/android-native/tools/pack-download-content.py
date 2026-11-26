@@ -1,11 +1,13 @@
 """Pack local song directories in HDD layout and optionally package exported crew assets."""
 import argparse
 from collections import Counter
+from contextlib import contextmanager
 import json
 from pathlib import Path, PurePosixPath
 import shutil
 import sys
 from tempfile import TemporaryDirectory
+from uuid import uuid4
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
 
@@ -20,6 +22,25 @@ def encoded(data):
 def add_file(archive, path, name):
     compression = ZIP_DEFLATED if path.suffix in {".json", ".dat"} else ZIP_STORED
     archive.write(path, name, compress_type=compression, compresslevel=3 if compression == ZIP_DEFLATED else None)
+
+
+@contextmanager
+def delivery_directory(output):
+    """Publish a complete immutable directory by switching a single pointer."""
+    output.mkdir(parents=True, exist_ok=True)
+    name = f"release-{uuid4().hex}"
+    with TemporaryDirectory(prefix=".building-", dir=output) as scratch:
+        work = Path(scratch)
+        staged = work / name
+        staged.mkdir()
+        yield staged
+        pointer = work / "latest.json"
+        pointer.write_bytes(encoded({"directory": name}) + b"\n")
+        # Both renames stay on the output filesystem. Readers of an earlier
+        # pointer can finish reading its indexes and ZIPs after the switch.
+        staged.rename(output / name)
+        pointer.replace(output / "latest.json")
+    print(f"Ready: {output / name}", flush=True)
 
 
 def build_crew(destination, external, builtin, reference=None):
@@ -247,30 +268,44 @@ def main():
         reason = "without a playable addition in the baseline catalog" if args.song_catalog else "without a local VOX directory"
         print(f"Skipped song IDs {reason}: {sorted(missing)}", flush=True)
 
-    output.mkdir(parents=True, exist_ok=True)
-    names, totals = build_songs(output, directories, args.directory)
-    if args.song_catalog or args.songs or args.directory:
+    if args.directory:
+        output.mkdir(parents=True, exist_ok=True)
+        build_songs(output, directories, True)
         return
 
-    runtime = args.project / "development/android-native"
-    builtin = runtime / "src/main/assets"
-    reference = runtime / "assets-reference"
-    external = args.project / "development/download-content"
-    crew_name, crew_count = None, 0
-    crew_output = output / "SDVX-extra-crew.zip"
-    if crew_output.is_file():
-        crew_name = crew_output.name
-        crew_count = reuse_crew_archive(crew_output)
-    elif all((root / file).is_file() for root in (external, builtin)
-             for file in ("crew/catalog.json", "crew/voice/index.json")):
-        crew_name, crew_count = build_crew(output, external, builtin, reference)
-    else:
-        print("Skipped crew ZIP since the local crew inputs are unavailable.", flush=True)
+    with delivery_directory(output) as stage:
+        names, totals = build_songs(stage, directories, False)
+        if args.song_catalog or args.songs:
+            return
 
-    report = {"songs": len(directories), "song_file_counts": dict(totals), "song_archives": names,
-              "crew_archive": crew_name, "crew_files": crew_count}
-    (output / "s3v-report.json").write_bytes(encoded(report))
-    print(json.dumps(report, ensure_ascii=False), flush=True)
+        runtime = args.project / "development/android-native"
+        builtin = runtime / "src/main/assets"
+        reference = runtime / "assets-reference"
+        external = args.project / "development/download-content"
+        crew_name, crew_count = None, 0
+        crew_output = output / "SDVX-extra-crew.zip"
+        pointer = output / "latest.json"
+        if pointer.is_file():
+            previous = load(pointer)["directory"]
+            if not isinstance(previous, str) or not previous.startswith("release-") or Path(previous).name != previous:
+                raise ValueError(f"Invalid delivery directory in {pointer}")
+            previous_crew = output / previous / crew_output.name
+            if previous_crew.is_file():
+                crew_output = previous_crew
+        if crew_output.is_file():
+            crew_name = crew_output.name
+            shutil.copyfile(crew_output, stage / crew_name)
+            crew_count = reuse_crew_archive(stage / crew_name)
+        elif all((root / file).is_file() for root in (external, builtin)
+                 for file in ("crew/catalog.json", "crew/voice/index.json")):
+            crew_name, crew_count = build_crew(stage, external, builtin, reference)
+        else:
+            print("Skipped crew ZIP since the local crew inputs are unavailable.", flush=True)
+
+        report = {"songs": len(directories), "song_file_counts": dict(totals), "song_archives": names,
+                  "crew_archive": crew_name, "crew_files": crew_count}
+        (stage / "s3v-report.json").write_bytes(encoded(report))
+        print(json.dumps(report, ensure_ascii=False), flush=True)
 
 
 if __name__ == "__main__":

@@ -36,7 +36,11 @@ $apk = 'D:\Builds\SDVX-phone.apk'
 & $python .\tools\build-incremental-packs.py --hdd $hdd --apk $apk --output 'D:\Builds\extra'
 ```
 
-只做角色、只做音乐、或挑选几首时，可用以下命令。每个输出目录下的清单列出该次应当安装的 ZIP。同一目录用于其他 APK 或另一组歌曲时，请按新清单取包。
+每次成功构建都会打印一个新的 `release-…/` 交付目录，里面包含本次请求的全部 ZIP、对应清单和安装说明。程序在所有类别都完成后，一次性替换输出根目录的 `latest.json`。自动化先读取一次其中的 `directory`，再从该目录读取 `music/index.json` 或 `crew/index.json` 及其 ZIP。
+
+中断或重试时，已经发布的目录仍可使用。并发构建分别产生独立目录，最后成功切换的版本成为最新交付。仅构建一种资源时，最新交付只包含该类别。旧工具直接写在输出根目录的资源可按原清单继续使用。确认旧交付已无人使用后可自行清理以释放空间。
+
+只做角色、只做音乐或挑选几首时，可用以下命令。
 
 ```powershell
 & $python .\tools\build-incremental-packs.py --hdd $hdd --apk $apk --part crew  --output 'D:\Builds\crew-only'

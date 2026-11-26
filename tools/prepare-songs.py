@@ -1,14 +1,13 @@
 """Build the selected songs, jackets and seven-generation registration from a local HDD."""
 import argparse
 import json
-import math
 from pathlib import Path
 import re
-import struct
 import subprocess
 import sys
 
 from hdd_inputs import locate_contents
+from judgment_windows import read_judgment_tables
 
 def prepare(contents, service=None, song_ids=None):
     game = contents / "data"
@@ -22,26 +21,7 @@ def prepare(contents, service=None, song_ids=None):
     (app / "assets-reference").mkdir(exist_ok=True)
     dll = (contents / "modules/soundvoltex.dll").read_bytes()
 
-    # File offsets of binary32 constants used by the window initializers in this checked DLL.
-    # Each pair is a lower-bound inclusive time and the runtime result ID.
-    chip = [(10079660,1),(10079648,2),(10079616,3),(10079612,4),(None,6),(10076992,7),(10077060,8),(10077180,10)]
-    narrow = [(10079596,5),(10076976,10)]
-    windows = {"chip":chip, "fx_chip_special":[(chip[0][0],0),(chip[1][0],3),*chip[3:]],
-               "hold_wide":[(10079648,5),(10077132,10)], "hold_narrow":narrow, "laser_track":narrow,
-               "laser_slam":[(10079620,5),(10077064,10)]}
-    tables = {}
-    for name, entries in windows.items():
-        rows = []
-        for offset, result in entries:
-            word = dll[offset:offset+4] if offset is not None else bytes(4)
-            if len(word) != 4:
-                raise ValueError(f"Missing {name} judgment window in soundvoltex.dll at {offset}")
-            seconds = struct.unpack("<f", word)[0]
-            if not math.isfinite(seconds) or (rows and seconds <= rows[-1]["from_seconds"]):
-                raise ValueError(f"Invalid {name} judgment window in soundvoltex.dll at {offset}")
-            rows.append({"from_seconds":seconds, "result_id":result,
-                         "float_bits": f"0x{int.from_bytes(word,'little'):08x}"})
-        tables[name] = rows
+    tables = read_judgment_tables(dll)
     # Timing offset application is owned by stageJudgeTime / stageDrawTime in the runtime.
     songs.mkdir(parents=True,exist_ok=True)
     judgment = songs / "judgment.json"

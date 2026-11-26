@@ -40,7 +40,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--hdd", required=True, type=Path, help="Local HDD, contents or data directory")
     parser.add_argument("--apk", required=True, type=Path, help="The installed APK to supplement")
-    parser.add_argument("--output", required=True, type=Path, help="Release directory for music/ and crew/ packages")
+    parser.add_argument("--output", required=True, type=Path, help="Delivery root containing immutable releases and latest.json")
     parser.add_argument("--part", choices=("music", "crew"), help="Build only this group (default: both)")
     parser.add_argument("--songs", nargs="+", type=int, help="Build only the listed additional song IDs")
     args = parser.parse_args()
@@ -52,15 +52,12 @@ def main():
     output = args.output.resolve()
     if output.is_relative_to(contents):
         parser.error("Use an output directory outside the HDD contents")
-    output.mkdir(parents=True, exist_ok=True)
     sys.path.insert(0, str(NATIVE_TOOLS))
     packer = import_module("pack-download-content")
-    for category in parts:
-        dest = output / category
-        dest.mkdir(exist_ok=True)
-        # Finish all ZIPs before replacing deliverables, with the index last.
-        with TemporaryDirectory(prefix=f".{category}-", dir=output) as scratch:
-            stage = Path(scratch)
+    with packer.delivery_directory(output) as delivery:
+        for category in parts:
+            stage = delivery / category
+            stage.mkdir(parents=True)
             if category == "music":
                 requested = set(args.songs or ())
                 dirs, found = packer.incremental_songs(contents / "data/music", apk, requested)
@@ -84,10 +81,7 @@ def main():
                         name, _ = packer.build_crew(stage, work, ZipPath(base, "assets/"))
                 names = [name]
             write_index(stage, apk, category, names)
-            for name in [*names, "index.json"]:
-                (stage / name).replace(dest / name)
-            print(f"Ready: {dest / 'index.json'}", flush=True)
-    shutil.copyfile(ROOT / "docs/INCREMENTAL.md", output / "INCREMENTAL.md")
+        shutil.copyfile(ROOT / "docs/INCREMENTAL.md", delivery / "INCREMENTAL.md")
 
 
 if __name__ == "__main__":

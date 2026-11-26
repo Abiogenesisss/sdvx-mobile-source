@@ -3,6 +3,8 @@ import argparse
 import json
 from pathlib import Path
 
+from judgment_windows import validate_judgment_tables
+
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("root", type=Path, nargs="?", default=Path(__file__).resolve().parents[1])
 app = parser.parse_args().root / "development/android-native"
@@ -25,6 +27,15 @@ required = ["songs/judgment.json", "font/0000.ttc", "crew/grace/model/grace_ver7
             "songs/details.json","songs/selection.json","stage/sound/general_sampler.json","subscreen/achievements.json",
             "subscreen/catalog.json","result/bg_grid_result.png","crew_selector/afp-library.json",
             "stage/touch/note.png","stage/touch/fx.png","startup/warning_j.png"]
+# Direct APK builds may reuse a catalog generated before window checks existed.
+judgment = next((root / "songs/judgment.json" for root in (assets, reference)
+                 if (root / "songs/judgment.json").is_file()), None)
+if judgment is not None:
+    try:
+        data = json.loads(judgment.read_bytes())
+        validate_judgment_tables(data["judgment"]["tables"])
+    except (ValueError, KeyError, TypeError) as error:
+        raise SystemExit(f"Invalid {judgment}: {error}") from error
 if catalog.is_file() and catalog.stat().st_size:
     songs = json.loads(catalog.read_text(encoding="utf-8"))
     count = 0
